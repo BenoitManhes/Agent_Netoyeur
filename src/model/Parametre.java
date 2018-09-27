@@ -16,5 +16,6 @@ public class Parametre {
 	
 	//autre...
 	public static final int TAILLE_GRILLE = 10;
+	public static final int DELAI = 1000; // pas de temps en ms de la simulaion
 	
 }

@@ -1,9 +1,28 @@
 package controller;
+import model.*;
+import view.*;
 
-public class exAgent {
-
-	public exAgent() {
-		// TODO Auto-generated constructor stub
+public class exAgent implements Runnable{
+	
+	public void run() {
+		Draw drawing = new Draw("Agent");
+		/**Initialisation de l agent*/
+		Agent A = new Agent();
+		
+		
+		/**Gestion de l agent*/
+		while(true) {	// gestion de l agent en boucle infini
+			
+			// Observer environement ou non
+			// Mise a jour Etat
+			// Decision action
+			// Action
+			
+			drawing.render();//mis a jour affichage avec drawing
+			try {Thread.sleep(Parametre.DELAI);} catch (InterruptedException e) {e.printStackTrace();}
+		}
 	}
+	
+	/**Methode utile a la gestion de l agent*/
 
 }

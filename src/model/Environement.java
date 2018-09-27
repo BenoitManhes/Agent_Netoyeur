@@ -1,9 +1,9 @@
 package model;
 
-public class Environement {
+import java.util.ArrayList;
 
-	public Environement() {
-		// TODO Auto-generated constructor stub
-	}
+public class Environement {
+	
+	public static ArrayList<Element> ListEnvironement = new ArrayList<Element>();
 
 }
