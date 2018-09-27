@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -19,7 +19,7 @@ public class Draw{
    private int WIDTH = 500;
    private int HEIGHT = 500;
 
-   Draw(String titre){
+   public Draw(String titre){
       //Makes a new window, with the name " Basic game  ".
       frame = new JFrame(titre);
       JPanel panel = (JPanel) frame.getContentPane();
@@ -45,7 +45,7 @@ public class Draw{
       // This will add our buttonhandler to our program
       //canvas.addKeyListener(new ButtonHandler());
       }
-   void render() {
+   public void render() {
       Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
       g.clearRect(0, 0, WIDTH, HEIGHT);
       render(g);

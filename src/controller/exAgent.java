@@ -5,15 +5,15 @@ import view.*;
 public class exAgent implements Runnable{
 	
 	public void run() {
-		Draw drawing = new Draw("Agent");
+
 		/**Initialisation de l agent*/
 		Agent A = new Agent();
-		
+		Draw drawing = new Draw("Agent");
 		
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 			
-			// Observer environement ou non
+			// Observer environement
 			// Mise a jour Etat
 			// Decision action
 			// Action
