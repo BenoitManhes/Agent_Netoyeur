@@ -19,11 +19,32 @@ public class exEnvironement implements Runnable{
 		while(true) {	// gestion de l'environement en boucle infini
 			
 			//apparition ou non d elements
-			drawing.render();	//mis a jour affichage avec drawing
+			genererPoussiere(probaPoussiere);
+			genererBijou(probaBijou);
+			
+			//mis a jour affichage avec drawing
+			drawing.render();	
 			try {Thread.sleep(Parametre.DELAI);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 		
 	}
 	
 	/**Methode utile a la gestion de l environement*/
+	
+	public void genererPoussiere(double p) {
+		double i = Math.random();
+		if(i<=p) {
+			int x = (int) Math.random()*Parametre.TAILLE_GRILLE;
+			int y = (int) Math.random()*Parametre.TAILLE_GRILLE;
+			Environement.ListEnvironement.add(new Poussiere(x, y));
+		}
+	}
+	public void genererBijou(double p) {
+		double i = Math.random();
+		if(i<=p) {
+			int x = (int) Math.random()*Parametre.TAILLE_GRILLE;
+			int y = (int) Math.random()*Parametre.TAILLE_GRILLE;
+			Environement.ListEnvironement.add(new Bijou(x, y));
+		}
+	}
 }
