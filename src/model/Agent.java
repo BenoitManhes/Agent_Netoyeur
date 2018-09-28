@@ -3,13 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class Agent {
-	public static final int NE_RIEN_FAIRE = 0;
-	public static final int HAUT = 1;
-	public static final int BAS = 2;
-	public static final int DROITE = 3;
-	public static final int GAUCHE = 4;
-	public static final int ASPIRER_POUSSIERE = 5;
-	public static final int RAMASSER_BIJOU = 6;
 	
 	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
 	private ArrayList<Element> Objectifs = new ArrayList<Element>();
@@ -56,19 +49,53 @@ public class Agent {
 	}
 	
 	public void goUp(){
+		if(this.Y>0){
+			this.Y--;
+			this.lastAction = Parametre.HAUT;
+			this.energieDepense++;
+			System.out.println("Agent : Je me suis deplace vers le haut");
+		}
+		
 		
 	}
 	
 	public void goDown(){
-		
+		if(this.Y<Parametre.TAILLE_GRILLE-1){
+			this.Y++;
+			this.lastAction = Parametre.BAS;
+			this.energieDepense++;
+			System.out.println("Agent : Je me suis deplace vers le bas");
+		}
 	}
 	
 	public void goRight(){
-		
+		if(this.X<Parametre.TAILLE_GRILLE-1){
+			this.X++;
+			this.lastAction = Parametre.DROITE;
+			this.energieDepense++;
+			System.out.println("Agent : Je me suis deplace vers la droite");
+		}
 	}
 	
 	public void goLeft(){
-		
+		if(this.X>0){
+			this.X--;
+			this.lastAction = Parametre.GAUCHE;
+			this.energieDepense++;
+			System.out.println("Agent : Je me suis deplace vers la gauche");
+		}
+	}
+	
+	public void ramasser(){ 
+		this.lastAction = Parametre.RAMASSER;
+		this.energieDepense++;
+		System.out.println("Agent : J'ai ramasse le contenu de la case");
+	}
+	
+	public void aspirer(){
+		this.lastAction = Parametre.ASPIRER;
+		this.energieDepense++;
+		System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
 	public int getLastAction() {

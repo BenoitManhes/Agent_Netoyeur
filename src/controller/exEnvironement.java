@@ -26,7 +26,7 @@ public class exEnvironement implements Runnable{
 
 			//mis a jour affichage avec drawing
 			drawing.render();	
-			try {Thread.sleep(Parametre.DELAI);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(Parametre.DELAI_ENV);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 
 	}
@@ -40,7 +40,7 @@ public class exEnvironement implements Runnable{
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, true)) {
 				Environement.ListEnvironement.add(new Poussiere(x, y));
-				System.out.println("Poussiere apparue en "+x+","+y);
+				System.out.println("Environnement : Poussiere apparue en "+x+","+y);
 			}
 		}
 	}
@@ -51,7 +51,7 @@ public class exEnvironement implements Runnable{
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, false)) {
 				Environement.ListEnvironement.add(new Bijou(x, y));
-				System.out.println("Bijou apparue en "+x+","+y);
+				System.out.println("Environnement : Bijou apparue en "+x+","+y);
 			}
 		}
 	}
