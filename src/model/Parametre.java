@@ -11,8 +11,8 @@ public class Parametre {
 	public static final int MALUS_ENERGIE = -1;
 	
 	//Proba
-	public static final double PROBA_POUSSIERE = 0.5;
-	public static final double PROBA_BIJOU = 0.1;
+	public static final double PROBA_POUSSIERE = 1;
+	public static final double PROBA_BIJOU = 1;
 	
 	//autre...
 	public static final int TAILLE_GRILLE = 10;

@@ -5,10 +5,13 @@ import java.util.ArrayList;
 public class Agent {
 
 	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
+	private ArrayList<Element> Objectifs = new ArrayList<Element>();
 	private int X;
 	private int Y;
 	
 	public Agent() {
+		X = (int) (Math.random()*Parametre.TAILLE_GRILLE);
+		Y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 	}
 
 	public ArrayList<Element> getListElementObs() {
@@ -33,5 +36,13 @@ public class Agent {
 
 	public void setY(int y) {
 		Y = y;
+	}
+
+	public ArrayList<Element> getObjectifs() {
+		return Objectifs;
+	}
+
+	public void setObjectifs(ArrayList<Element> objectifs) {
+		Objectifs = objectifs;
 	}
 }

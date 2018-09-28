@@ -9,5 +9,9 @@ public class Bijou extends Element{
 		Y = y;
 		Pts = POINT;
 	}
+	
+	public boolean isPoussiere() {
+		return false;
+	}
 
 }
