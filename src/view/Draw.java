@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -31,17 +32,20 @@ public class Draw{
 	private int WIDTH = (int)(Math.min(height, width)/2*1.1);
 	private int HEIGHT = (int)(Math.min(height, width)/2*1.1);
 	private int intervalle = WIDTH/Parametre.TAILLE_GRILLE;
-	
+
 	/**image*/
 	private Image poussiere;
 	private Image bijou;
+	
+	private ArrayList<Element> List;
 
-	public Draw(String titre){
+	public Draw(String titre, ArrayList<Element> list){
+		List = list;
 		try {
-			this.poussiere = ImageIO.read(new File("poussiere.jpg"));
+			this.poussiere = ImageIO.read(new File("poussiere.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.poussiere = ImageIO.read(new File("diamond-ring.png"));
+			this.bijou = ImageIO.read(new File("diamond-ring.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		//Makes a new window, with the name " Basic game  ".
 		frame = new JFrame(titre);
@@ -76,7 +80,7 @@ public class Draw{
 		bufferStrategy.show();
 	}
 	protected void render(Graphics2D g){
-		
+
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.WHITE);
 		// drawing de la grille
@@ -85,22 +89,28 @@ public class Draw{
 				g.fillRect(CO(i), CO(j),T,T );
 			}
 		}
-		// drawing des elements
-		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
-			Element e = Environement.ListEnvironement.get(i);
+		/* drawing des elements d abord poussier puis ensuite bijou 
+		 * 2 boucle for afin de permettre aux images des bijoux de paraitre dessus la poussiere
+		 */
+		for (int i = 0; i < List.size(); i++) {
+			Element e = List.get(i);
 			if(e.isPoussiere()) {
 				g.drawImage(poussiere,CO(e.getX()),CO(e.getY()),T,T,null);
-			}else {
+			}
+		}
+		for (int i = 0; i < List.size(); i++) {
+			Element e = List.get(i);
+			if(!e.isPoussiere()) {
 				g.drawImage(bijou,CO(e.getX()),CO(e.getY()),T,T,null);
 			}
 		}
 		// drawing du robot
-		
-		
+
+
 	}
-	
+
 	private int CO(int x) {	// coordonne en fonction de la taille de grille
 		return (int) (x*intervalle+intervalle/10);
 	}
-	
+
 }
