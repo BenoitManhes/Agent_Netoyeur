@@ -10,6 +10,8 @@ public class Agent {
 	private int Y;
 	
 	public Agent() {
+		X = (int) (Math.random()*Parametre.TAILLE_GRILLE);
+		Y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 	}
 
 	public ArrayList<Element> getListElementObs() {

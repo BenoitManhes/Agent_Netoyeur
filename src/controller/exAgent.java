@@ -7,8 +7,7 @@ public class exAgent implements Runnable{
 	public void run() {
 
 		/**Initialisation de l agent*/
-		Agent A = new Agent();
-		Draw drawing = new Draw("Agent",A.getListElementObs());
+		Draw drawing = new Draw("Agent",Environement.agent.getListElementObs());
 		
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini

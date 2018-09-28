@@ -29,18 +29,22 @@ public class Draw{
 	int height = (int)dimension.getHeight();
 	int width  = (int)dimension.getWidth();
 
-	private int WIDTH = (int)(Math.min(height, width)/2*1.1);
-	private int HEIGHT = (int)(Math.min(height, width)/2*1.1);
+	private int WIDTH = (int)(Math.min(height, width)*0.75*1.1);
+	private int HEIGHT = (int)(Math.min(height, width)*0.75*1.1);
 	private int intervalle = WIDTH/Parametre.TAILLE_GRILLE;
 
 	/**image*/
 	private Image poussiere;
 	private Image bijou;
+	private Image robot;
 	
 	private ArrayList<Element> List;
 
 	public Draw(String titre, ArrayList<Element> list){
 		List = list;
+		try {
+			this.robot = ImageIO.read(new File("robot.png"));
+		} catch (IOException e) {e.printStackTrace();}
 		try {
 			this.poussiere = ImageIO.read(new File("poussiere.png"));
 		} catch (IOException e) {e.printStackTrace();}
@@ -105,7 +109,7 @@ public class Draw{
 			}
 		}
 		// drawing du robot
-
+		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 
 	}
 
