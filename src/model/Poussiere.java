@@ -10,5 +10,8 @@ public class Poussiere extends Element{
 		Y=y;
 		Pts=POINT;
 	}
-
+	
+	public boolean isPoussiere() {
+		return true;
+	}
 }

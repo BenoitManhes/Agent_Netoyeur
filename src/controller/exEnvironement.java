@@ -1,4 +1,6 @@
 package controller;
+import javax.swing.plaf.ProgressBarUI;
+
 import model.*;
 import view.*;
 
@@ -6,7 +8,7 @@ public class exEnvironement implements Runnable{
 
 	@Override
 	public void run() {
-		
+
 		/**Initialisation de l environement*/
 		Draw drawing = new Draw("Environement");
 		// environement déjà creer en  public static -> Unique et Accessible a tous
@@ -14,10 +16,10 @@ public class exEnvironement implements Runnable{
 		double probaBijou = Parametre.PROBA_BIJOU;
 
 		//initialisationEnvironement();
-		
+
 		/**Gestion environement*/
 		while(true) {	// gestion de l'environement en boucle infini
-			
+
 			//apparition ou non d elements
 			genererPoussiere(probaPoussiere);
 			genererBijou(probaBijou);
@@ -26,9 +28,9 @@ public class exEnvironement implements Runnable{
 			drawing.render();	
 			try {Thread.sleep(Parametre.DELAI);} catch (InterruptedException e) {e.printStackTrace();}
 		}
-		
+
 	}
-	
+
 	/**Methode utile a la gestion de l environement*/
 	
 	public void genererPoussiere(double p) {
