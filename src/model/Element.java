@@ -1,6 +1,6 @@
 package model;
 
-public class Element {
+public abstract class Element {
 	
 	protected int X;	//coordonne en abscisse 
 	protected int Y;	//coordonne en ordonne
@@ -15,6 +15,8 @@ public class Element {
 		Y=y;
 		Pts=p;
 	}
+	
+	public abstract boolean isPoussiere();
 
  	public int getX() {
 		return X;

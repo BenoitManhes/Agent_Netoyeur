@@ -4,11 +4,17 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import model.Element;
+import model.Environement;
 import model.Parametre;
 
 
@@ -25,8 +31,18 @@ public class Draw{
 	private int WIDTH = (int)(Math.min(height, width)/2*1.1);
 	private int HEIGHT = (int)(Math.min(height, width)/2*1.1);
 	private int intervalle = WIDTH/Parametre.TAILLE_GRILLE;
+	
+	/**image*/
+	private Image poussiere;
+	private Image bijou;
 
 	public Draw(String titre){
+		try {
+			this.poussiere = ImageIO.read(new File("poussiere.jpg"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.poussiere = ImageIO.read(new File("diamond-ring.png"));
+		} catch (IOException e) {e.printStackTrace();}
 		//Makes a new window, with the name " Basic game  ".
 		frame = new JFrame(titre);
 		JPanel panel = (JPanel) frame.getContentPane();
@@ -63,11 +79,23 @@ public class Draw{
 		
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.WHITE);
+		// drawing de la grille
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
 				g.fillRect(CO(i), CO(j),T,T );
 			}
 		}
+		// drawing des elements
+		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+			Element e = Environement.ListEnvironement.get(i);
+			if(e.isPoussiere()) {
+				g.drawImage(poussiere,CO(e.getX()),CO(e.getY()),T,T,null);
+			}else {
+				g.drawImage(bijou,CO(e.getX()),CO(e.getY()),T,T,null);
+			}
+		}
+		// drawing du robot
+		
 		
 	}
 	
