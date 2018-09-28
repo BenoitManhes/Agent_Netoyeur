@@ -29,15 +29,15 @@ public class Draw{
 	int height = (int)dimension.getHeight();
 	int width  = (int)dimension.getWidth();
 
-	private int WIDTH = (int)(Math.min(height, width)*0.75*1.1);
-	private int HEIGHT = (int)(Math.min(height, width)*0.75*1.1);
-	private int intervalle = WIDTH/Parametre.TAILLE_GRILLE;
+	private int WIDTH = (int)(width/2);
+	private int HEIGHT = (int)(width/2);
+	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
 	/**image*/
 	private Image poussiere;
 	private Image bijou;
 	private Image robot;
-	
+
 	private ArrayList<Element> List;
 
 	public Draw(String titre, ArrayList<Element> list){
@@ -64,6 +64,14 @@ public class Draw{
 		frame.pack();
 		//this will make the frame not re-sizable
 		frame.setResizable(false);
+		//this will place the frames on different positions
+		switch(titre) {
+		case "Environement" : frame.setLocation(0, 0);
+		break;
+		case "Agent" : frame.setLocation(WIDTH, 0);
+		break;
+		default : break;
+		}
 		frame.setVisible(true);
 		//this will add the canvas to our frame
 		panel.add(canvas);
@@ -86,11 +94,11 @@ public class Draw{
 	protected void render(Graphics2D g){
 
 		int T =(int) (intervalle*0.9); // Taille d un element 
-		g.setColor(Color.WHITE);
+		g.setColor(Color.darkGray);
 		// drawing de la grille
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
-				g.fillRect(CO(i), CO(j),T,T );
+				g.drawRect(CO(i), CO(j),T,T );
 			}
 		}
 		/* drawing des elements d abord poussier puis ensuite bijou 
