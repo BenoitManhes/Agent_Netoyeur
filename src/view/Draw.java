@@ -56,7 +56,6 @@ public class Draw{
 		JPanel panel = (JPanel) frame.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
-
 		canvas = new Canvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
@@ -99,6 +98,8 @@ public class Draw{
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
 				g.drawRect(CO(i), CO(j),T,T );
+				g.setColor(Color.white);
+				g.fillRect(CO(i), CO(j),T,T );
 			}
 		}
 		/* drawing des elements d abord poussier puis ensuite bijou 
