@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -81,11 +82,20 @@ public class Draw{
 		default : break;
 		}
 		//this will add a menu on the frame Environnement
+		int tailleMenu = 0;
 		switch(titre) {
-		case "Environement" : frame.setJMenuBar(createMenuBar());
+		case "Environement" :
+			JMenuBar menuEnvironnement = createMenuBarEnvironnement();
+			tailleMenu = menuEnvironnement.getHeight();
+			frame.setJMenuBar(menuEnvironnement);
+		break;
+		case "Agent" :
+			JMenuBar menuAgent = createMenuBarAgent();
+			tailleMenu = menuAgent.getHeight();
+			frame.setJMenuBar(menuAgent);
 		break;
 		default : break;
-		}
+		}					
 		frame.setVisible(true);
 		//this will add the canvas to our frame
 		panel.add(canvas);
@@ -108,12 +118,12 @@ public class Draw{
 	protected void render(Graphics2D g){
 
 		int T =(int) (intervalle*0.9); // Taille d un element 
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		// drawing de la grille
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
 				g.drawRect(CO(i), CO(j),T,T );
-				g.setColor(Color.darkGray);
+				g.setColor(Color.white);
 				g.fillRect(CO(i), CO(j),T,T );
 				g.setColor(Color.darkGray);
 				g.drawRect(CO(i), CO(j),T,T );
@@ -137,6 +147,9 @@ public class Draw{
 		}
 		// drawing du robot
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		
+		//maj score
+		g.drawString("Score Environnement : "+Environement.scoreEnvironnement, 20,20);
 
 	}
 
@@ -144,7 +157,69 @@ public class Draw{
 		return (int) (x*intervalle+intervalle/10);
 	}
 	
-	public static JMenuBar createMenuBar() {
+	public static JMenuBar createMenuBarEnvironnement() {
+
+		JMenuBar menuBar;
+		JMenu menu;
+		JMenuItem menuItem;
+		JRadioButtonMenuItem rdmi;
+
+		//Create the menu bar.
+		menuBar = new JMenuBar();
+		menuBar.repaint();
+
+		//Build the simulationMenu
+		menu = new JMenu("Simulation");
+		menu.setMnemonic(KeyEvent.VK_F);
+		menu.getAccessibleContext().setAccessibleDescription("Set event");
+		menuBar.add(menu);
+
+		//Create the item to restart the simulation
+		menuItem = new JMenuItem("Restart");
+		menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Restart");
+		menu.add(menuItem);
+
+		//Create the groups to select the state
+		menu.addSeparator();
+		ButtonGroup groupRun = new ButtonGroup();
+		rdmi = new JRadioButtonMenuItem("Running");
+		rdmi.setSelected(true);
+		rdmi.setMnemonic(KeyEvent.VK_R);
+		groupRun.add(rdmi);
+		menu.add(rdmi);
+
+		rdmi = new JRadioButtonMenuItem("Pause");
+		rdmi.setMnemonic(KeyEvent.VK_SPACE);
+		groupRun.add(rdmi);
+		menu.add(rdmi);
+
+		//Create the groups to select the speed
+		menu.addSeparator();
+		ButtonGroup groupSpeed = new ButtonGroup();
+		rdmi = new JRadioButtonMenuItem("Fast");
+		rdmi.setSelected(true);
+		rdmi.setMnemonic(KeyEvent.VK_F);
+		groupSpeed.add(rdmi);
+		menu.add(rdmi);
+
+		rdmi = new JRadioButtonMenuItem("Slow");
+		rdmi.setMnemonic(KeyEvent.VK_S);
+		groupSpeed.add(rdmi);
+		menu.add(rdmi);
+
+		//Create the parameterMenu
+		menu = new JMenu("Parameters");
+		menu.setMnemonic(KeyEvent.VK_E);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"Edit Menu");
+		menuBar.add(menu);
+
+		return menuBar;
+	}
+	
+	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
 		JMenu menu;
@@ -206,5 +281,6 @@ public class Draw{
 		return menuBar;
 		
 	}
+	
 
 }

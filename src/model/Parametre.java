@@ -8,7 +8,6 @@ public class Parametre {
 	public static final int POINT_POUSSIERE = 10;
 	public static final int POINT_BIJOU = 5;
 	public static final int MALUS_BIJOU = -15;
-	
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba

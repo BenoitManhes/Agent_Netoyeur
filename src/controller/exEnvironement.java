@@ -74,7 +74,7 @@ public class exEnvironement implements Runnable{
 	}
 
 	//Calculer les points
-	public int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
+	private int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
 
 		int score = 0;
 		int PositionX = getXPositionAgent();
@@ -100,6 +100,7 @@ public class exEnvironement implements Runnable{
 				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 		}
+		ajouterScore(score);
 		return score;
 	}
 
@@ -115,7 +116,7 @@ public class exEnvironement implements Runnable{
 		return presence;
 	}
 
-	public void majAffichage() {
+	private void majAffichage() {
 
 		int PositionX = getXPositionAgent();
 		int PositionY = getYPositionAgent();
@@ -142,6 +143,10 @@ public class exEnvironement implements Runnable{
 				}
 			}
 		}
+	}
+	
+	private void ajouterScore(int score) {
+		Environement.scoreEnvironnement+=score;
 	}
 
 
