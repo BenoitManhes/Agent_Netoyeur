@@ -23,10 +23,11 @@ public class exEnvironement implements Runnable{
 			//apparition ou non d elements
 			genererPoussiere(probaPoussiere);
 			genererBijou(probaBijou);
-			
+
 			//Regarder le robot et compter les points
-			
+
 			calculateScoreEnvironnement();
+			majAffichage();
 
 			//mis a jour affichage avec drawing
 			drawing.render();	
@@ -59,29 +60,29 @@ public class exEnvironement implements Runnable{
 			}
 		}
 	}
-	
+
 	//Recupere actuelle la position du robot
 	public int getXPositionAgent() {
 		return Environement.agent.getX();
 	}
-	
+
 	public int getYPositionAgent() {
 		return Environement.agent.getY();
 	}
-	
+
 	//Recupere la derniere action du robot
 	public int getLastActionAgent() {
 		return Environement.agent.getLastAction();
 	}
-	
+
 	//Calculer les points
 	public int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
-		
+
 		int score = 0;
 		int PositionX = getXPositionAgent();
 		int PositionY = getYPositionAgent();
 		int lastAction = getLastActionAgent();
-		
+
 		//Test si il y a de la poussiere
 		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER_POUSSIERE) { 
 			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
@@ -98,10 +99,10 @@ public class exEnvironement implements Runnable{
 				score+=Parametre.POINT_BIJOU;
 			}
 		}
-		System.out.println("Environnement : l'action de l'agent lui octroie");
+		System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 		return score;
 	}
-	
+
 	public boolean isTherePoussiere(int x, int y, boolean testPoussiere) {
 		boolean presence = false;
 		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
@@ -113,9 +114,37 @@ public class exEnvironement implements Runnable{
 		}
 		return presence;
 	}
-	
-	
-	
-	
-	
+
+	public void majAffichage() {
+
+		int PositionX = getXPositionAgent();
+		int PositionY = getYPositionAgent();
+		int lastAction = getLastActionAgent();
+
+		//Tout aspirer
+		if(lastAction == Agent.ASPIRER_POUSSIERE) {
+			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+				int a = Environement.ListEnvironement.get(i).getX();
+				int b = Environement.ListEnvironement.get(i).getY();
+				if(PositionX==a && PositionY==b) {
+					Environement.ListEnvironement.remove(i);
+				}
+			}
+		}
+
+		//Ramasser avec condition
+		if(lastAction == Agent.RAMASSER_BIJOU) {
+			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+				int a = Environement.ListEnvironement.get(i).getX();
+				int b = Environement.ListEnvironement.get(i).getY();
+				if(PositionX==a && PositionY==b && !Environement.ListEnvironement.get(i).isPoussiere()) {
+					Environement.ListEnvironement.remove(i);
+				}
+			}
+		}
+	}
+
+
+
+
 }
