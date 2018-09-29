@@ -13,4 +13,5 @@ public class Poussiere extends model.Element{
 	public boolean isPoussiere() {
 		return true;
 	}
+	
 }
