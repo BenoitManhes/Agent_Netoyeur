@@ -1,6 +1,6 @@
 package model;
 
-public class Bijou extends Element{
+public class Bijou extends model.Element{
 	
 	private final int POINT = Parametre.POINT_BIJOU;	// constante plus court et visible dans la classe
 

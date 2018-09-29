@@ -1,7 +1,6 @@
 package model;
-import model.*;
 
-public class Poussiere extends Element{
+public class Poussiere extends model.Element{
 	
 	private final int POINT = Parametre.POINT_POUSSIERE;
 

@@ -10,7 +10,7 @@ public class exEnvironement implements Runnable{
 	public void run() {
 
 		/**Initialisation de l environement*/
-		Draw drawing = new Draw("Environement",Environement.ListEnvironement);
+		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environement.ListEnvironement);
 		// environement d�j� creer en  public static -> Unique et Accessible a tous
 		double probaPoussiere = Parametre.PROBA_POUSSIERE;
 		double probaBijou = Parametre.PROBA_BIJOU;
@@ -39,7 +39,7 @@ public class exEnvironement implements Runnable{
 			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, true)) {
-				Environement.ListEnvironement.add(new Poussiere(x, y));
+				model.Environement.ListEnvironement.add(new Poussiere(x, y));
 				System.out.println("Poussiere apparue en "+x+","+y);
 			}
 		}
@@ -50,7 +50,7 @@ public class exEnvironement implements Runnable{
 			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, false)) {
-				Environement.ListEnvironement.add(new Bijou(x, y));
+				model.Environement.ListEnvironement.add(new Bijou(x, y));
 				System.out.println("Bijou apparue en "+x+","+y);
 			}
 		}
