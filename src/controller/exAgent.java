@@ -7,7 +7,7 @@ public class exAgent implements Runnable{
 	public void run() {
 
 		/**Initialisation de l agent*/
-		Draw drawing = new Draw("Agent",model.Environement.agent.getListElementObs());
+		Draw drawing = new Draw(Parametre.TITRE_AGENT,model.Environement.agent.getListElementObs());
 		
 		/**Gestion de l agent*/
 		testArbre();

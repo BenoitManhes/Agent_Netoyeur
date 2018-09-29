@@ -59,7 +59,7 @@ public class ArbreNonInforme {
 		if(score>topScore) {
 			cloneList(itineraireOptimale, itineraire);
 			topScore=score;
-			System.out.println("Max score = "+score+" nb = "+itineraireOptimale.size());
+			//System.out.println("Max score = "+score+" nb = "+itineraireOptimale.size());
 		}
 	}
 	
