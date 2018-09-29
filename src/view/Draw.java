@@ -93,12 +93,12 @@ public class Draw{
 	protected void render(Graphics2D g){
 
 		int T =(int) (intervalle*0.9); // Taille d un element 
-		g.setColor(Color.darkGray);
+		g.setColor(Color.white);
 		// drawing de la grille
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
 				g.drawRect(CO(i), CO(j),T,T );
-				g.setColor(Color.white);
+				g.setColor(Color.darkGray);
 				g.fillRect(CO(i), CO(j),T,T );
 			}
 		}

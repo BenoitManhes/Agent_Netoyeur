@@ -1,6 +1,4 @@
 package controller;
-import javax.swing.plaf.ProgressBarUI;
-
 import model.*;
 import view.*;
 
@@ -102,7 +100,6 @@ public class exEnvironement implements Runnable{
 				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 		}
-		
 		return score;
 	}
 
