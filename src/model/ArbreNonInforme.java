@@ -25,12 +25,12 @@ public class ArbreNonInforme {
 	public void cheminNonInforme(){
 		
 		ArrayList<Element> itineraire = new ArrayList<Element>();
-		itineraire.add(new Poussiere(X, Y));
+		itineraire.add(new Poussiere(X, Y)); 	// ajout de la positoin initiale
 		int score = 0;
 		int deep = 0;
 		
 		parcourChemin(itineraire, score, deep, groupElement);
-		
+		itineraireOptimale.remove(0); 		 // suppression position initiale -> on obtient une liste d objectif
 	}
 	
 	public void parcourChemin(ArrayList<Element> itineraire, int score, int deep, ArrayList<Element> EDispo) {

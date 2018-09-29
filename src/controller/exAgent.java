@@ -31,7 +31,7 @@ public class exAgent implements Runnable{
 			int y = (int)(Math.random()*10);
 			model.Environement.agent.getListElementObs().add(new Poussiere(x, y));
 		}
-		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),8, Environement.agent.getX(), Environement.agent.getY());
+		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),10, Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
 		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
 	}

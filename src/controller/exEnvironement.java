@@ -10,7 +10,7 @@ public class exEnvironement implements Runnable{
 	public void run() {
 
 		/**Initialisation de l environement*/
-		Draw drawing = new Draw("Environement",model.Environement.ListEnvironement);
+		Draw drawing = new Draw("Environement",Environement.ListEnvironement);
 		// environement d�j� creer en  public static -> Unique et Accessible a tous
 		double probaPoussiere = Parametre.PROBA_POUSSIERE;
 		double probaBijou = Parametre.PROBA_BIJOU;
