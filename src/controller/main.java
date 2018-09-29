@@ -10,7 +10,7 @@ public class main {
 		 exEnvironement exE = new exEnvironement();
 		 exAgent exA = new exAgent();
 		 
-		 new Thread(exE).start();
+		 //new Thread(exE).start();
 		 new Thread(exA).start();
 	}
 

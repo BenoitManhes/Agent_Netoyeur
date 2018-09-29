@@ -119,6 +119,11 @@ public class Draw{
 		}
 		// drawing du robot
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		
+		g.setColor(Color.RED);
+		for (int i = 0; i < Environement.agent.getObjectifs().size()-1; i++) {
+			g.drawLine(CO(Environement.agent.getObjectifs().get(i).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(i).getY())+intervalle/2,CO( Environement.agent.getObjectifs().get(i+1).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(i+1).getY())+intervalle/2);
+		}
 
 	}
 
