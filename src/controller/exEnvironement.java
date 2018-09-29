@@ -84,17 +84,17 @@ public class exEnvironement implements Runnable{
 		int lastAction = getLastActionAgent();
 
 		//Test si il y a de la poussiere
-		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER_POUSSIERE) { 
+		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Parametre.ASPIRER) { 
 			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
 			score+=Parametre.POINT_POUSSIERE;
 		}
 		//Test si il y a un bijou
 		if (isTherePoussiere(PositionX, PositionY, false)) {
-			if(lastAction == Agent.ASPIRER_POUSSIERE) {
+			if(lastAction == Parametre.ASPIRER) {
 				System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait un bijou");
 				score+=Parametre.MALUS_BIJOU;
 			}
-			else if(lastAction == Agent.RAMASSER_BIJOU) {
+			else if(lastAction == Parametre.RAMASSER) {
 				System.out.println("Environnement : Je detecte que l'agent a ramasse la ou il y avait un bijou");
 				score+=Parametre.POINT_BIJOU;
 			}
@@ -122,7 +122,7 @@ public class exEnvironement implements Runnable{
 		int lastAction = getLastActionAgent();
 
 		//Tout aspirer
-		if(lastAction == Agent.ASPIRER_POUSSIERE) {
+		if(lastAction == Parametre.ASPIRER) {
 			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 				int a = Environement.ListEnvironement.get(i).getX();
 				int b = Environement.ListEnvironement.get(i).getY();
@@ -133,7 +133,7 @@ public class exEnvironement implements Runnable{
 		}
 
 		//Ramasser avec condition
-		if(lastAction == Agent.RAMASSER_BIJOU) {
+		if(lastAction == Parametre.RAMASSER) {
 			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 				int a = Environement.ListEnvironement.get(i).getX();
 				int b = Environement.ListEnvironement.get(i).getY();
