@@ -12,7 +12,7 @@ public class exAgent implements Runnable{
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 			
-			action();
+			actionAgent();
 
 			// Observer environement
 			// Mise a jour Etat
@@ -26,7 +26,7 @@ public class exAgent implements Runnable{
 
 	/**Methode utile a la gestion de l agent*/
 
-	public void action(){
+	public void actionAgent(){
 		if(!Environement.agent.getMouvementChemin().isEmpty()){
 			switch(Environement.agent.getMouvementChemin().get(0)){
 			case 1:
