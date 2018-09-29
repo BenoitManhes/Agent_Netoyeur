@@ -23,6 +23,10 @@ public class exEnvironement implements Runnable{
 			//apparition ou non d elements
 			genererPoussiere(probaPoussiere);
 			genererBijou(probaBijou);
+			
+			//Regarder le robot et compter les points
+			
+			calculateScoreEnvironnement();
 
 			//mis a jour affichage avec drawing
 			drawing.render();	
@@ -55,4 +59,63 @@ public class exEnvironement implements Runnable{
 			}
 		}
 	}
+	
+	//Recupere actuelle la position du robot
+	public int getXPositionAgent() {
+		return Environement.agent.getX();
+	}
+	
+	public int getYPositionAgent() {
+		return Environement.agent.getY();
+	}
+	
+	//Recupere la derniere action du robot
+	public int getLastActionAgent() {
+		return Environement.agent.getLastAction();
+	}
+	
+	//Calculer les points
+	public int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
+		
+		int score = 0;
+		int PositionX = getXPositionAgent();
+		int PositionY = getYPositionAgent();
+		int lastAction = getLastActionAgent();
+		
+		//Test si il y a de la poussiere
+		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER_POUSSIERE) { 
+			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
+			score+=Parametre.POINT_POUSSIERE;
+		}
+		//Test si il y a un bijou
+		if (isTherePoussiere(PositionX, PositionY, false)) {
+			if(lastAction == Agent.ASPIRER_POUSSIERE) {
+				System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait un bijou");
+				score+=Parametre.MALUS_BIJOU;
+			}
+			else if(lastAction == Agent.RAMASSER_BIJOU) {
+				System.out.println("Environnement : Je detecte que l'agent a ramasse la ou il y avait un bijou");
+				score+=Parametre.POINT_BIJOU;
+			}
+		}
+		System.out.println("Environnement : l'action de l'agent lui octroie");
+		return score;
+	}
+	
+	public boolean isTherePoussiere(int x, int y, boolean testPoussiere) {
+		boolean presence = false;
+		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+			int a = Environement.ListEnvironement.get(i).getX();
+			int b = Environement.ListEnvironement.get(i).getY();
+			if(x==a && y==b && Environement.ListEnvironement.get(i).isPoussiere()==testPoussiere) {
+				presence = true;
+			}
+		}
+		return presence;
+	}
+	
+	
+	
+	
+	
 }

@@ -14,4 +14,5 @@ public class Poussiere extends Element{
 	public boolean isPoussiere() {
 		return true;
 	}
+	
 }

@@ -6,6 +6,7 @@ public class Environement {
 	
 	public static ArrayList<Element> ListEnvironement = new ArrayList<Element>();
 	public static Agent agent = new Agent();
+	public static int performance;
 	
 	// verifie que la case x,y ne contient pas deja un element similaire
 	public static boolean caseDisponible(int x, int y, boolean poussiere) {
@@ -19,4 +20,6 @@ public class Environement {
 		}
 		return dispo;
 	}
+	
+	
 }
