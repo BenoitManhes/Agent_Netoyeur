@@ -18,14 +18,6 @@ public class Parametre {
 	public static final int TAILLE_GRILLE = 10;
 	public static final int DELAI_AGENT = 1000; // pas de temps en ms de la simulaion
 	public static final int DELAI_ENV = 10;
-	
-	//Mouvement de l'agent
-	public static final int NE_RIEN_FAIRE = 0;
-	public static final int HAUT = 1;
-	public static final int BAS = 2;
-	public static final int DROITE = 3;
-	public static final int GAUCHE = 4;
-	public static final int ASPIRER = 5;
-	public static final int RAMASSER = 6;
+
 	
 }
