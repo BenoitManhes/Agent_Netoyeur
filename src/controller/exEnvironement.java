@@ -87,19 +87,22 @@ public class exEnvironement implements Runnable{
 		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Parametre.ASPIRER) { 
 			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
 			score+=Parametre.POINT_POUSSIERE;
+			System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 		}
 		//Test si il y a un bijou
 		if (isTherePoussiere(PositionX, PositionY, false)) {
 			if(lastAction == Parametre.ASPIRER) {
 				System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait un bijou");
 				score+=Parametre.MALUS_BIJOU;
+				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 			else if(lastAction == Parametre.RAMASSER) {
 				System.out.println("Environnement : Je detecte que l'agent a ramasse la ou il y avait un bijou");
 				score+=Parametre.POINT_BIJOU;
+				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 		}
-		System.out.println("Environnement : l'action de l'agent lui octroie "+score);
+		
 		return score;
 	}
 
