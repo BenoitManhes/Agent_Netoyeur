@@ -51,7 +51,7 @@ public class Draw{
 		try {
 			this.bijou = ImageIO.read(new File("diamond-ring.png"));
 		} catch (IOException e) {e.printStackTrace();}
-		//Makes a new window, with the name " Basic game  ".
+		//Makes a new window
 		frame = new JFrame(titre);
 		JPanel panel = (JPanel) frame.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));

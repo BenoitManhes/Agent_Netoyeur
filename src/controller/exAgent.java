@@ -7,7 +7,7 @@ public class exAgent implements Runnable{
 	public void run() {
 
 		/**Initialisation de l agent*/
-		Draw drawing = new Draw("Agent",Environement.agent.getListElementObs());
+		Draw drawing = new Draw("Agent",model.Environement.agent.getListElementObs());
 		
 		/**Gestion de l agent*/
 		testArbre();
@@ -29,7 +29,7 @@ public class exAgent implements Runnable{
 		for (int i = 0; i < 10; i++) {
 			int x = (int)(Math.random()*10);
 			int y = (int)(Math.random()*10);
-			Environement.agent.getListElementObs().add(new Poussiere(x, y));
+			model.Environement.agent.getListElementObs().add(new Poussiere(x, y));
 		}
 		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),8, Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
