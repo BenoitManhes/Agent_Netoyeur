@@ -6,8 +6,8 @@ public class Environement {
 	
 	public static ArrayList<Element> ListEnvironement = new ArrayList<Element>();
 	public static Agent agent = new Agent();
-	public static int performance;
-	public static int scoreEnvironnement;
+	private static int performance;
+	private static int scoreEnvironnement;
 	
 	// verifie que la case x,y ne contient pas deja un element similaire
 	public static boolean caseDisponible(int x, int y, boolean poussiere) {
@@ -32,5 +32,21 @@ public class Environement {
 			}
 		}
 		return id;
+	}
+
+	public static int getPerformance() {
+		return performance;
+	}
+
+	public static void setPerformance(int performance) {
+		Environement.performance = performance;
+	}
+
+	public static int getScoreEnvironnement() {
+		return scoreEnvironnement;
+	}
+
+	public static void setScoreEnvironnement(int scoreEnvironnement) {
+		Environement.scoreEnvironnement = scoreEnvironnement;
 	}
 }

@@ -5,21 +5,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
 
 import model.Element;
 import model.Environement;
@@ -45,6 +43,9 @@ public class Draw{
 	private Image bijou;
 	private Image robot;
 	private String typeAffichage;
+
+	/**commodite d'affichage*/
+	private static boolean informationsVisibles;
 
 	private ArrayList<Element> List;
 
@@ -87,12 +88,12 @@ public class Draw{
 			JMenuBar menuEnvironnement = createMenuBarEnvironnement();
 			tailleMenu = menuEnvironnement.getHeight();
 			frame.setJMenuBar(menuEnvironnement);
-		break;
+			break;
 		case "Agent" :
 			JMenuBar menuAgent = createMenuBarAgent();
 			tailleMenu = menuAgent.getHeight();
 			frame.setJMenuBar(menuAgent);
-		break;
+			break;
 		default : break;
 		}					
 		frame.setVisible(true);
@@ -126,7 +127,7 @@ public class Draw{
 				g.fillRect(CO(i), CO(j),T,T );
 				g.setColor(Color.darkGray);
 				g.drawRect(CO(i), CO(j),T,T );
-				
+
 			}
 		}
 		/* drawing des elements d abord poussier puis ensuite bijou 
@@ -146,14 +147,25 @@ public class Draw{
 		}
 		// drawing du robot
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
-		
+
 		//maj score
-		g.drawString("Score environnement : "+Environement.scoreEnvironnement, 20,20);
-		g.drawString("Coût énergie : "+Environement.agent.getEnergieDepense(), 20, 40);
-		g.drawString("Score : "+(Environement.scoreEnvironnement-Environement.agent.getEnergieDepense()), 20, 60);
-		g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 300, 20);
-		g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 300, 40);
-		g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 300, 60);
+		if(informationsVisibles==true) {
+			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,20);
+			g.drawString("Coût énergie : "+Environement.agent.getEnergieDepense(), 20, 40);
+			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, 60);
+			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 300, 20);
+			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 300, 40);
+			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 300, 60);
+
+			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
+			bd= bd.setScale(3,BigDecimal.ROUND_DOWN);
+			double valeurProba = bd.doubleValue();
+
+			g.drawString("Probabilite apparition poussiere : "+valeurProba, 20, 100);
+			g.drawString("Probabilite apparition bijoux : "+valeurProba, 20, 120);
+			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 300, 100);
+
+		}
 
 		//affichage parcour planifie
 		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environement.agent.getObjectifs().isEmpty()) {
@@ -169,13 +181,12 @@ public class Draw{
 	private int CO(int x) {	// coordonne en fonction de la taille de grille
 		return (int) (x*intervalle+intervalle/10);
 	}
-	
+
 	public static JMenuBar createMenuBarEnvironnement() {
 
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenuItem menuItem;
-		JRadioButtonMenuItem rdmi;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -183,61 +194,82 @@ public class Draw{
 
 		//Build the simulationMenu
 		menu = new JMenu("Simulation");
-	//	menu.setMnemonic(KeyEvent.VK_F);
+		//	menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("Set event");
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
-		menuItem = new JMenuItem("Restart");
-	//	menuItem.setMnemonic(KeyEvent.VK_P);
-		menuItem.getAccessibleContext().setAccessibleDescription(
-				"Restart");
+		menuItem = new JMenuItem("Reinitialiser elements environnement");
+		//	menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+					Environement.ListEnvironement.remove(i);
+				}
+			}
+		});
+		menuBar.add(menuItem);
+
+		//Create the groups to select the probability of dirt
+		menu.addSeparator();
+		menuItem = new JMenuItem("Probabilite apparition poussiere +");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.1;
+
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Probabilite apparition poussiere -");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Parametre.PROBA_POUSSIERE>0.2) Parametre.PROBA_POUSSIERE -= 0.1;
+				else Parametre.PROBA_POUSSIERE = 0;
+			}
+		});
 		menu.add(menuItem);
 
-		//Create the groups to select the state
+		//Create the groups to select the probability of jewel
 		menu.addSeparator();
-		ButtonGroup groupRun = new ButtonGroup();
-		rdmi = new JRadioButtonMenuItem("Running");
-		rdmi.setSelected(true);
-	//	rdmi.setMnemonic(KeyEvent.VK_R);
-		groupRun.add(rdmi);
-		menu.add(rdmi);
+		menuItem = new JMenuItem("Probabilite apparition bijou +");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.1;
 
-		rdmi = new JRadioButtonMenuItem("Pause");
-	//	rdmi.setMnemonic(KeyEvent.VK_SPACE);
-		groupRun.add(rdmi);
-		menu.add(rdmi);
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Probabilite apparition bijou -");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Parametre.PROBA_BIJOU>0.2) Parametre.PROBA_BIJOU -= 0.1;
+				else Parametre.PROBA_BIJOU = 0;
+			}
+		});
+		menu.add(menuItem);
 
-		//Create the groups to select the speed
-		menu.addSeparator();
-		ButtonGroup groupSpeed = new ButtonGroup();
-		rdmi = new JRadioButtonMenuItem("Fast");
-		rdmi.setSelected(true);
-	//	rdmi.setMnemonic(KeyEvent.VK_F);
-		groupSpeed.add(rdmi);
-		menu.add(rdmi);
 
-		rdmi = new JRadioButtonMenuItem("Slow");
-	//	rdmi.setMnemonic(KeyEvent.VK_S);
-		groupSpeed.add(rdmi);
-		menu.add(rdmi);
-
-		//Create the parameterMenu
-		menu = new JMenu("Parameters");
-	//	menu.setMnemonic(KeyEvent.VK_E);
-		menu.getAccessibleContext().setAccessibleDescription(
-				"Edit Menu");
-		menuBar.add(menu);
+		menuItem = new JMenuItem("Informations");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(informationsVisibles) {
+					informationsVisibles=false;
+				}
+				else {
+					informationsVisibles=true;
+				}
+			}
+		});
+		menuBar.add(menuItem);
 
 		return menuBar;
 	}
-	
+
 	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenuItem menuItem;
-		JRadioButtonMenuItem rdmi;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -245,55 +277,62 @@ public class Draw{
 
 		//Build the simulationMenu
 		menu = new JMenu("Simulation");
-	//	menu.setMnemonic(KeyEvent.VK_F);
+		//	menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("Set event");
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
-		menuItem = new JMenuItem("Restart");
-	//	menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem = new JMenuItem("Reinitialiser performances agent");
+		//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Restart");
-		menu.add(menuItem);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Environement.setPerformance(0);
+				Environement.setScoreEnvironnement(0);
+				Environement.agent.setEnergieDepense(0);
+				Environement.agent.setLastAction(0);
+				Environement.agent.setNbrBijouxRamasses(0);
+				Environement.agent.setNbrCasesParcourues(0);
+				Environement.agent.setNbrObjetsAspirees(0);
+			}});
+		menuBar.add(menuItem);
 
-		//Create the groups to select the state
-		menu.addSeparator();
-		ButtonGroup groupRun = new ButtonGroup();
-		rdmi = new JRadioButtonMenuItem("Running");
-		rdmi.setSelected(true);
-	//	rdmi.setMnemonic(KeyEvent.VK_R);
-		groupRun.add(rdmi);
-		menu.add(rdmi);
-
-		rdmi = new JRadioButtonMenuItem("Pause");
-	//	rdmi.setMnemonic(KeyEvent.VK_SPACE);
-		groupRun.add(rdmi);
-		menu.add(rdmi);
 
 		//Create the groups to select the speed
 		menu.addSeparator();
-		ButtonGroup groupSpeed = new ButtonGroup();
-		rdmi = new JRadioButtonMenuItem("Fast");
-		rdmi.setSelected(true);
-//		rdmi.setMnemonic(KeyEvent.VK_F);
-		groupSpeed.add(rdmi);
-		menu.add(rdmi);
+		menuItem = new JMenuItem("Vitesse de l'agent +");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Parametre.DELAI_AGENT>100) Parametre.DELAI_AGENT -= 50;
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Vitesse de l'agent -");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Parametre.DELAI_AGENT += 50;
+			}
+		});
+		menu.add(menuItem);
 
-		rdmi = new JRadioButtonMenuItem("Slow");
-	//	rdmi.setMnemonic(KeyEvent.VK_S);
-		groupSpeed.add(rdmi);
-		menu.add(rdmi);
+		menuItem = new JMenuItem("Informations");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(informationsVisibles) {
+					informationsVisibles=false;
+				}
+				else {
+					informationsVisibles=true;
+				}
+			}
+		});
+		menuBar.add(menuItem);
 
-		//Create the parameterMenu
-		menu = new JMenu("Parameters");
-	//	menu.setMnemonic(KeyEvent.VK_E);
-		menu.getAccessibleContext().setAccessibleDescription(
-				"Edit Menu");
-		menuBar.add(menu);
-		
 		return menuBar;
-		
+
 	}
-	
+
+
 
 }
