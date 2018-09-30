@@ -201,8 +201,13 @@ public class Draw{
 		//Create the item to restart the simulation
 		menuItem = new JMenuItem("Reinitialiser elements environnement");
 		//	menuItem.setMnemonic(KeyEvent.VK_P);
-		menuItem.getAccessibleContext().setAccessibleDescription(
-				"Restart");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
+					Environement.ListEnvironement.remove(i);
+				}
+			}
+		});
 		menuBar.add(menuItem);
 
 		//Create the groups to select the probability of dirt
