@@ -83,7 +83,7 @@ public class Draw{
 		//this will add a menu on the frame Environnement
 		int tailleMenu = 0;
 		switch(titre) {
-		case "Environement" :
+		case "Environnement" :
 			JMenuBar menuEnvironnement = createMenuBarEnvironnement();
 			tailleMenu = menuEnvironnement.getHeight();
 			frame.setJMenuBar(menuEnvironnement);
@@ -148,7 +148,12 @@ public class Draw{
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 		
 		//maj score
-		g.drawString("Score Environnement : "+Environement.scoreEnvironnement, 20,20);
+		g.drawString("Score environnement : "+Environement.scoreEnvironnement, 20,20);
+		g.drawString("Coût énergie : "+Environement.agent.getEnergieDepense(), 20, 40);
+		g.drawString("Score : "+(Environement.scoreEnvironnement-Environement.agent.getEnergieDepense()), 20, 60);
+		g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 300, 20);
+		g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 300, 40);
+		g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 300, 60);
 
 		//affichage parcour planifie
 		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environement.agent.getObjectifs().isEmpty()) {

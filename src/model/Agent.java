@@ -20,6 +20,9 @@ public class Agent {
 	private int X;
 	private int Y;
 	private int energieDepense;
+	private int nbrCasesParcourues;
+	private int nbrObjetsAspires;
+	private int nbrBijouxRamasses;
 
 	public Agent() {
 		X = (int) (Math.random()*Parametre.TAILLE_GRILLE);
@@ -74,6 +77,7 @@ public class Agent {
 			this.Y++;
 			this.lastAction = BAS;
 			this.energieDepense++;
+			this.nbrCasesParcourues++;
 			System.out.println("Agent : Je me suis deplace vers le bas");
 		}
 	}
@@ -83,6 +87,7 @@ public class Agent {
 			this.X++;
 			this.lastAction = DROITE;
 			this.energieDepense++;
+			this.nbrCasesParcourues++;
 			System.out.println("Agent : Je me suis deplace vers la droite");
 		}
 	}
@@ -92,6 +97,7 @@ public class Agent {
 			this.X--;
 			this.lastAction = GAUCHE;
 			this.energieDepense++;
+			this.nbrCasesParcourues++;
 			System.out.println("Agent : Je me suis deplace vers la gauche");
 		}
 	}
@@ -99,18 +105,20 @@ public class Agent {
 	public void ramasser(){ 
 		this.lastAction = RAMASSER;
 		this.energieDepense++;
+		this.nbrBijouxRamasses++;
 		System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
 
 	public void aspirer(){
 		this.lastAction = ASPIRER;
 		this.energieDepense++;
+		this.nbrObjetsAspires++;
 		System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
 	public void observerEnvironnement(){
 		this.ListElementObs.addAll(Environement.ListEnvironement);
-		System.out.println("Agent : J'observe l'environnement à l'aide de mes capteurs");
+		System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
 	}
 
 	public void cheminVers(int x, int y){
@@ -187,6 +195,30 @@ public class Agent {
 
 	public void setMouvementChemin(ArrayList<Integer> mouvementChemin) {
 		this.mouvementChemin = mouvementChemin;
+	}
+
+	public int getNbrCasesParcourues() {
+		return nbrCasesParcourues;
+	}
+
+	public void setNbrCasesParcourues(int nbrCasesParcourues) {
+		this.nbrCasesParcourues = nbrCasesParcourues;
+	}
+
+	public int getNbrObjetsAspirees() {
+		return nbrObjetsAspires;
+	}
+
+	public void setNbrObjetsAspirees(int nbrObjetsAspirees) {
+		this.nbrObjetsAspires = nbrObjetsAspirees;
+	}
+
+	public int getNbrBijouxRamasses() {
+		return nbrBijouxRamasses;
+	}
+
+	public void setNbrBijouxRamasses(int nbrBijouxRamasses) {
+		this.nbrBijouxRamasses = nbrBijouxRamasses;
 	}
 
 
