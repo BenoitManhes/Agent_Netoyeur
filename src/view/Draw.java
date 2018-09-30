@@ -21,9 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-import com.sun.glass.events.KeyEvent;
-
-import javafx.event.ActionEvent;
 import model.Element;
 import model.Environement;
 import model.Parametre;
@@ -154,7 +151,7 @@ public class Draw{
 		g.drawString("Score Environnement : "+Environement.scoreEnvironnement, 20,20);
 
 		//affichage parcour planifie
-		if(typeAffichage.equals(Parametre.TITRE_AGENT)) {
+		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environement.agent.getObjectifs().isEmpty()) {
 			g.setColor(Color.RED);
 			g.drawLine(CO(Environement.agent.getX())+intervalle/2, CO(Environement.agent.getY())+intervalle/2,CO( Environement.agent.getObjectifs().get(0).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(0).getY())+intervalle/2);
 			for (int i = 0; i < Environement.agent.getObjectifs().size()-1; i++) {
@@ -181,13 +178,13 @@ public class Draw{
 
 		//Build the simulationMenu
 		menu = new JMenu("Simulation");
-		menu.setMnemonic(KeyEvent.VK_F);
+	//	menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("Set event");
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
 		menuItem = new JMenuItem("Restart");
-		menuItem.setMnemonic(KeyEvent.VK_P);
+	//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Restart");
 		menu.add(menuItem);
@@ -197,12 +194,12 @@ public class Draw{
 		ButtonGroup groupRun = new ButtonGroup();
 		rdmi = new JRadioButtonMenuItem("Running");
 		rdmi.setSelected(true);
-		rdmi.setMnemonic(KeyEvent.VK_R);
+	//	rdmi.setMnemonic(KeyEvent.VK_R);
 		groupRun.add(rdmi);
 		menu.add(rdmi);
 
 		rdmi = new JRadioButtonMenuItem("Pause");
-		rdmi.setMnemonic(KeyEvent.VK_SPACE);
+	//	rdmi.setMnemonic(KeyEvent.VK_SPACE);
 		groupRun.add(rdmi);
 		menu.add(rdmi);
 
@@ -211,18 +208,18 @@ public class Draw{
 		ButtonGroup groupSpeed = new ButtonGroup();
 		rdmi = new JRadioButtonMenuItem("Fast");
 		rdmi.setSelected(true);
-		rdmi.setMnemonic(KeyEvent.VK_F);
+	//	rdmi.setMnemonic(KeyEvent.VK_F);
 		groupSpeed.add(rdmi);
 		menu.add(rdmi);
 
 		rdmi = new JRadioButtonMenuItem("Slow");
-		rdmi.setMnemonic(KeyEvent.VK_S);
+	//	rdmi.setMnemonic(KeyEvent.VK_S);
 		groupSpeed.add(rdmi);
 		menu.add(rdmi);
 
 		//Create the parameterMenu
 		menu = new JMenu("Parameters");
-		menu.setMnemonic(KeyEvent.VK_E);
+	//	menu.setMnemonic(KeyEvent.VK_E);
 		menu.getAccessibleContext().setAccessibleDescription(
 				"Edit Menu");
 		menuBar.add(menu);
@@ -243,13 +240,13 @@ public class Draw{
 
 		//Build the simulationMenu
 		menu = new JMenu("Simulation");
-		menu.setMnemonic(KeyEvent.VK_F);
+	//	menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("Set event");
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
 		menuItem = new JMenuItem("Restart");
-		menuItem.setMnemonic(KeyEvent.VK_P);
+	//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Restart");
 		menu.add(menuItem);
@@ -259,12 +256,12 @@ public class Draw{
 		ButtonGroup groupRun = new ButtonGroup();
 		rdmi = new JRadioButtonMenuItem("Running");
 		rdmi.setSelected(true);
-		rdmi.setMnemonic(KeyEvent.VK_R);
+	//	rdmi.setMnemonic(KeyEvent.VK_R);
 		groupRun.add(rdmi);
 		menu.add(rdmi);
 
 		rdmi = new JRadioButtonMenuItem("Pause");
-		rdmi.setMnemonic(KeyEvent.VK_SPACE);
+	//	rdmi.setMnemonic(KeyEvent.VK_SPACE);
 		groupRun.add(rdmi);
 		menu.add(rdmi);
 
@@ -273,18 +270,18 @@ public class Draw{
 		ButtonGroup groupSpeed = new ButtonGroup();
 		rdmi = new JRadioButtonMenuItem("Fast");
 		rdmi.setSelected(true);
-		rdmi.setMnemonic(KeyEvent.VK_F);
+//		rdmi.setMnemonic(KeyEvent.VK_F);
 		groupSpeed.add(rdmi);
 		menu.add(rdmi);
 
 		rdmi = new JRadioButtonMenuItem("Slow");
-		rdmi.setMnemonic(KeyEvent.VK_S);
+	//	rdmi.setMnemonic(KeyEvent.VK_S);
 		groupSpeed.add(rdmi);
 		menu.add(rdmi);
 
 		//Create the parameterMenu
 		menu = new JMenu("Parameters");
-		menu.setMnemonic(KeyEvent.VK_E);
+	//	menu.setMnemonic(KeyEvent.VK_E);
 		menu.getAccessibleContext().setAccessibleDescription(
 				"Edit Menu");
 		menuBar.add(menu);

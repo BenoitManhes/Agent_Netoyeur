@@ -7,19 +7,23 @@ public class exAgent implements Runnable{
 	public void run() {
 
 		/**Initialisation de l agent*/
-		Draw drawing = new Draw(Parametre.TITRE_AGENT,model.Environement.agent.getListElementObs());
-		
+		Draw drawing = new Draw(Parametre.TITRE_AGENT, Environement.agent.getListElementObs());
+
 		/**Gestion de l agent*/
-		testArbre();
+		
+		int i=0;
 		while(true) {	// gestion de l agent en boucle infini
+			i++;
 			
-			actionAgent();
+			//Exemple : Tous les 10 tours de l'agent, il observe son environnement:
+			if(i%10 == 0)
+				Environement.agent.observerEnvironnement();
 
 			// Observer environement
 			// Mise a jour Etat
 			// Decision action
 			// Action
-			
+
 			drawing.render();//mis a jour affichage avec drawing
 			try {Thread.sleep(Parametre.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
 		}
@@ -59,5 +63,5 @@ public class exAgent implements Runnable{
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
 		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
 	}
-	
+
 }

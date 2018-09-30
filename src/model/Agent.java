@@ -108,6 +108,11 @@ public class Agent {
 		System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 	
+	public void observerEnvironnement(){
+		this.ListElementObs.addAll(Environement.ListEnvironement);
+		System.out.println("Agent : J'observe l'environnement à l'aide de mes capteurs");
+	}
+	
 	public void cheminVers(int x, int y){
 		this.mouvementChemin.clear();
 		int diffX = this.X - x;
