@@ -146,7 +146,7 @@ public class exEnvironement implements Runnable{
 	}
 	
 	private void ajouterScore(int score) {
-		Environement.scoreEnvironnement+=score;
+		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
 	}
 
 
