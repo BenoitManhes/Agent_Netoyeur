@@ -27,16 +27,15 @@ public class ArbreNonInforme {
 		ArrayList<Element> itineraire = new ArrayList<Element>();
 		itineraire.add(new Poussiere(X, Y)); 	// ajout de la positoin initiale
 		int score = 0;
-		int deep = 0;
-		
+		int deep = 0;	
 		parcourChemin(itineraire, score, deep, groupElement);
-		itineraireOptimale.remove(0); 		 // suppression position initiale -> on obtient une liste d objectif
+		if(!itineraireOptimale.isEmpty())
+			itineraireOptimale.remove(0); 		 // suppression position initiale -> on obtient une liste d objectif
 	}
 	
 	public void parcourChemin(ArrayList<Element> itineraire, int score, int deep, ArrayList<Element> EDispo) {
 		if(deep < profondeur && !EDispo.isEmpty()) {
 			for (int i = 0; i < EDispo.size(); i++) {
-				//System.out.println(itineraire.size());
 				Element e = EDispo.get(i);
 				int s= score - distanceManhattan(e, itineraire.get(itineraire.size()-1) );
 				s+= Parametre.COUT_ENERGIE + e.getPts();

@@ -37,4 +37,8 @@ public abstract class Element {
 	public int getPts() {
 		return Pts;
 	}
+	
+	public String toString(){
+		return "("+this.X+","+this.Y+")";
+	}
 }
