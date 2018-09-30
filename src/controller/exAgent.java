@@ -13,9 +13,11 @@ public class exAgent implements Runnable{
 		while(true) {	// gestion de l agent en boucle infini
 
 			// Observer environement
-			if(Environement.agent.getListElementObs().isEmpty()) { // si aucun objectif est en attente
+			if(Environement.agent.getObjectifs().isEmpty()) { // si aucun objectif est en attente
 				Environement.agent.observerEnvironnement();
+			}
 
+			if(!Environement.agent.getListElementObs().isEmpty() && Environement.agent.getObjectifs().isEmpty()) {	
 				// Mise a jour Etat
 				int nbElementObs = Environement.agent.getListElementObs().size();
 				if(nbElementObs>0) {
@@ -29,15 +31,15 @@ public class exAgent implements Runnable{
 			}
 			if( !Environement.agent.getObjectifs().isEmpty() && Environement.agent.getMouvementChemin().isEmpty()) { // il existe un objectif et le robot n a rien a faire
 				planificationAction();
-				
+
 			}
 
 			// Action
 			actionAgent();
-			
+
 			drawing.render();//mis a jour affichage avec drawing
 			try {Thread.sleep(Parametre.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
-			
+
 		}
 	}
 
