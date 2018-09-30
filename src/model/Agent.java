@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Agent {
-	
+
 	//Mouvement de l'agent
 	public static final int NE_RIEN_FAIRE = 0;
 	public static final int HAUT = 1;
@@ -12,7 +12,7 @@ public class Agent {
 	public static final int GAUCHE = 4;
 	public static final int ASPIRER = 5;
 	public static final int RAMASSER = 6;
-	
+
 	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
 	private ArrayList<Element> Objectifs = new ArrayList<Element>();
 	private ArrayList<Integer> mouvementChemin = new ArrayList<Integer>();
@@ -20,7 +20,7 @@ public class Agent {
 	private int X;
 	private int Y;
 	private int energieDepense;
-	
+
 	public Agent() {
 		X = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 		Y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
@@ -57,7 +57,7 @@ public class Agent {
 	public void setObjectifs(ArrayList<Element> objectifs) {
 		Objectifs = objectifs;
 	}
-	
+
 	public void goUp(){
 		if(this.Y>0){
 			this.Y--;
@@ -65,10 +65,10 @@ public class Agent {
 			this.energieDepense++;
 			System.out.println("Agent : Je me suis deplace vers le haut");
 		}
-		
-		
+
+
 	}
-	
+
 	public void goDown(){
 		if(this.Y<Parametre.TAILLE_GRILLE-1){
 			this.Y++;
@@ -77,7 +77,7 @@ public class Agent {
 			System.out.println("Agent : Je me suis deplace vers le bas");
 		}
 	}
-	
+
 	public void goRight(){
 		if(this.X<Parametre.TAILLE_GRILLE-1){
 			this.X++;
@@ -86,7 +86,7 @@ public class Agent {
 			System.out.println("Agent : Je me suis deplace vers la droite");
 		}
 	}
-	
+
 	public void goLeft(){
 		if(this.X>0){
 			this.X--;
@@ -95,26 +95,25 @@ public class Agent {
 			System.out.println("Agent : Je me suis deplace vers la gauche");
 		}
 	}
-	
+
 	public void ramasser(){ 
 		this.lastAction = RAMASSER;
 		this.energieDepense++;
 		System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
-	
+
 	public void aspirer(){
 		this.lastAction = ASPIRER;
 		this.energieDepense++;
 		System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
-	
+
 	public void observerEnvironnement(){
 		this.ListElementObs.addAll(Environement.ListEnvironement);
 		System.out.println("Agent : J'observe l'environnement à l'aide de mes capteurs");
 	}
-	
+
 	public void cheminVers(int x, int y){
-		this.mouvementChemin.clear();
 		int diffX = this.X - x;
 		int diffY = this.Y - y;
 		while(diffX != 0){
@@ -138,9 +137,33 @@ public class Agent {
 				diffY--;
 			}
 		}
-		
-		
+
+
 	}
+
+	public void actualiserObjectif() {
+		Element e = this.Objectifs.get(0);
+		if( this.X==e.getX() && this.Y==e.getY()) {
+			this.Objectifs.remove(0);	//objectif atteint, il est supprime des objectif
+
+			int i = indiceElement(this.X, this.Y, e.isPoussiere());
+			ListElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
+		}
+	}
+
+
+	public int indiceElement(int x, int y, boolean poussiere) {
+		int id = -1;
+		for (int i = 0; i < ListElementObs.size(); i++) {
+			int a = ListElementObs.get(i).getX();
+			int b = ListElementObs.get(i).getY();
+			if(x==a && y==b && ListElementObs.get(i).isPoussiere()==poussiere) {
+				id = i;
+			}
+		}
+		return id;
+	}
+
 
 	public int getLastAction() {
 		return lastAction;
@@ -165,6 +188,6 @@ public class Agent {
 	public void setMouvementChemin(ArrayList<Integer> mouvementChemin) {
 		this.mouvementChemin = mouvementChemin;
 	}
-	
-	
+
+
 }

@@ -11,7 +11,7 @@ public class Parametre {
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba
-	public static final double PROBA_POUSSIERE = 0.01;
+	public static final double PROBA_POUSSIERE = 0.003;
 	public static final double PROBA_BIJOU = 0.001;
 	
 	//autre...

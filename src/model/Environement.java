@@ -22,5 +22,15 @@ public class Environement {
 		return dispo;
 	}
 	
-	
+	public static int indiceElement(int x, int y, boolean poussiere) {
+		int id = -1;
+		for (int i = 0; i < ListEnvironement.size(); i++) {
+			int a = ListEnvironement.get(i).getX();
+			int b = ListEnvironement.get(i).getY();
+			if(x==a && y==b && ListEnvironement.get(i).isPoussiere()==poussiere) {
+				id = i;
+			}
+		}
+		return id;
+	}
 }
