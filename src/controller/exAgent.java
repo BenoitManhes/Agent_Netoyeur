@@ -19,7 +19,7 @@ public class exAgent implements Runnable{
 				// Mise a jour Etat
 				int nbElementObs = Environement.agent.getListElementObs().size();
 				if(nbElementObs>0) {
-					int X = nbElementObs;
+					int X = Math.min(nbElementObs,8);
 					planificationItineraire(X);
 				}
 			}

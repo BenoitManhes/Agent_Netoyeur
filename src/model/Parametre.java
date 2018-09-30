@@ -11,12 +11,12 @@ public class Parametre {
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba
-	public static final double PROBA_POUSSIERE = 0.003;
-	public static final double PROBA_BIJOU = 0.001;
+	public static final double PROBA_POUSSIERE = 0.02;
+	public static final double PROBA_BIJOU = 0.002;
 	
 	//autre...
 	public static final int TAILLE_GRILLE = 10;
-	public static final int DELAI_AGENT = 1000; // pas de temps en ms de la simulaion
+	public static final int DELAI_AGENT = 200; // pas de temps en ms de la simulaion
 	public static final int DELAI_ENV = 10;
 	public static final String TITRE_AGENT = "Agent";
 	public static final String TITRE_ENVIRONNEMENT = "Environnement";
