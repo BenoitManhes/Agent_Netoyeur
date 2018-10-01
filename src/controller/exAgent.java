@@ -11,6 +11,7 @@ public class exAgent implements Runnable{
 		/**Initialisation de l agent*/
 		Draw drawing = new Draw(Parametre.TITRE_AGENT, Environement.agent.getListElementObs());
 
+	//	testAInformee();
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 
@@ -38,6 +39,7 @@ public class exAgent implements Runnable{
 
 			// Action
 			actionAgent();
+			
 
 			drawing.render();//mis a jour affichage avec drawing
 			try {Thread.sleep(Parametre.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
@@ -81,10 +83,21 @@ public class exAgent implements Runnable{
 			int y = (int)(Math.random()*10);
 			model.Environement.agent.getListElementObs().add(new Poussiere(x, y));
 		}
-		/*ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),10, Environement.agent.getX(), Environement.agent.getY());
+		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),10, Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
-		System.out.println("Taille final "+Environement.agent.getObjectifs().size());*/
+		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
 	}
+	
+	public void testAInformee() {
+		for (int i = 0; i < 3; i++) {
+			int x = (int)(Math.random()*10);
+			int y = (int)(Math.random()*10);
+			model.Environement.agent.getListElementObs().add(new Poussiere(x, y));
+		}
+		Astar arbreinf = new Astar(Environement.agent.getX(), Environement.agent.getY(), Environement.agent.getListElementObs(), Environement.agent.getListElementObs().get(0)); 
+		arbreinf.creationGraph();
+	}
+	
 
 	public void planificationItineraire(int X) {
 		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),X, Environement.agent.getX(), Environement.agent.getY());
