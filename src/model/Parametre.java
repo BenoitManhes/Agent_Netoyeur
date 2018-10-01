@@ -11,13 +11,17 @@ public class Parametre {
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba
-	public static double PROBA_POUSSIERE = 0.02;
-	public static double PROBA_BIJOU = 0.002;
+	public static final double PROBA_POUSSIERE = 0.02;
+	public static final double PROBA_BIJOU = 0.002;
+	
+	//Frequence d observation
+	public static final int FREQUENCE_MAX = 5;	// nb d objectif atteind avant une nouvelle observation
+	public static final int NB_PARCOUR_MIN = 10; // nb de parcour min par frequence pour initialiser le tableau des frequences
 	
 	//autre...
 	public static final int TAILLE_GRILLE = 10;
-	public static int DELAI_AGENT = 200; // pas de temps en ms de la simulaion
-	public static final int DELAI_ENV = 10;
+	public static final int DELAI_AGENT = 200; 	// pas de temps en ms de la simulaion de l agent
+	public static final int DELAI_ENV = 10;		// idem environnement
 	public static final String TITRE_AGENT = "Agent";
 	public static final String TITRE_ENVIRONNEMENT = "Environnement";
 	

@@ -33,15 +33,7 @@ public class Environement {
 		}
 		return id;
 	}
-
-	public static int getPerformance() {
-		return performance;
-	}
-
-	public static void setPerformance(int performance) {
-		Environement.performance = performance;
-	}
-
+	
 	public static int getScoreEnvironnement() {
 		return scoreEnvironnement;
 	}

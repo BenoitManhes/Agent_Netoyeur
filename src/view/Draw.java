@@ -34,8 +34,8 @@ public class Draw{
 	int height = (int)dimension.getHeight();
 	int width  = (int)dimension.getWidth();
 
-	private int WIDTH = (int)(width/2);
-	private int HEIGHT = (int)(width/2)+20;  //20 = height of menu
+	private int WIDTH = (int)(width/3);
+	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
 	/**image*/
