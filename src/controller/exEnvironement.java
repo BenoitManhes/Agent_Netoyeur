@@ -138,7 +138,7 @@ public class exEnvironement implements Runnable{
 			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 				int a = Environement.ListEnvironement.get(i).getX();
 				int b = Environement.ListEnvironement.get(i).getY();
-				if(PositionX==a && PositionY==b && !Environement.ListEnvironement.get(i).isPoussiere()) {
+				if(PositionX==a && PositionY==b && Environement.ListEnvironement.get(i).isPoussiere()==false) {
 					Environement.ListEnvironement.remove(i);
 				}
 			}

@@ -146,23 +146,31 @@ public class Draw{
 			}
 		}
 		// drawing du robot
+		
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		
 
 		//maj score
 		if(informationsVisibles==true) {
 			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,20);
-			g.drawString("Coût énergie : "+Environement.agent.getEnergieDepense(), 20, 40);
+			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, 40);
 			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, 60);
+			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, 80);
+			
 			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 300, 20);
 			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 300, 40);
 			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 300, 60);
 
 			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
-			bd= bd.setScale(3,BigDecimal.ROUND_DOWN);
-			double valeurProba = bd.doubleValue();
+			bd= bd.setScale(4,BigDecimal.ROUND_DOWN);
+			double valeurProbaPoussiere = bd.doubleValue();
 
-			g.drawString("Probabilite apparition poussiere : "+valeurProba, 20, 100);
-			g.drawString("Probabilite apparition bijoux : "+valeurProba, 20, 120);
+			BigDecimal bdb = new BigDecimal(Parametre.PROBA_BIJOU);
+			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
+			double valeurProbaBijou = bdb.doubleValue();
+			
+			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 20, 100);
+			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 20, 120);
 			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 300, 100);
 
 		}
@@ -186,7 +194,12 @@ public class Draw{
 
 		JMenuBar menuBar;
 		JMenu menu;
-		JMenuItem menuItem;
+		JMenuItem menuItemRaz;
+		JMenuItem menuItemPoussierePlus;
+		JMenuItem menuItemPoussiereMoins;
+		JMenuItem menuItemBijouPlus;
+		JMenuItem menuItemBijouMoins;
+		JMenuItem menuItemInformations;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -199,58 +212,57 @@ public class Draw{
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
-		menuItem = new JMenuItem("Reinitialiser elements environnement");
+		menuItemRaz = new JMenuItem("Reinitialiser elements environnement");
 		//	menuItem.setMnemonic(KeyEvent.VK_P);
-		menuItem.addActionListener(new ActionListener() {
+		menuItemRaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 					Environement.ListEnvironement.remove(i);
 				}
 			}
 		});
-		menuBar.add(menuItem);
+		menuBar.add(menuItemRaz);
 
 		//Create the groups to select the probability of dirt
 		menu.addSeparator();
-		menuItem = new JMenuItem("Probabilite apparition poussiere +");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemPoussierePlus = new JMenuItem("Probabilite apparition poussiere +");
+		menuItemPoussierePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.1;
-
 			}
 		});
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Probabilite apparition poussiere -");
-		menuItem.addActionListener(new ActionListener() {
+		menu.add(menuItemPoussierePlus);
+		menuItemPoussiereMoins = new JMenuItem("Probabilite apparition poussiere -");
+		menuItemPoussiereMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_POUSSIERE>0.2) Parametre.PROBA_POUSSIERE -= 0.1;
+				if(Parametre.PROBA_POUSSIERE>=0.1) Parametre.PROBA_POUSSIERE -= 0.1;
 				else Parametre.PROBA_POUSSIERE = 0;
 			}
 		});
-		menu.add(menuItem);
+		menu.add(menuItemPoussiereMoins);
 
 		//Create the groups to select the probability of jewel
 		menu.addSeparator();
-		menuItem = new JMenuItem("Probabilite apparition bijou +");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemBijouPlus = new JMenuItem("Probabilite apparition bijou +");
+		menuItemBijouPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.1;
 
 			}
 		});
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Probabilite apparition bijou -");
-		menuItem.addActionListener(new ActionListener() {
+		menu.add(menuItemBijouPlus);
+		menuItemBijouMoins = new JMenuItem("Probabilite apparition bijou -");
+		menuItemBijouMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU>0.2) Parametre.PROBA_BIJOU -= 0.1;
+				if(Parametre.PROBA_BIJOU>=0.1) Parametre.PROBA_BIJOU -= 0.1;
 				else Parametre.PROBA_BIJOU = 0;
 			}
 		});
-		menu.add(menuItem);
+		menu.add(menuItemBijouMoins);
 
 
-		menuItem = new JMenuItem("Informations");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemInformations = new JMenuItem("Informations");
+		menuItemInformations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(informationsVisibles) {
 					informationsVisibles=false;
@@ -260,7 +272,7 @@ public class Draw{
 				}
 			}
 		});
-		menuBar.add(menuItem);
+		menuBar.add(menuItemInformations);
 
 		return menuBar;
 	}
@@ -269,7 +281,10 @@ public class Draw{
 
 		JMenuBar menuBar;
 		JMenu menu;
-		JMenuItem menuItem;
+		JMenuItem menuItemRazPerf;
+		JMenuItem menuItemVitessePlus;
+		JMenuItem menuItemVitesseMoins;
+		JMenuItem menuItemInformations2;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -282,11 +297,8 @@ public class Draw{
 		menuBar.add(menu);
 
 		//Create the item to restart the simulation
-		menuItem = new JMenuItem("Reinitialiser performances agent");
-		//	menuItem.setMnemonic(KeyEvent.VK_P);
-		menuItem.getAccessibleContext().setAccessibleDescription(
-				"Restart");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemRazPerf = new JMenuItem("Reinitialiser performances agent");
+		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Environement.setPerformance(0);
 				Environement.setScoreEnvironnement(0);
@@ -296,28 +308,28 @@ public class Draw{
 				Environement.agent.setNbrCasesParcourues(0);
 				Environement.agent.setNbrObjetsAspirees(0);
 			}});
-		menuBar.add(menuItem);
+		menuBar.add(menuItemRazPerf);
 
 
 		//Create the groups to select the speed
 		menu.addSeparator();
-		menuItem = new JMenuItem("Vitesse de l'agent +");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemVitessePlus = new JMenuItem("Vitesse de l'agent +");
+		menuItemVitessePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.DELAI_AGENT>100) Parametre.DELAI_AGENT -= 50;
 			}
 		});
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Vitesse de l'agent -");
-		menuItem.addActionListener(new ActionListener() {
+		menu.add(menuItemVitessePlus);
+		menuItemVitesseMoins = new JMenuItem("Vitesse de l'agent -");
+		menuItemVitesseMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Parametre.DELAI_AGENT += 50;
 			}
 		});
-		menu.add(menuItem);
+		menu.add(menuItemVitesseMoins);
 
-		menuItem = new JMenuItem("Informations");
-		menuItem.addActionListener(new ActionListener() {
+		menuItemInformations2 = new JMenuItem("Informations");
+		menuItemInformations2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(informationsVisibles) {
 					informationsVisibles=false;
@@ -327,7 +339,7 @@ public class Draw{
 				}
 			}
 		});
-		menuBar.add(menuItem);
+		menuBar.add(menuItemInformations2);
 
 		return menuBar;
 

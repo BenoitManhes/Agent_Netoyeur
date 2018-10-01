@@ -89,6 +89,8 @@ public class exAgent implements Runnable{
 	public void planificationItineraire(int X) {
 		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),X, Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
+		Environement.enregistrerPerf();
+		Environement.reinitialiserPerf();
 	}
 
 	public void planificationAction() {
