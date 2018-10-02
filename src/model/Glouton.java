@@ -45,7 +45,8 @@ public void greedySearch(){
 }
 
 public int elementScore(Element a, Element b){
-	int score = b.getPts() - distanceManhattan(a,b);
+	//Points raportés par le traitement de l'element - cout de déplacement - cout de traitement de la poussiere
+	int score = b.getPts() - distanceManhattan(a,b)*Parametre.COUT_ENERGIE - Parametre.COUT_ENERGIE;
 	return score;
 }
 
