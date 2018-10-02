@@ -8,11 +8,10 @@ public class exEnvironement implements Runnable{
 	public void run() {
 
 		/**Initialisation de l environement*/
+		initialisationEnvironnement();
 		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environement.ListEnvironement);
 		double probaPoussiere = Parametre.PROBA_POUSSIERE;
 		double probaBijou = Parametre.PROBA_BIJOU;
-
-		//initialisationEnvironement();
 
 		/**Gestion environement*/
 		while(true) {	// gestion de l'environement en boucle infini
@@ -159,5 +158,11 @@ public class exEnvironement implements Runnable{
 		}
 	}
 	
+	// -------------------------------------------------Methode pour initialiser l'environnement-------------------------------------------------------------------------------
+	
+	private void initialisationEnvironnement() {
+		genererBijou(Parametre.PROBA_BIJOU*300);
+		genererPoussiere(Parametre.PROBA_POUSSIERE*300);
+	}
 
 }
