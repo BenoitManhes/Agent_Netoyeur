@@ -16,7 +16,7 @@ public class Agent {
 	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
 	private ArrayList<Element> Objectifs = new ArrayList<Element>();
 	private ArrayList<Integer> mouvementChemin = new ArrayList<Integer>();
-	private int[][] tabFrequence = new int[Parametre.FREQUENCE_MAX][2];		// tab[i][j] : i= les differentes frequences X=i+1, j=1 : score total pour X, j=2 : nb total de parcour effectuer avec X
+	private double[][] tabFrequence = new double[Parametre.FREQUENCE_MAX][2];		// tab[i][j] : i= les differentes frequences X=i+1, j=1 : score total pour X, j=2 : nb total de parcour effectuer avec X
 	private int lastAction;
 	private int X;
 	private int Y;
@@ -34,22 +34,23 @@ public class Agent {
 
 	
 	/** ============================================== Observation =============================================================================*/
-	public void observerEnvironnement(){
-		this.ListElementObs.addAll(Environement.ListEnvironement);
-		System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
-	}
-
-	/** ============================================ Mise ajour Etat ===========================================================================*/
 	public void actualiserObjectif() {
 		Element e = this.Objectifs.get(0);
 		if( this.X==e.getX() && this.Y==e.getY()) {
 			this.Objectifs.remove(0);	//objectif atteint, il est supprime des objectif
 
 			int i = indiceElement(this.X, this.Y, e.isPoussiere());
-			ListElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
+			this.ListElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
 		}
 	}
 	
+	public void observerEnvironnement(){
+		this.ListElementObs.clear();
+		this.ListElementObs.addAll(Environement.ListEnvironement);
+		System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
+	}
+
+	/** ============================================ Mise ajour Etat ===========================================================================*/
 	public void ajoutPerformance() {
 		tabFrequence[frequenceObs-1][0] += Environement.getScoreEnvironnement() - energieDepense; // calcul des points
 		tabFrequence[frequenceObs-1][1]++;
@@ -61,11 +62,11 @@ public class Agent {
 	/** =============================================== Decision ===============================================================================*/
 	public void choixFrequence() {
 		frequenceObs = 1;
-		int tauxMax = 0;
+		double tauxMax = 0;
 		//calcul du X optimal par rapport au score
 		for (int i = 0; i < tabFrequence.length; i++) {
 			//calcul du nb moyen de points apporte pour chaque element avec une frequence d observation X = i+1
-			int taux = 0;
+			double taux = 0;
 			if( tabFrequence[i][1] != 0 ) { // pas de division par 0
 				taux = tabFrequence[i][0] / ( tabFrequence[i][1]*(i+1) );
 			}
@@ -80,7 +81,7 @@ public class Agent {
 				frequenceObs = i+1;
 			}
 		}
-		frequenceObs = 5;
+		//frequenceObs = 5;
 	}
 	
 	/** ================================================ Action ================================================================================*/
@@ -89,7 +90,7 @@ public class Agent {
 			this.Y--;
 			this.lastAction = HAUT;
 			this.energieDepense++;
-			System.out.println("Agent : Je me suis deplace vers le haut");
+			//System.out.println("Agent : Je me suis deplace vers le haut");
 		}
 	}
 
@@ -99,7 +100,7 @@ public class Agent {
 			this.lastAction = BAS;
 			this.energieDepense++;
 			this.nbrCasesParcourues++;
-			System.out.println("Agent : Je me suis deplace vers le bas");
+			//System.out.println("Agent : Je me suis deplace vers le bas");
 		}
 	}
 
@@ -109,7 +110,7 @@ public class Agent {
 			this.lastAction = DROITE;
 			this.energieDepense++;
 			this.nbrCasesParcourues++;
-			System.out.println("Agent : Je me suis deplace vers la droite");
+			//System.out.println("Agent : Je me suis deplace vers la droite");
 		}
 	}
 
@@ -119,7 +120,7 @@ public class Agent {
 			this.lastAction = GAUCHE;
 			this.energieDepense++;
 			this.nbrCasesParcourues++;
-			System.out.println("Agent : Je me suis deplace vers la gauche");
+			//System.out.println("Agent : Je me suis deplace vers la gauche");
 		}
 	}
 
@@ -127,14 +128,14 @@ public class Agent {
 		this.lastAction = RAMASSER;
 		this.energieDepense++;
 		this.nbrBijouxRamasses++;
-		System.out.println("Agent : J'ai ramasse le contenu de la case");
+		//System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
 
 	public void aspirer(){
 		this.lastAction = ASPIRER;
 		this.energieDepense++;
 		this.nbrObjetsAspires++;
-		System.out.println("Agent : J'ai aspire le contenu de la case");
+		//System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
 	
@@ -262,6 +263,10 @@ public class Agent {
 	
 	public int getFrequenceObs() {
 		return frequenceObs;
+	}
+	
+	public double[][] getTabFrequence(){
+		return tabFrequence;
 	}
 
 

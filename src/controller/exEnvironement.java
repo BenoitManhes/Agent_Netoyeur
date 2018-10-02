@@ -43,7 +43,7 @@ public class exEnvironement implements Runnable{
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, true)) {
 				Environement.ListEnvironement.add(new Poussiere(x, y));
-				System.out.println("Environnement : Poussiere apparue en "+x+","+y);
+				//System.out.println("Environnement : Poussiere apparue en "+x+","+y);
 			}
 		}
 	}
@@ -54,7 +54,7 @@ public class exEnvironement implements Runnable{
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			if(Environement.caseDisponible(x, y, false)) {
 				Environement.ListEnvironement.add(new Bijou(x, y));
-				System.out.println("Environnement : Bijou apparue en "+x+","+y);
+				//System.out.println("Environnement : Bijou apparue en "+x+","+y);
 			}
 		}
 	}
@@ -85,19 +85,19 @@ public class exEnvironement implements Runnable{
 		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER) { 
 			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
 			score+=Parametre.POINT_POUSSIERE;
-			System.out.println("Environnement : l'action de l'agent lui octroie "+score);
+			//System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 		}
 		//Test si il y a un bijou
 		if (isTherePoussiere(PositionX, PositionY, false)) {
 			if(lastAction == Agent.ASPIRER) {
-				System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait un bijou");
+				//System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait un bijou");
 				score+=Parametre.MALUS_BIJOU;
-				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
+				//System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 			else if(lastAction == Agent.RAMASSER) {
-				System.out.println("Environnement : Je detecte que l'agent a ramasse la ou il y avait un bijou");
+				//System.out.println("Environnement : Je detecte que l'agent a ramasse la ou il y avait un bijou");
 				score+=Parametre.POINT_BIJOU;
-				System.out.println("Environnement : l'action de l'agent lui octroie "+score);
+				//System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 			}
 		}
 		ajouterScore(score);
@@ -148,8 +148,5 @@ public class exEnvironement implements Runnable{
 	private void ajouterScore(int score) {
 		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
 	}
-
-
-
 
 }

@@ -38,7 +38,11 @@ public class exAgent implements Runnable{
 
 	// -------------------------------------------------Observation-------------------------------------------------------------------------------
 	public void observation() {
-		if(Environement.agent.getMouvementChemin().isEmpty()) { // si aucun objectif est en attente
+		// Observation si cible atteinte
+		if(!Environement.agent.getObjectifs().isEmpty()) {	
+			Environement.agent.actualiserObjectif();
+		}
+		if(Environement.agent.getObjectifs().isEmpty()) { // si aucun objectif est en attente
 			Environement.agent.observerEnvironnement();
 		}
 	}
@@ -46,13 +50,12 @@ public class exAgent implements Runnable{
 	// -----------------------------------------------Mise a jour Etat----------------------------------------------------------------------------
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
-		if(Environement.agent.getNbrCasesParcourues()>0) {	// si le robot a deja effectuer un cycle
+		if(Environement.agent.getNbrCasesParcourues()>0 && Environement.agent.getObjectifs().isEmpty()) {	// si le robot a deja effectuer un cycle
 			Environement.agent.ajoutPerformance();
+			System.out.println("Performance enregistré");
+			affichageFrequence();
 		}
-		// Mise a jour du prochain element a atteindre
-		if(!Environement.agent.getObjectifs().isEmpty()) {	
-			Environement.agent.actualiserObjectif();
-		}
+
 	}
 
 	// --------------------------------------------------Decision---------------------------------------------------------------------------------
@@ -145,6 +148,20 @@ public class exAgent implements Runnable{
 		}
 		s += "]";
 		System.out.println(s);
+	}
+
+	public void affichageFrequence() {
+		System.out.println("Nb de pts / elements recuperer selon la frequence :");
+		double[][] tab = Environement.agent.getTabFrequence();
+		for (int i = 0; i < tab.length; i++) {
+			
+			double taux = 0;
+			if( tab[i][1] != 0 ) { // pas de division par 0
+				taux = tab[i][0] / ( tab[i][1]*(i+1) );
+			}
+			System.out.print("F="+(i+1)+" : "+taux+"\t");
+			
+		}
 	}
 
 }

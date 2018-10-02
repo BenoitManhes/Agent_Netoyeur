@@ -16,7 +16,7 @@ public class Parametre {
 	
 	//Frequence d observation
 	public static final int FREQUENCE_MAX = 5;	// nb d objectif atteind avant une nouvelle observation
-	public static final int NB_PARCOUR_MIN = 10; // nb de parcour min par frequence pour initialiser le tableau des frequences
+	public static final int NB_PARCOUR_MIN = 5; // nb de parcour min par frequence pour initialiser le tableau des frequences
 	
 	//autre...
 	public static final int TAILLE_GRILLE = 10;
