@@ -54,7 +54,7 @@ public class Agent {
 	/** ============================================ Mise ajour Etat ===========================================================================*/
 	public void ajoutPerformance() {
 		tabFrequence[frequenceObs-1][0] += Environement.getScoreEnvironnement() - energieDepense; // calcul des points
-		tabFrequence[frequenceObs-1][1]++;
+		tabFrequence[frequenceObs-1][1] += nbElementCycle;
 		//remise de spoints a zero
 		energieDepense=0;
 		Environement.setScoreEnvironnement(0);
@@ -73,20 +73,19 @@ public class Agent {
 			//calcul du nb moyen de points apporte pour chaque element avec une frequence d observation X = i+1
 			double taux = 0;
 			if( tabFrequence[i][1] != 0 ) { // pas de division par 0
-				taux = tabFrequence[i][0] / ( tabFrequence[i][1]*(i+1) );
+				taux = tabFrequence[i][0] / ( tabFrequence[i][1] );
 			}
 			if(taux>tauxMax) {
-				taux = tauxMax;
+				tauxMax = taux;
 				frequenceObs = i+1;
 			}
 		}
 		//si un X n est pas assez echantillone , on le choisit
 		for (int i = 0; i < tabFrequence.length; i++) {
-			if(tabFrequence[i][1] < Parametre.NB_PARCOUR_MIN) {
+			if(tabFrequence[i][1] < Parametre.ECHANTILLON_MIN) {
 				frequenceObs = i+1;
 			}
 		}
-		//frequenceObs = 5;
 	}
 	
 	/** ================================================ Action ================================================================================*/

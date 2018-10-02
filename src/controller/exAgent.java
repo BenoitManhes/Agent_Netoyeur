@@ -54,6 +54,8 @@ public class exAgent implements Runnable{
 		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) {	// si le robot a terminer son cycle
 			Environement.agent.ajoutPerformance();
 			Environement.agent.resetNbElementCycle(); 	// Nouveau cycle
+			Environement.agent.getObjectifs().clear();
+			Environement.agent.getMouvementChemin().clear();
 			System.out.println("Performance enregistré");
 			affichageFrequence();
 		}
@@ -63,7 +65,7 @@ public class exAgent implements Runnable{
 	// --------------------------------------------------Decision---------------------------------------------------------------------------------
 	public void decision() {
 		// Choix de la frequence d observation
-		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) { // cycle termine
+		if(Environement.agent.getNbElementCycle() == 0 && Environement.agent.getObjectifs().isEmpty()) { // cycle termine
 			Environement.agent.choixFrequence();
 			System.out.println("Frequence choisi : "+Environement.agent.getFrequenceObs());
 		}
@@ -72,7 +74,6 @@ public class exAgent implements Runnable{
 			int nbElementObs = Environement.agent.getListElementObs().size();
 			if(nbElementObs>0) {
 				planificationItineraire();
-				Environement.agent.getMouvementChemin().clear();
 			}
 		}
 		// Planification des actions a faire 
@@ -144,30 +145,16 @@ public class exAgent implements Runnable{
 		}
 		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
-<<<<<<< HEAD
-		System.out.println("Taille final "+Environement.agent.getObjectifs().size());*/
+		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
 	}
 
 	public void planificationItineraire(int X) {
-		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),X, Environement.agent.getX(), Environement.agent.getY());
+		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
 		Environement.enregistrerPerf();
 		Environement.reinitialiserPerf();
 	}
 
-	public void planificationAction() {
-		Element e = Environement.agent.getObjectifs().get(0);
-		Environement.agent.cheminVers(e.getX(), e.getY());
-		if(e.isPoussiere()) {
-			Environement.agent.getMouvementChemin().add(Agent.ASPIRER);
-		}else {
-			Environement.agent.getMouvementChemin().add(Agent.RAMASSER);
-		}
-
-=======
-		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
->>>>>>> Score_Arbre
-	}
 
 	public void afficherAction() {
 		String s = "action : [ ";
@@ -179,17 +166,16 @@ public class exAgent implements Runnable{
 	}
 
 	public void affichageFrequence() {
-		System.out.println("Nb de pts / elements recuperer selon la frequence :");
 		double[][] tab = Environement.agent.getTabFrequence();
 		for (int i = 0; i < tab.length; i++) {
 			
 			double taux = 0;
 			if( tab[i][1] != 0 ) { // pas de division par 0
-				taux = tab[i][0] / ( tab[i][1]*(i+1) );
+				taux = tab[i][0] / ( tab[i][1] );
 			}
 			System.out.print("F="+(i+1)+" : "+taux+"\t");
-			
 		}
+		System.out.println();
 	}
 
 	public void afficherItineraire() {

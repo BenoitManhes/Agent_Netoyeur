@@ -44,7 +44,6 @@ public class Environement {
 	public static void setScoreEnvironnement(int scoreEnvironnement) {
 		Environement.scoreEnvironnement = scoreEnvironnement;
 	}
-<<<<<<< HEAD
 	
 	public static void reinitialiserPerf() {
 		Environement.setScoreEnvironnement(0);
@@ -70,7 +69,5 @@ public class Environement {
 	public static void setMoyenneScore(double moyenneScore) {
 		Environement.moyenneScore = moyenneScore;
 	}
-=======
 
->>>>>>> Score_Arbre
 }

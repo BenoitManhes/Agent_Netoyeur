@@ -41,13 +41,10 @@ public class Draw{
 	int height = (int)dimension.getHeight();
 	int width  = (int)dimension.getWidth();
 
-<<<<<<< HEAD
-	private int WIDTH = (int)(width/2);
-	private int HEIGHT = (int)height; 
-=======
+
 	private int WIDTH = (int)(width/3);
 	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
->>>>>>> Score_Arbre
+
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
 	/**image*/
@@ -199,10 +196,7 @@ public class Draw{
 		}
 		
 		// drawing du robot
-<<<<<<< HEAD
-		
-		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
-=======
+
 		if(Environement.agent.getLastAction()==Agent.DROITE) {
 			g.drawImage(robotDroite, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 		}
@@ -227,7 +221,7 @@ public class Draw{
 		else {
 			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 		}
->>>>>>> Score_Arbre
+
 		
 
 		//maj score
