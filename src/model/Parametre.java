@@ -5,8 +5,13 @@ package model;
 public class Parametre {
 	
 	//Gestion des points
+<<<<<<< Frequence
 	public static final int POINT_POUSSIERE = 8;
 	public static final int POINT_BIJOU = 5;
+=======
+	public static final int POINT_POUSSIERE = 10;
+	public static final int POINT_BIJOU = 20;
+>>>>>>> Prise en compte du cas d'un bijou sur de la poussiere
 	public static final int MALUS_BIJOU = -20;
 	public static final int COUT_ENERGIE = 1;
 	

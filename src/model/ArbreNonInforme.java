@@ -37,6 +37,7 @@ public class ArbreNonInforme {
 		if(deep < profondeur && !EDispo.isEmpty()) {
 			for (int i = 0; i < EDispo.size(); i++) {
 				Element e = EDispo.get(i);
+<<<<<<< Frequence
 				int s= score - distanceManhattan(e, itineraire.get(itineraire.size()-1) );
 				s+= Parametre.COUT_ENERGIE + e.getPts();
 				
@@ -47,6 +48,15 @@ public class ArbreNonInforme {
 				ArrayList<Element> newEDispo = new ArrayList<Element>();
 				cloneList(newEDispo, EDispo);
 				newEDispo.remove(i);
+=======
+				ArrayList<Element> newEDispo = new ArrayList<Element>();
+				cloneList(newEDispo, EDispo);
+				newEDispo.remove(i);
+				int s = calculerScore(e, newEDispo, score, itineraire);
+				ArrayList<Element> newIteneraire = new ArrayList<Element>();
+				cloneList(newIteneraire, itineraire);
+				newIteneraire.add(e);
+>>>>>>> Prise en compte du cas d'un bijou sur de la poussiere
 				
 				parcourChemin(newIteneraire, s, deep+1, newEDispo);
 			}
@@ -57,6 +67,26 @@ public class ArbreNonInforme {
 		}
 	}
 	
+	private int calculerScore(Element e, ArrayList<Element> newEDispo, int score, ArrayList<Element> itineraire) {
+		int s = score - distanceManhattan(e, itineraire.get(itineraire.size()-1)) + e.getPts() + Parametre.COUT_ENERGIE;
+		if(e.isPoussiere() && verifierPresenceBijou(e, newEDispo)) {
+			s += Parametre.MALUS_BIJOU;
+		}
+		return s;
+		
+	}
+	
+	private boolean verifierPresenceBijou(Element e, ArrayList<Element> newEDispo) {
+		for(int i = 0 ; i<newEDispo.size() ; i++) {
+			if(newEDispo.get(i).getX()==e.getX() && newEDispo.get(i).getY()==e.getY()) {
+				if(newEDispo.get(i).isPoussiere()==false) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void testCombinaison(ArrayList<Element> itineraire,int score) {
 		if(score>topScore) {
 			cloneList(itineraireOptimale, itineraire);
@@ -73,9 +103,7 @@ public class ArbreNonInforme {
 	
 	public static void cloneList (ArrayList<Element> A, ArrayList<Element> B) {
 		A.clear();
-		for (int i = 0; i < B.size(); i++) {
-			A.add(B.get(i));
-		}
+		A.addAll(B);
 	}
 	
 	public int getTopScore() {

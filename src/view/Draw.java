@@ -215,6 +215,9 @@ public class Draw{
 		else if(Environement.agent.getLastAction()==Agent.NE_RIEN_FAIRE) {
 			g.drawImage(robotNeRienFaire, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 		}
+		else {
+			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
 		
 
 		//maj score
