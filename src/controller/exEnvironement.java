@@ -9,7 +9,6 @@ public class exEnvironement implements Runnable{
 
 		/**Initialisation de l environement*/
 		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environement.ListEnvironement);
-		// environement d�j� creer en  public static -> Unique et Accessible a tous
 		double probaPoussiere = Parametre.PROBA_POUSSIERE;
 		double probaBijou = Parametre.PROBA_BIJOU;
 
@@ -34,7 +33,9 @@ public class exEnvironement implements Runnable{
 
 	}
 
-	/**Methode utile a la gestion de l environement*/
+	/** ======================================= Methode utile a la gestion de l environnement ===========================================================*/
+
+	// -------------------------------------------------Generer les elements-------------------------------------------------------------------------------
 
 	public void genererPoussiere(double p) {
 		double i = Math.random();
@@ -58,8 +59,10 @@ public class exEnvironement implements Runnable{
 			}
 		}
 	}
+	
 
-	//Recupere actuelle la position du robot
+	// -------------------------------------------------Obtenir les positions de l agent-------------------------------------------------------------------------------
+	
 	public int getXPositionAgent() {
 		return Environement.agent.getX();
 	}
@@ -68,12 +71,15 @@ public class exEnvironement implements Runnable{
 		return Environement.agent.getY();
 	}
 
-	//Recupere la derniere action du robot
+	// -------------------------------------------------Obtenir la derniere action de l agent-------------------------------------------------------------------------------
+	
 	public int getLastActionAgent() {
 		return Environement.agent.getLastAction();
 	}
+	
 
-	//Calculer les points
+	// -------------------------------------------------Calculer le score-------------------------------------------------------------------------------
+	
 	private int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
 
 		int score = 0;
@@ -103,7 +109,13 @@ public class exEnvironement implements Runnable{
 		ajouterScore(score);
 		return score;
 	}
+	
+	private void ajouterScore(int score) {
+		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
+	}
 
+// -------------------------------------------------Voir la presence d element-------------------------------------------------------------------------------
+	
 	public boolean isTherePoussiere(int x, int y, boolean testPoussiere) {
 		boolean presence = false;
 		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
@@ -115,6 +127,8 @@ public class exEnvironement implements Runnable{
 		}
 		return presence;
 	}
+	
+	// -------------------------------------------------Mettre a jour l affichage-------------------------------------------------------------------------------
 
 	private void majAffichage() {
 
@@ -145,8 +159,5 @@ public class exEnvironement implements Runnable{
 		}
 	}
 	
-	private void ajouterScore(int score) {
-		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
-	}
 
 }

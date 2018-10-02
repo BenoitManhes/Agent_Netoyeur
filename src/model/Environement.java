@@ -41,4 +41,5 @@ public class Environement {
 	public static void setScoreEnvironnement(int scoreEnvironnement) {
 		Environement.scoreEnvironnement = scoreEnvironnement;
 	}
+
 }
