@@ -11,12 +11,12 @@ public class ArbreNonInforme {
 	private int X;
 	private int Y;
 	
-	public ArbreNonInforme(ArrayList<Element> groupE, int p , int x, int y ) {
+	public ArbreNonInforme(ArrayList<Element> groupE , int x, int y ) {
 		itineraireOptimale = new ArrayList<Element>();
 		topScore = 0;
 		groupElement = new ArrayList<Element>();
 		cloneList(groupElement, groupE);
-		profondeur = p;
+		profondeur = Math.min(Parametre.PROFONDEUR_ARBRE_MAX,Environement.agent.getListElementObs().size());
 		X = x;
 		Y = y;
 		this.cheminNonInforme();
@@ -37,14 +37,17 @@ public class ArbreNonInforme {
 		if(deep < profondeur && !EDispo.isEmpty()) {
 			for (int i = 0; i < EDispo.size(); i++) {
 				Element e = EDispo.get(i);
-				int s= score - distanceManhattan(e, itineraire.get(itineraire.size()-1) );
-				s+= Parametre.COUT_ENERGIE + e.getPts();
-				ArrayList<Element> newIteneraire = new ArrayList<Element>();
-				cloneList(newIteneraire, itineraire);
-				newIteneraire.add(e);
+				
 				ArrayList<Element> newEDispo = new ArrayList<Element>();
 				cloneList(newEDispo, EDispo);
 				newEDispo.remove(i);
+				
+				ArrayList<Element> newIteneraire = new ArrayList<Element>();
+				cloneList(newIteneraire, itineraire);
+				newIteneraire.add(e);
+												
+				int s = calculerScore(e, newEDispo, score, itineraire);
+								
 				parcourChemin(newIteneraire, s, deep+1, newEDispo);
 			}
 			testCombinaison(itineraire, score); 	// Test agent choisie de rien faire		
@@ -54,6 +57,26 @@ public class ArbreNonInforme {
 		}
 	}
 	
+	private int calculerScore(Element e, ArrayList<Element> newEDispo, int score, ArrayList<Element> itineraire) {
+		int s = score - distanceManhattan(e, itineraire.get(itineraire.size()-1)) + e.getPts() + Parametre.COUT_ENERGIE;
+		if(e.isPoussiere() && verifierPresenceBijou(e, newEDispo)) {
+			s += Parametre.MALUS_BIJOU;
+		}
+		return s;
+		
+	}
+	
+	private boolean verifierPresenceBijou(Element e, ArrayList<Element> newEDispo) {
+		for(int i = 0 ; i<newEDispo.size() ; i++) {
+			if(newEDispo.get(i).getX()==e.getX() && newEDispo.get(i).getY()==e.getY()) {
+				if(newEDispo.get(i).isPoussiere()==false) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void testCombinaison(ArrayList<Element> itineraire,int score) {
 		if(score>topScore) {
 			cloneList(itineraireOptimale, itineraire);

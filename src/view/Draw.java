@@ -20,12 +20,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import model.Agent;
 import model.Element;
 import model.Environement;
 import model.Parametre;
 
+/** ======================================= Dessiner les fenetres et tous les elements a mettre a jour ===========================================================*/
+
 
 public class Draw{
+	
+	// -------------------------------------------------Attributs-------------------------------------------------------------------------------
+	
 	JFrame frame;
 	Canvas canvas;
 
@@ -35,14 +41,25 @@ public class Draw{
 	int height = (int)dimension.getHeight();
 	int width  = (int)dimension.getWidth();
 
+<<<<<<< HEAD
 	private int WIDTH = (int)(width/2);
 	private int HEIGHT = (int)height; 
+=======
+	private int WIDTH = (int)(width/3);
+	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
+>>>>>>> Score_Arbre
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
 	/**image*/
 	private Image poussiere;
 	private Image bijou;
-	private Image robot;
+	private Image robotDroite;
+	private Image robotGauche;
+	private Image robotHaut;
+	private Image robotBas;
+	private Image robotAspire;
+	private Image robotRamasse;
+	private Image robotNeRienFaire;
 	private String typeAffichage;
 
 	/**commodite d'affichage*/
@@ -50,11 +67,33 @@ public class Draw{
 
 	private ArrayList<Element> List;
 
+	// -------------------------------------------------Constructeur-------------------------------------------------------------------------------
+	
 	public Draw(String titre, ArrayList<Element> list){
+		
+		//Chargement des ressources utiles
 		typeAffichage=titre;
 		List = list;
 		try {
-			this.robot = ImageIO.read(new File("robot.png"));
+			this.robotDroite = ImageIO.read(new File("robotDroite.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotGauche = ImageIO.read(new File("robotGauche.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotBas = ImageIO.read(new File("robotBas.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotHaut = ImageIO.read(new File("robotHaut.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotRamasse = ImageIO.read(new File("robotRamasse.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotAspire = ImageIO.read(new File("robotAspire.png"));
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			this.robotNeRienFaire = ImageIO.read(new File("robotNeRienFaire.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
 			this.poussiere = ImageIO.read(new File("poussiere.png"));
@@ -62,6 +101,7 @@ public class Draw{
 		try {
 			this.bijou = ImageIO.read(new File("diamond-ring.png"));
 		} catch (IOException e) {e.printStackTrace();}
+		
 		//Makes a new window
 		frame = new JFrame(titre);
 		JPanel panel = (JPanel) frame.getContentPane();
@@ -72,8 +112,10 @@ public class Draw{
 		canvas.setIgnoreRepaint(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
+		
 		//this will make the frame not re-sizable
 		frame.setResizable(false);
+		
 		//this will place the frames on different positions
 		switch(titre) {
 		case "Environement" : frame.setLocation(0, 0);
@@ -82,6 +124,7 @@ public class Draw{
 		break;
 		default : break;
 		}
+		
 		//this will add a menu on the frame Environnement
 		int tailleMenu = 0;
 		switch(titre) {
@@ -98,17 +141,23 @@ public class Draw{
 		default : break;
 		}					
 		frame.setVisible(true);
+		
 		//this will add the canvas to our frame
 		panel.add(canvas);
 		canvas.createBufferStrategy(2);
 		bufferStrategy = canvas.getBufferStrategy();
-		//This will make sure the canvas has focus, so that it can take input from mouse/keyboard
+		
+		//this will make sure the canvas has focus, so that it can take input from mouse/keyboard
 		canvas.requestFocus();
+		
 		//this will set the background to black
 		canvas.setBackground(Color.black);
 		// This will add our buttonhandler to our program
 		//canvas.addKeyListener(new ButtonHandler());
 	}
+	
+	// -------------------------------------------------Mise a jour avec le thread de l environnement-------------------------------------------------------------------------------
+	
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
@@ -116,6 +165,8 @@ public class Draw{
 		g.dispose();
 		bufferStrategy.show();
 	}
+	
+	
 	protected void render(Graphics2D g){
 		
 		int T =(int) (intervalle*0.9); // Taille d un element 
@@ -130,7 +181,8 @@ public class Draw{
 				g.drawRect(CO(i), CO(j),T,T );
 			}
 		}
-		/* drawing des elements d abord poussier puis ensuite bijou 
+		
+		/* Drawing des elements d abord poussier puis ensuite bijou 
 		 * 2 boucle for afin de permettre aux images des bijoux de paraitre dessus la poussiere
 		 */
 		for (int i = 0; i < List.size(); i++) {
@@ -145,9 +197,37 @@ public class Draw{
 				g.drawImage(bijou,CO(e.getX()),CO(e.getY()),T,T,null);
 			}
 		}
+		
 		// drawing du robot
+<<<<<<< HEAD
 		
 		g.drawImage(robot, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+=======
+		if(Environement.agent.getLastAction()==Agent.DROITE) {
+			g.drawImage(robotDroite, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.GAUCHE) {
+			g.drawImage(robotGauche, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.BAS) {
+			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.HAUT) {
+			g.drawImage(robotHaut, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.ASPIRER) {
+			g.drawImage(robotAspire, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.RAMASSER) {
+			g.drawImage(robotRamasse, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else if(Environement.agent.getLastAction()==Agent.NE_RIEN_FAIRE) {
+			g.drawImage(robotNeRienFaire, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+		else {
+			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		}
+>>>>>>> Score_Arbre
 		
 
 		//maj score
@@ -186,10 +266,17 @@ public class Draw{
 
 	}
 
+	// -------------------------------------------------Generer les cases-------------------------------------------------------------------------------
+	
 	private int CO(int x) {	// coordonne en fonction de la taille de grille
 		return (int) (x*intervalle+intervalle/10);
 	}
 
+	
+	/** ================================================== Creer les menus ===========================================================*/
+	
+	// -------------------------------------------------Menu de l environnement-------------------------------------------------------------------------------
+	
 	public static JMenuBar createMenuBarEnvironnement() {
 
 		JMenuBar menuBar;
@@ -277,6 +364,8 @@ public class Draw{
 		return menuBar;
 	}
 
+	// -------------------------------------------------Menu de l agent-------------------------------------------------------------------------------
+	
 	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
@@ -300,7 +389,6 @@ public class Draw{
 		menuItemRazPerf = new JMenuItem("Reinitialiser performances agent");
 		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Environement.setPerformance(0);
 				Environement.setScoreEnvironnement(0);
 				Environement.agent.setEnergieDepense(0);
 				Environement.agent.setLastAction(0);

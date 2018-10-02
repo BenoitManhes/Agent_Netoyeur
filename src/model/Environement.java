@@ -36,15 +36,7 @@ public class Environement {
 		}
 		return id;
 	}
-
-	public static int getPerformance() {
-		return performance;
-	}
-
-	public static void setPerformance(int performance) {
-		Environement.performance = performance;
-	}
-
+	
 	public static int getScoreEnvironnement() {
 		return scoreEnvironnement;
 	}
@@ -52,6 +44,7 @@ public class Environement {
 	public static void setScoreEnvironnement(int scoreEnvironnement) {
 		Environement.scoreEnvironnement = scoreEnvironnement;
 	}
+<<<<<<< HEAD
 	
 	public static void reinitialiserPerf() {
 		Environement.setScoreEnvironnement(0);
@@ -77,4 +70,7 @@ public class Environement {
 	public static void setMoyenneScore(double moyenneScore) {
 		Environement.moyenneScore = moyenneScore;
 	}
+=======
+
+>>>>>>> Score_Arbre
 }
