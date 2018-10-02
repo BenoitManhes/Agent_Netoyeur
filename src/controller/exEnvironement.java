@@ -140,7 +140,7 @@ public class exEnvironement implements Runnable{
 			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 				int a = Environement.ListEnvironement.get(i).getX();
 				int b = Environement.ListEnvironement.get(i).getY();
-				if(PositionX==a && PositionY==b) {
+				if(PositionX==a && PositionY==b && (Environement.ListEnvironement.get(i).isPoussiere()==false || Environement.ListEnvironement.get(i).isPoussiere()==true)) {
 					Environement.ListEnvironement.remove(i);
 				}
 			}
@@ -151,7 +151,7 @@ public class exEnvironement implements Runnable{
 			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
 				int a = Environement.ListEnvironement.get(i).getX();
 				int b = Environement.ListEnvironement.get(i).getY();
-				if(PositionX==a && PositionY==b && !Environement.ListEnvironement.get(i).isPoussiere()) {
+				if(PositionX==a && PositionY==b && Environement.ListEnvironement.get(i).isPoussiere()==false) {
 					Environement.ListEnvironement.remove(i);
 				}
 			}
@@ -161,8 +161,8 @@ public class exEnvironement implements Runnable{
 	// -------------------------------------------------Methode pour initialiser l'environnement-------------------------------------------------------------------------------
 	
 	private void initialisationEnvironnement() {
-		genererBijou(Parametre.PROBA_BIJOU*300);
-		genererPoussiere(Parametre.PROBA_POUSSIERE*300);
+		genererBijou(Parametre.PROBA_BIJOU*1000);
+		genererPoussiere(Parametre.PROBA_POUSSIERE*1000);
 	}
 
 }
