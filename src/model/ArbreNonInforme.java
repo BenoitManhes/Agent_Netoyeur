@@ -37,36 +37,17 @@ public class ArbreNonInforme {
 		if(deep < profondeur && !EDispo.isEmpty()) {
 			for (int i = 0; i < EDispo.size(); i++) {
 				Element e = EDispo.get(i);
-<<<<<<< HEAD
-<<<<<<< Frequence
-				int s= score - distanceManhattan(e, itineraire.get(itineraire.size()-1) );
-				s+= Parametre.COUT_ENERGIE + e.getPts();
+				
+				ArrayList<Element> newEDispo = new ArrayList<Element>();
+				cloneList(newEDispo, EDispo);
+				newEDispo.remove(i);
 				
 				ArrayList<Element> newIteneraire = new ArrayList<Element>();
 				cloneList(newIteneraire, itineraire);
 				newIteneraire.add(e);
-				
-				ArrayList<Element> newEDispo = new ArrayList<Element>();
-				cloneList(newEDispo, EDispo);
-				newEDispo.remove(i);
-=======
-				ArrayList<Element> newEDispo = new ArrayList<Element>();
-				cloneList(newEDispo, EDispo);
-				newEDispo.remove(i);
-=======
-				ArrayList<Element> newEDispo = new ArrayList<Element>();
-				cloneList(newEDispo, EDispo);
-				newEDispo.remove(i);
->>>>>>> Score_Arbre
+												
 				int s = calculerScore(e, newEDispo, score, itineraire);
-				ArrayList<Element> newIteneraire = new ArrayList<Element>();
-				cloneList(newIteneraire, itineraire);
-				newIteneraire.add(e);
-<<<<<<< HEAD
->>>>>>> Prise en compte du cas d'un bijou sur de la poussiere
-=======
->>>>>>> Score_Arbre
-				
+								
 				parcourChemin(newIteneraire, s, deep+1, newEDispo);
 			}
 			testCombinaison(itineraire, score); 	// Test agent choisie de rien faire		
