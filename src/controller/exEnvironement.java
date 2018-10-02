@@ -88,7 +88,7 @@ public class exEnvironement implements Runnable{
 
 		//Test si il y a de la poussiere
 		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER) { 
-			System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
+			//System.out.println("Environnement : Je detecte que l'agent a aspire la ou il y avait de la poussiere");
 			score+=Parametre.POINT_POUSSIERE;
 			//System.out.println("Environnement : l'action de l'agent lui octroie "+score);
 		}

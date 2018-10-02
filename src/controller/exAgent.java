@@ -38,11 +38,12 @@ public class exAgent implements Runnable{
 
 	// -------------------------------------------------Observation-------------------------------------------------------------------------------
 	public void observation() {
-		// Observation si cible atteinte
+		// Actualisation objectif si cible atteinte
 		if(!Environement.agent.getObjectifs().isEmpty()) {	
 			Environement.agent.actualiserObjectif();
 		}
-		if(Environement.agent.getObjectifs().isEmpty()) { // si aucun objectif est en attente
+		// Observation si un cycle est finie ou liste d element observe vide
+		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) { 
 			Environement.agent.observerEnvironnement();
 		}
 	}
@@ -50,8 +51,9 @@ public class exAgent implements Runnable{
 	// -----------------------------------------------Mise a jour Etat----------------------------------------------------------------------------
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
-		if(Environement.agent.getNbrCasesParcourues()>0 && Environement.agent.getObjectifs().isEmpty()) {	// si le robot a deja effectuer un cycle
+		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) {	// si le robot a terminer son cycle
 			Environement.agent.ajoutPerformance();
+			Environement.agent.resetNbElementCycle(); 	// Nouveau cycle
 			System.out.println("Performance enregistré");
 			affichageFrequence();
 		}
@@ -61,15 +63,16 @@ public class exAgent implements Runnable{
 	// --------------------------------------------------Decision---------------------------------------------------------------------------------
 	public void decision() {
 		// Choix de la frequence d observation
-		if(Environement.agent.getObjectifs().isEmpty()) {
+		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) { // cycle termine
 			Environement.agent.choixFrequence();
 			System.out.println("Frequence choisi : "+Environement.agent.getFrequenceObs());
 		}
 		// Choix du chemin a parcourir
-		if(!Environement.agent.getListElementObs().isEmpty() && Environement.agent.getObjectifs().isEmpty()) {	
+		if(!Environement.agent.getListElementObs().isEmpty() && (Environement.agent.getNbElementCycle() == 0 || Environement.agent.getObjectifs().isEmpty())) {	
 			int nbElementObs = Environement.agent.getListElementObs().size();
 			if(nbElementObs>0) {
 				planificationItineraire();
+				Environement.agent.getMouvementChemin().clear();
 			}
 		}
 		// Planification des actions a faire 
@@ -79,8 +82,11 @@ public class exAgent implements Runnable{
 	}
 
 	public void planificationItineraire() {
-		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),Environement.agent.getFrequenceObs(), Environement.agent.getX(), Environement.agent.getY());
-		Environement.agent.setObjectifs(A.getItineraireOptimal());
+		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
+		
+		if(!A.getItineraireOptimal().isEmpty()) {
+			Environement.agent.setObjectifs(A.getItineraireOptimal());
+		}
 	}
 
 	public void planificationAction() {
@@ -136,7 +142,7 @@ public class exAgent implements Runnable{
 			int y = (int)(Math.random()*10);
 			model.Environement.agent.getListElementObs().add(new Poussiere(x, y));
 		}
-		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(),10, Environement.agent.getX(), Environement.agent.getY());
+		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
 		Environement.agent.setObjectifs(A.getItineraireOptimal());
 		System.out.println("Taille final "+Environement.agent.getObjectifs().size());
 	}
@@ -164,4 +170,11 @@ public class exAgent implements Runnable{
 		}
 	}
 
+	public void afficherItineraire() {
+		for (int i = 0; i < Environement.agent.getObjectifs().size(); i++) {
+			Element e = Environement.agent.getObjectifs().get(i);
+			System.out.println("("+e.getX()+","+e.getY()+")  ");
+		}
+	}
+	
 }

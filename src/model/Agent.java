@@ -20,7 +20,8 @@ public class Agent {
 	private int lastAction;
 	private int X;
 	private int Y;
-	private int frequenceObs;
+	private int frequenceObs = Parametre.FREQUENCE_MAX;
+	private int nbElementCycle = 0;	// nb element atteint sans avoir effectuer d observation
 	private int energieDepense;
 	private int nbrCasesParcourues;
 	private int nbrObjetsAspires;
@@ -36,13 +37,13 @@ public class Agent {
 	/** ============================================== Observation =============================================================================*/
 	public void actualiserObjectif() {
 		Element e = this.Objectifs.get(0);
-		if( this.X==e.getX() && this.Y==e.getY()) {
+		if( this.X==e.getX() && this.Y==e.getY() && mouvementChemin.isEmpty()) {
 			this.Objectifs.remove(0);	//objectif atteint, il est supprime des objectif
-
 			int i = indiceElement(this.X, this.Y, e.isPoussiere());
 			this.ListElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
 		}
 	}
+
 	
 	public void observerEnvironnement(){
 		this.ListElementObs.clear();
@@ -57,6 +58,10 @@ public class Agent {
 		//remise de spoints a zero
 		energieDepense=0;
 		Environement.setScoreEnvironnement(0);
+	}
+	
+	public void resetNbElementCycle() {
+		nbElementCycle=0;
 	}
 	
 	/** =============================================== Decision ===============================================================================*/
@@ -75,7 +80,7 @@ public class Agent {
 				frequenceObs = i+1;
 			}
 		}
-		//si un X n est pas aasez echantillone , on le choisit
+		//si un X n est pas assez echantillone , on le choisit
 		for (int i = 0; i < tabFrequence.length; i++) {
 			if(tabFrequence[i][1] < Parametre.NB_PARCOUR_MIN) {
 				frequenceObs = i+1;
@@ -128,6 +133,7 @@ public class Agent {
 		this.lastAction = RAMASSER;
 		this.energieDepense++;
 		this.nbrBijouxRamasses++;
+		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
 		//System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
 
@@ -135,6 +141,7 @@ public class Agent {
 		this.lastAction = ASPIRER;
 		this.energieDepense++;
 		this.nbrObjetsAspires++;
+		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
 		//System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
@@ -267,6 +274,16 @@ public class Agent {
 	
 	public double[][] getTabFrequence(){
 		return tabFrequence;
+	}
+
+
+	public int getNbElementCycle() {
+		return nbElementCycle;
+	}
+
+
+	public void setNbElementCycle(int nbElementCycle) {
+		this.nbElementCycle = nbElementCycle;
 	}
 
 

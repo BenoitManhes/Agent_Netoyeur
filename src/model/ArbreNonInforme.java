@@ -11,12 +11,12 @@ public class ArbreNonInforme {
 	private int X;
 	private int Y;
 	
-	public ArbreNonInforme(ArrayList<Element> groupE, int p , int x, int y ) {
+	public ArbreNonInforme(ArrayList<Element> groupE , int x, int y ) {
 		itineraireOptimale = new ArrayList<Element>();
 		topScore = 0;
 		groupElement = new ArrayList<Element>();
 		cloneList(groupElement, groupE);
-		profondeur = p;
+		profondeur = Math.min(Parametre.PROFONDEUR_ARBRE_MAX,Environement.agent.getListElementObs().size());
 		X = x;
 		Y = y;
 		this.cheminNonInforme();
@@ -39,12 +39,15 @@ public class ArbreNonInforme {
 				Element e = EDispo.get(i);
 				int s= score - distanceManhattan(e, itineraire.get(itineraire.size()-1) );
 				s+= Parametre.COUT_ENERGIE + e.getPts();
+				
 				ArrayList<Element> newIteneraire = new ArrayList<Element>();
 				cloneList(newIteneraire, itineraire);
 				newIteneraire.add(e);
+				
 				ArrayList<Element> newEDispo = new ArrayList<Element>();
 				cloneList(newEDispo, EDispo);
 				newEDispo.remove(i);
+				
 				parcourChemin(newIteneraire, s, deep+1, newEDispo);
 			}
 			testCombinaison(itineraire, score); 	// Test agent choisie de rien faire		
