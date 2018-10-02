@@ -70,9 +70,7 @@ public class ArbreNonInforme {
 	
 	public static void cloneList (ArrayList<Element> A, ArrayList<Element> B) {
 		A.clear();
-		for (int i = 0; i < B.size(); i++) {
-			A.add(B.get(i));
-		}
+		A.addAll(B);
 	}
 	
 	public int getTopScore() {

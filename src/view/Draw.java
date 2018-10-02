@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -35,7 +36,7 @@ public class Draw{
 	int width  = (int)dimension.getWidth();
 
 	private int WIDTH = (int)(width/2);
-	private int HEIGHT = (int)(width/2)+20;  //20 = height of menu
+	private int HEIGHT = (int)height; 
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
 	/**image*/
@@ -77,7 +78,7 @@ public class Draw{
 		switch(titre) {
 		case "Environement" : frame.setLocation(0, 0);
 		break;
-		case "Agent" : frame.setLocation(WIDTH, 0);
+		case "Agent" : frame.setLocation(width/2, 0);
 		break;
 		default : break;
 		}
@@ -116,7 +117,7 @@ public class Draw{
 		bufferStrategy.show();
 	}
 	protected void render(Graphics2D g){
-
+		
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.black);
 		// drawing de la grille
@@ -127,7 +128,6 @@ public class Draw{
 				g.fillRect(CO(i), CO(j),T,T );
 				g.setColor(Color.darkGray);
 				g.drawRect(CO(i), CO(j),T,T );
-
 			}
 		}
 		/* drawing des elements d abord poussier puis ensuite bijou 
@@ -152,14 +152,14 @@ public class Draw{
 
 		//maj score
 		if(informationsVisibles==true) {
-			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,20);
-			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, 40);
-			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, 60);
-			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, 80);
+			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,HEIGHT-170);
+			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, HEIGHT-150);
+			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, HEIGHT-130);
+			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, HEIGHT-110);
 			
-			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 300, 20);
-			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 300, 40);
-			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 300, 60);
+			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, HEIGHT-170);
+			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200, HEIGHT-150);
+			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, HEIGHT-130);
 
 			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
 			bd= bd.setScale(4,BigDecimal.ROUND_DOWN);
@@ -169,9 +169,9 @@ public class Draw{
 			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
 			double valeurProbaBijou = bdb.doubleValue();
 			
-			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 20, 100);
-			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 20, 120);
-			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 300, 100);
+			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 420, HEIGHT-170);
+			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 420, HEIGHT-150);
+			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 420, HEIGHT-130);
 
 		}
 
