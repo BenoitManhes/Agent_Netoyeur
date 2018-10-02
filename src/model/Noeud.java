@@ -65,4 +65,8 @@ public class Noeud {
 	public void setListeArrete(ArrayList<Arrete> listeArrete) {
 		this.listeArrete = listeArrete;
 	}
+	
+	public String toString(){
+		return this.e.toString();
+	}
 }

@@ -24,4 +24,8 @@ public class Arrete {
 	public void setCout(int cout) {
 		this.cout = cout;
 	}
+	
+	public String toString(){
+		return "("+noeudCible.getE()+","+cout+")";
+	}
 }
