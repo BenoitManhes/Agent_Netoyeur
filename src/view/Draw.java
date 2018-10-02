@@ -246,7 +246,7 @@ public class Draw{
 		menuItemBijouPlus = new JMenuItem("Probabilite apparition bijou +");
 		menuItemBijouPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.1;
+				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.01;
 
 			}
 		});
@@ -254,7 +254,7 @@ public class Draw{
 		menuItemBijouMoins = new JMenuItem("Probabilite apparition bijou -");
 		menuItemBijouMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU>=0.1) Parametre.PROBA_BIJOU -= 0.1;
+				if(Parametre.PROBA_BIJOU>=0.1) Parametre.PROBA_BIJOU -= 0.01;
 				else Parametre.PROBA_BIJOU = 0;
 			}
 		});
@@ -307,6 +307,7 @@ public class Draw{
 				Environement.agent.setNbrBijouxRamasses(0);
 				Environement.agent.setNbrCasesParcourues(0);
 				Environement.agent.setNbrObjetsAspirees(0);
+				Environement.setMoyenneScore(0);
 			}});
 		menuBar.add(menuItemRazPerf);
 
