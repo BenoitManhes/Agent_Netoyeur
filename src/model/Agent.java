@@ -22,6 +22,7 @@ public class Agent {
 	private int Y;
 	private int frequenceObs = Parametre.FREQUENCE_MAX;
 	private int nbElementCycle = 0;	// nb element atteint sans avoir effectuer d observation
+	private boolean debutCycle = true;
 	private int energieDepense;
 	private int nbrCasesParcourues;
 	private int nbrObjetsAspires;
@@ -48,7 +49,7 @@ public class Agent {
 	public void observerEnvironnement(){
 		this.ListElementObs.clear();
 		this.ListElementObs.addAll(Environement.ListEnvironement);
-		System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
+		//System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
 	}
 
 	/** ============================================ Mise ajour Etat ===========================================================================*/
@@ -133,7 +134,7 @@ public class Agent {
 		this.energieDepense++;
 		this.nbrBijouxRamasses++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
-		//System.out.println("Agent : J'ai ramasse le contenu de la case");
+	//	System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
 
 	public void aspirer(){
@@ -141,7 +142,7 @@ public class Agent {
 		this.energieDepense++;
 		this.nbrObjetsAspires++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
-		//System.out.println("Agent : J'ai aspire le contenu de la case");
+	//	System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
 	
@@ -283,6 +284,16 @@ public class Agent {
 
 	public void setNbElementCycle(int nbElementCycle) {
 		this.nbElementCycle = nbElementCycle;
+	}
+
+
+	public boolean isDebutCycle() {
+		return debutCycle;
+	}
+
+
+	public void setDebutCycle(boolean debutCycle) {
+		this.debutCycle = debutCycle;
 	}
 
 
