@@ -1,9 +1,4 @@
 package controller;
-import javax.annotation.processing.SupportedSourceVersion;
-
-import org.omg.CORBA.SystemException;
-import org.w3c.dom.css.ElementCSSInlineStyle;
-
 import model.*;
 import view.*;
 
@@ -57,6 +52,12 @@ public class exAgent implements Runnable{
 			}
 			System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
 			Environement.agent.observerEnvironnement();
+			
+			//mode safe : espace d'etat trop grand pour le non informe -> passage en informee
+			if(Environement.agent.getListElementObs().size()>Parametre.LIMITE_NON_INFORME && !Draw.isChoixInformee()) {
+				Draw.setChoixInformee(true);
+				System.out.println("Systeme : Safe Mode Activated : mode informe");
+			}
 		}else {
 			Environement.agent.setDebutCycle(false);
 		}
@@ -88,10 +89,6 @@ public class exAgent implements Runnable{
 		// Choix du chemin a parcourir
 		if(!Environement.agent.getListElementObs().isEmpty() && (Environement.agent.getNbElementCycle() == 0 || Environement.agent.getObjectifs().isEmpty())) {	
 			int nbElementObs = Environement.agent.getListElementObs().size();
-			if(nbElementObs>Parametre.LIMITE_NON_INFORME) {
-				Draw.setChoixInformee(true);
-				System.out.println("Agent : Je me suis mis en mode safe");
-			}
 
 			if(nbElementObs>0) {
 				if(!Draw.isChoixInformee()) {
