@@ -228,7 +228,18 @@ public class Draw{
 		}
 
 
-
+		//Affichage type exploration :
+		
+		if(choixInformee){
+			g.setColor(new Color(52, 201, 36));
+			g.drawString("Mode : Exploration informee", 10, HEIGHT -20);
+		}
+		else{
+			g.setColor(new Color(0, 127, 255));
+			g.drawString("Mode : Exploration non-informee", 10, HEIGHT - 20);
+		}
+		
+		g.setColor(Color.BLACK);
 		//maj score
 		if(informationsVisibles==true) {
 			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,HEIGHT-170);
@@ -378,8 +389,8 @@ public class Draw{
 		JMenuItem menuItemVitesseMoins;
 		JMenuItem menuItemInformations2;
 		JMenu menuInforme;
-		JRadioButtonMenuItem menuInformeOui;
-		JRadioButtonMenuItem menuInformeNon;
+		JMenuItem menuInformeOui;
+		JMenuItem menuInformeNon;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -435,31 +446,26 @@ public class Draw{
 		ButtonGroup bg = new ButtonGroup();
 		
 		menuInforme.addSeparator();
-		menuInformeOui = new JRadioButtonMenuItem("Exploration informee");
+		menuInformeOui = new JMenuItem("Exploration informee");
+		
 		menuInformeOui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choixInformee = true;
 				System.out.println("Systeme : mode exploration informee");
 			}
 		});
+		
 		bg.add(menuInformeOui);
 		menuInforme.add(menuInformeOui);
 		
 		menuInforme.addSeparator();
-		menuInformeNon = new JRadioButtonMenuItem("Exploration non-informee");
+		menuInformeNon = new JMenuItem("Exploration non-informee");
 		menuInformeNon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choixInformee = false;
 				System.out.println("Systeme : mode exploration non-informee");
 			}
 		});
-		
-		if(choixInformee == false) {
-			menuInformeOui.setSelected(false);
-			menuInformeNon.setSelected(true);
-		}
-		else menuInformeNon.setSelected(false);
-		
 		bg.add(menuInformeNon);
 		menuInforme.add(menuInformeNon);
 
@@ -471,9 +477,8 @@ public class Draw{
 		return choixInformee;
 	}
 	
-	public static boolean setChoixInformee(boolean choix) {
+	public static void setChoixInformee(boolean choix) {
 		choixInformee = choix;
-		return choixInformee;
 	}
 
 
