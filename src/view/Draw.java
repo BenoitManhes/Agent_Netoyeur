@@ -44,8 +44,8 @@ public class Draw{
 	int width  = (int)dimension.getWidth();
 
 
-	private int WIDTH = (int)(width/2);
-	private int HEIGHT = (int)(width/2)+20;  //20 = height of menu
+	private int WIDTH = (int)(width/3);
+	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
 
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
@@ -302,9 +302,9 @@ public class Draw{
 		//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItemRaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
-					Environement.ListEnvironement.remove(i);
-				}
+				System.out.println("Systeme : réinitialisation de l'environnement");
+				Environement.ListEnvironement.clear();
+				
 			}
 		});
 		menuBar.add(menuItemRaz);
@@ -315,6 +315,7 @@ public class Draw{
 		menuItemPoussierePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.1;
+				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
 			}
 		});
 		menu.add(menuItemPoussierePlus);
@@ -323,6 +324,8 @@ public class Draw{
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_POUSSIERE>=0.1) Parametre.PROBA_POUSSIERE -= 0.1;
 				else Parametre.PROBA_POUSSIERE = 0;
+				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
+				
 			}
 		});
 		menu.add(menuItemPoussiereMoins);
@@ -333,7 +336,7 @@ public class Draw{
 		menuItemBijouPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.01;
-
+				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
 			}
 		});
 		menu.add(menuItemBijouPlus);
@@ -342,6 +345,7 @@ public class Draw{
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.PROBA_BIJOU>=0.1) Parametre.PROBA_BIJOU -= 0.01;
 				else Parametre.PROBA_BIJOU = 0;
+				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
 			}
 		});
 		menu.add(menuItemBijouMoins);
@@ -391,6 +395,7 @@ public class Draw{
 		menuItemRazPerf = new JMenuItem("Reinitialiser performances agent");
 		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Systeme : performances de l'agent reinitialisee");
 				Environement.setScoreEnvironnement(0);
 				Environement.agent.setEnergieDepense(0);
 				Environement.agent.setLastAction(0);
@@ -408,6 +413,8 @@ public class Draw{
 		menuItemVitessePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Parametre.DELAI_AGENT>100) Parametre.DELAI_AGENT -= 50;
+				System.out.println("Systeme : modification delai agent : "+Parametre.DELAI_AGENT);
+				
 			}
 		});
 		menu.add(menuItemVitessePlus);
@@ -415,6 +422,7 @@ public class Draw{
 		menuItemVitesseMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Parametre.DELAI_AGENT += 50;
+				System.out.println("Systeme : modification delai agent : "+Parametre.DELAI_AGENT);
 			}
 		});
 		menu.add(menuItemVitesseMoins);
@@ -431,6 +439,7 @@ public class Draw{
 		menuInformeOui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choixInformee = true;
+				System.out.println("Systeme : mode exploration informee");
 			}
 		});
 		bg.add(menuInformeOui);
@@ -441,6 +450,7 @@ public class Draw{
 		menuInformeNon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choixInformee = false;
+				System.out.println("Systeme : mode exploration non-informee");
 			}
 		});
 		menuInformeNon.setSelected(true);
