@@ -16,7 +16,7 @@ public class ArbreNonInforme {
 		topScore = 0;
 		groupElement = new ArrayList<Element>();
 		cloneList(groupElement, groupE);
-		profondeur = Math.min(Parametre.PROFONDEUR_ARBRE_MAX,Environement.agent.getListElementObs().size());
+		profondeur = Math.min(Parametre.PROFONDEUR_ARBRE_MAX,Environnement.agent.getListElementObs().size());
 		X = x;
 		Y = y;
 		this.cheminNonInforme();
@@ -81,7 +81,6 @@ public class ArbreNonInforme {
 		if(score>topScore) {
 			cloneList(itineraireOptimale, itineraire);
 			topScore=score;
-			//System.out.println("Max score = "+score+" nb = "+itineraireOptimale.size());
 		}
 	}
 	

@@ -2,14 +2,14 @@ package controller;
 import model.*;
 import view.*;
 
-public class exEnvironement implements Runnable{
+public class ExEnvironnement implements Runnable{
 
 	@Override
 	public void run() {
 
 		/**Initialisation de l environement*/
 		initialisationEnvironnement();
-		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environement.ListEnvironement);
+		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environnement.ListEnvironement);
 		double probaPoussiere = Parametre.PROBA_POUSSIERE;
 		double probaBijou = Parametre.PROBA_BIJOU;
 
@@ -43,8 +43,8 @@ public class exEnvironement implements Runnable{
 		if(i<=p) {
 			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
-			if(Environement.caseDisponible(x, y, true)) {
-				Environement.ListEnvironement.add(new Poussiere(x, y));
+			if(Environnement.caseDisponible(x, y, true)) {
+				Environnement.ListEnvironement.add(new Poussiere(x, y));
 				System.out.println("Environnement : Poussiere apparue en "+x+","+y);
 			}
 		}
@@ -54,8 +54,8 @@ public class exEnvironement implements Runnable{
 		if(i<=p) {
 			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
 			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
-			if(Environement.caseDisponible(x, y, false)) {
-				Environement.ListEnvironement.add(new Bijou(x, y));
+			if(Environnement.caseDisponible(x, y, false)) {
+				Environnement.ListEnvironement.add(new Bijou(x, y));
 				System.out.println("Environnement : Bijou apparue en "+x+","+y);
 			}
 		}
@@ -65,17 +65,17 @@ public class exEnvironement implements Runnable{
 	// -------------------------------------------------Obtenir les positions de l agent-------------------------------------------------------------------------------
 
 	public int getXPositionAgent() {
-		return Environement.agent.getX();
+		return Environnement.agent.getX();
 	}
 
 	public int getYPositionAgent() {
-		return Environement.agent.getY();
+		return Environnement.agent.getY();
 	}
 
 	// -------------------------------------------------Obtenir la derniere action de l agent-------------------------------------------------------------------------------
 
 	public int getLastActionAgent() {
-		return Environement.agent.getLastAction();
+		return Environnement.agent.getLastAction();
 	}
 
 
@@ -112,16 +112,16 @@ public class exEnvironement implements Runnable{
 	}
 
 	private void ajouterScore(int score) {
-		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
+		Environnement.setScoreEnvironnement(Environnement.getScoreEnvironnement() + score);
 	}
 
 	private void updateScoreMoyen() {
-		if(!Environement.scoresObtenus.isEmpty()) {
+		if(!Environnement.scoresObtenus.isEmpty()) {
 			double somme = 0;
-			for (int i = 0; i < Environement.scoresObtenus.size(); i++) {
-				somme += Environement.scoresObtenus.get(i);
+			for (int i = 0; i < Environnement.scoresObtenus.size(); i++) {
+				somme += Environnement.scoresObtenus.get(i);
 			}
-			Environement.setMoyenneScore(somme/Environement.scoresObtenus.size());
+			Environnement.setMoyenneScore(somme/Environnement.scoresObtenus.size());
 		}
 	}
 
@@ -129,10 +129,10 @@ public class exEnvironement implements Runnable{
 
 	public boolean isTherePoussiere(int x, int y, boolean testPoussiere) {
 		boolean presence = false;
-		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
-			int a = Environement.ListEnvironement.get(i).getX();
-			int b = Environement.ListEnvironement.get(i).getY();
-			if(x==a && y==b && Environement.ListEnvironement.get(i).isPoussiere()==testPoussiere) {
+		for (int i = 0; i < Environnement.ListEnvironement.size(); i++) {
+			int a = Environnement.ListEnvironement.get(i).getX();
+			int b = Environnement.ListEnvironement.get(i).getY();
+			if(x==a && y==b && Environnement.ListEnvironement.get(i).isPoussiere()==testPoussiere) {
 				presence = true;
 			}
 		}
@@ -149,22 +149,22 @@ public class exEnvironement implements Runnable{
 
 		//Tout aspirer
 		if(lastAction == Agent.ASPIRER) {
-			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
-				int a = Environement.ListEnvironement.get(i).getX();
-				int b = Environement.ListEnvironement.get(i).getY();
-				if(PositionX==a && PositionY==b && (Environement.ListEnvironement.get(i).isPoussiere()==false || Environement.ListEnvironement.get(i).isPoussiere()==true)) {
-					Environement.ListEnvironement.remove(i);
+			for (int i = 0; i < Environnement.ListEnvironement.size(); i++) {
+				int a = Environnement.ListEnvironement.get(i).getX();
+				int b = Environnement.ListEnvironement.get(i).getY();
+				if(PositionX==a && PositionY==b && (Environnement.ListEnvironement.get(i).isPoussiere()==false || Environnement.ListEnvironement.get(i).isPoussiere()==true)) {
+					Environnement.ListEnvironement.remove(i);
 				}
 			}
 		}
 
 		//Ramasser avec condition
 		if(lastAction == Agent.RAMASSER) {
-			for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
-				int a = Environement.ListEnvironement.get(i).getX();
-				int b = Environement.ListEnvironement.get(i).getY();
-				if(PositionX==a && PositionY==b && Environement.ListEnvironement.get(i).isPoussiere()==false) {
-					Environement.ListEnvironement.remove(i);
+			for (int i = 0; i < Environnement.ListEnvironement.size(); i++) {
+				int a = Environnement.ListEnvironement.get(i).getX();
+				int b = Environnement.ListEnvironement.get(i).getY();
+				if(PositionX==a && PositionY==b && Environnement.ListEnvironement.get(i).isPoussiere()==false) {
+					Environnement.ListEnvironement.remove(i);
 				}
 			}
 		}

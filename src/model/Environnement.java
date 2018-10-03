@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class Environement {
+public class Environnement {
 	
 	public static ArrayList<Element> ListEnvironement = new ArrayList<Element>();
 	public static Agent agent = new Agent();
@@ -42,20 +42,15 @@ public class Environement {
 	}
 
 	public static void setScoreEnvironnement(int scoreEnvironnement) {
-		Environement.scoreEnvironnement = scoreEnvironnement;
+		Environnement.scoreEnvironnement = scoreEnvironnement;
 	}
 	
-	/*public static void reinitialiserPerf() {
-		Environement.setScoreEnvironnement(0);
-		Environement.agent.setEnergieDepense(0);
-	}*/
-
 	public static double getMoyenneScore() {
 		return moyenneScore;
 	}
 
 	public static void setMoyenneScore(double moyenneScore) {
-		Environement.moyenneScore = moyenneScore;
+		Environnement.moyenneScore = moyenneScore;
 	}
 
 }

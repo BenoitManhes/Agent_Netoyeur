@@ -12,6 +12,7 @@ import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -23,9 +24,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 import model.Agent;
 import model.Element;
-import model.Environement;
+import model.Environnement;
 import model.Parametre;
 
 /** ======================================= Dessiner les fenetres et tous les elements a mettre a jour ===========================================================*/
@@ -40,13 +43,10 @@ public class Draw{
 
 	BufferStrategy bufferStrategy;
 
-	Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-	int height = (int)dimension.getHeight();
-	int width  = (int)dimension.getWidth();
+	private int WIDTH = 460;
+	private int HEIGHT = 650;  
 
 
-	private int WIDTH = (int)(width/3);
-	private int HEIGHT = (int)(width*4/9);  
 
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
@@ -61,9 +61,6 @@ public class Draw{
 	private Image robotRamasse;
 	private Image robotNeRienFaire;
 	private String typeAffichage;
-
-	/**commodite d'affichage*/
-	private static boolean informationsVisibles;
 
 	/**Choix de l'exploration*/
 	private static boolean choixInformee;
@@ -123,7 +120,7 @@ public class Draw{
 		switch(titre) {
 		case "Environement" : frame.setLocation(0, 0);
 		break;
-		case "Agent" : frame.setLocation(width/2, 0);
+		case "Agent" : frame.setLocation(WIDTH + 20, 0);
 		break;
 		default : break;
 		}
@@ -171,7 +168,6 @@ public class Draw{
 
 
 	protected void render(Graphics2D g){
-
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.black);
 		// drawing de la grille
@@ -203,29 +199,29 @@ public class Draw{
 
 		// drawing du robot
 
-		if(Environement.agent.getLastAction()==Agent.DROITE) {
-			g.drawImage(robotDroite, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		if(Environnement.agent.getLastAction()==Agent.DROITE) {
+			g.drawImage(robotDroite, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.GAUCHE) {
-			g.drawImage(robotGauche, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.GAUCHE) {
+			g.drawImage(robotGauche, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.BAS) {
-			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.BAS) {
+			g.drawImage(robotBas, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.HAUT) {
-			g.drawImage(robotHaut, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.HAUT) {
+			g.drawImage(robotHaut, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.ASPIRER) {
-			g.drawImage(robotAspire, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.ASPIRER) {
+			g.drawImage(robotAspire, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.RAMASSER) {
-			g.drawImage(robotRamasse, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.RAMASSER) {
+			g.drawImage(robotRamasse, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
-		else if(Environement.agent.getLastAction()==Agent.NE_RIEN_FAIRE) {
-			g.drawImage(robotNeRienFaire, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+		else if(Environnement.agent.getLastAction()==Agent.NE_RIEN_FAIRE) {
+			g.drawImage(robotNeRienFaire, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
 		else {
-			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
+			g.drawImage(robotBas, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
 
 
@@ -233,37 +229,24 @@ public class Draw{
 		
 		if(choixInformee){
 			g.setColor(new Color(52, 201, 36));
-			g.drawString("Mode : Exploration informee", 10, HEIGHT -20);
+			g.drawString("Mode : Exploration informee", 20, WIDTH + 15);
 		}
 		else{
 			g.setColor(new Color(0, 127, 255));
-			g.drawString("Mode : Exploration non-informee", 10, HEIGHT - 20);
+			g.drawString("Mode : Exploration non-informee", 20, WIDTH + 15);
 		}
 		
-		g.setColor(Color.BLACK);
-		//maj score
-		if(informationsVisibles==true) {
-/*<<<<<<< Updated upstream
-			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,HEIGHT-170);
-			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, HEIGHT-150);
-			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, HEIGHT-130);
-			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, HEIGHT-110);
-
-			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, HEIGHT-170);
-			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200, HEIGHT-150);
-			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, HEIGHT-130);
-=======*/
 			//Affichage stat
 			g.setColor(Color.white);
 			
-			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,CO(10)+20);
-			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, CO(10)+40);
-			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, CO(10)+60);
+			g.drawString("Score environnement : "+Environnement.getScoreEnvironnement(), 20,WIDTH+40);
+			g.drawString("Cout energie : "+Environnement.agent.getEnergieDepense(), 20, WIDTH+60);
+			g.drawString("Score : "+(Environnement.getScoreEnvironnement()-Environnement.agent.getEnergieDepense()), 20, WIDTH+80);
 			
 			
-			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, CO(10)+20);
-			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200,CO(10)+40);
-			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, CO(10)+60);
+			g.drawString("Nombre de cases parcourues : "+Environnement.agent.getNbrCasesParcourues(), 220, WIDTH+40);
+			g.drawString("Nombre d'objets aspires : "+Environnement.agent.getNbrObjetsAspirees(), 220,WIDTH+60);
+			g.drawString("Nombre de bijoux ramasses : "+Environnement.agent.getNbrBijouxRamasses(), 220, WIDTH+80);
 
 
 			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
@@ -274,27 +257,32 @@ public class Draw{
 			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
 			double valeurProbaBijou = bdb.doubleValue();
 			
-			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 420, CO(10)+20);
-			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 420,CO(10)+40);
-			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 420, CO(10)+60);
+			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 220, WIDTH + 105);
+			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 220, WIDTH +125);
+			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 220, WIDTH + 145);
 			
 			//Affichage informations essentielles
-			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, CO(12));
-			g.drawString("Energie total : "+Environement.agent.getEnergieDepenseTotal(), 20, CO(12)+20);
-			g.drawString("Frequence d'observation : "+Environement.agent.getFrequenceObs(), 20, CO(12)+40);
 			
-			if(Environement.agent.isDebutCycle()) {
-				g.drawString("OBSERVATION",200, CO(12)+20);
+			 
+			NumberFormat nf = NumberFormat.getInstance();
+			nf.setMaximumFractionDigits(2);
+			String scoreMoyenFormate = nf.format(Environnement.getMoyenneScore());
+			
+			g.drawString("Score Moyen : "+scoreMoyenFormate, 20, WIDTH + 105);
+			g.drawString("Energie total : "+Environnement.agent.getEnergieDepenseTotal(), 20, WIDTH +125);
+			g.drawString("Frequence d'observation : "+Environnement.agent.getFrequenceObs(), 20, WIDTH + 145);
+			
+			if(Environnement.agent.isDebutCycle()) {
+				g.setColor(Color.orange);
+				g.drawString("Observation",220, WIDTH + 15);
 			}
-
-		}
-
+			
 		//affichage parcour planifie
-		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environement.agent.getObjectifs().isEmpty()) {
+		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environnement.agent.getObjectifs().isEmpty()) {
 			g.setColor(Color.RED);
-			g.drawLine(CO(Environement.agent.getX())+intervalle/2, CO(Environement.agent.getY())+intervalle/2,CO( Environement.agent.getObjectifs().get(0).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(0).getY())+intervalle/2);
-			for (int i = 0; i < Environement.agent.getObjectifs().size()-1; i++) {
-				g.drawLine(CO(Environement.agent.getObjectifs().get(i).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(i).getY())+intervalle/2,CO( Environement.agent.getObjectifs().get(i+1).getX())+intervalle/2, CO(Environement.agent.getObjectifs().get(i+1).getY())+intervalle/2);
+			g.drawLine(CO(Environnement.agent.getX())+intervalle/2, CO(Environnement.agent.getY())+intervalle/2,CO( Environnement.agent.getObjectifs().get(0).getX())+intervalle/2, CO(Environnement.agent.getObjectifs().get(0).getY())+intervalle/2);
+			for (int i = 0; i < Environnement.agent.getObjectifs().size()-1; i++) {
+				g.drawLine(CO(Environnement.agent.getObjectifs().get(i).getX())+intervalle/2, CO(Environnement.agent.getObjectifs().get(i).getY())+intervalle/2,CO( Environnement.agent.getObjectifs().get(i+1).getX())+intervalle/2, CO(Environnement.agent.getObjectifs().get(i+1).getY())+intervalle/2);
 			}
 		}
 
@@ -337,8 +325,8 @@ public class Draw{
 		//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItemRaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Systeme : r�initialisation de l'environnement");
-				Environement.ListEnvironement.clear();
+				System.out.println("Systeme : reinitialisation de l'environnement");
+				Environnement.ListEnvironement.clear();
 				
 			}
 		});
@@ -385,20 +373,6 @@ public class Draw{
 		});
 		menu.add(menuItemBijouMoins);
 
-
-		menuItemInformations = new JMenuItem("Informations");
-		menuItemInformations.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(informationsVisibles) {
-					informationsVisibles=false;
-				}
-				else {
-					informationsVisibles=true;
-				}
-			}
-		});
-		menuBar.add(menuItemInformations);
-
 		return menuBar;
 	}
 
@@ -431,13 +405,13 @@ public class Draw{
 		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Systeme : performances de l'agent reinitialisee");
-				Environement.setScoreEnvironnement(0);
-				Environement.agent.setEnergieDepense(0);
-				Environement.agent.setLastAction(0);
-				Environement.agent.setNbrBijouxRamasses(0);
-				Environement.agent.setNbrCasesParcourues(0);
-				Environement.agent.setNbrObjetsAspirees(0);
-				Environement.setMoyenneScore(0);
+				Environnement.setScoreEnvironnement(0);
+				Environnement.agent.setEnergieDepense(0);
+				Environnement.agent.setLastAction(0);
+				Environnement.agent.setNbrBijouxRamasses(0);
+				Environnement.agent.setNbrCasesParcourues(0);
+				Environnement.agent.setNbrObjetsAspirees(0);
+				Environnement.setMoyenneScore(0);
 			}});
 		menuBar.add(menuItemRazPerf);
 

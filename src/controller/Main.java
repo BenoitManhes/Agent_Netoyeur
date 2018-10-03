@@ -4,8 +4,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		 exEnvironement exE = new exEnvironement();
-		 exAgent exA = new exAgent();
+		 ExEnvironnement exE = new ExEnvironnement();
+		 ExAgent exA = new ExAgent();
 		 
 		 new Thread(exE).start();
 		 new Thread(exA).start();

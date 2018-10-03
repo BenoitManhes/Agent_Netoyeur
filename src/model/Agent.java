@@ -51,20 +51,19 @@ public class Agent {
 	
 	public void observerEnvironnement(){
 		this.ListElementObs.clear();
-		this.ListElementObs.addAll(Environement.ListEnvironement);
-		//System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
+		this.ListElementObs.addAll(Environnement.ListEnvironement);
 	}
 
 	/** ============================================ Mise ajour Etat ===========================================================================*/
 	public void ajoutPerformance() {
-		int score = Environement.getScoreEnvironnement() - energieDepense;	// calcul des points
+		int score = Environnement.getScoreEnvironnement() - energieDepense;	// calcul des points
 		tabFrequence[frequenceObs-1][0] += score; 
 		tabFrequence[frequenceObs-1][1] += nbElementCycle;
-		Environement.scoresObtenus.add(score);
+		Environnement.scoresObtenus.add(score);
 		//remise de spoints a zero
-		System.out.println("Score environement: "+Environement.getScoreEnvironnement()+"  - energie: "+energieDepense);
+		System.out.println("Environnement: Score : "+Environnement.getScoreEnvironnement()+" / energie: "+energieDepense);
 		energieDepense=0;
-		Environement.setScoreEnvironnement(0);
+		Environnement.setScoreEnvironnement(0);
 	}
 	
 	public void resetNbElementCycle() {
