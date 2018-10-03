@@ -141,7 +141,6 @@ public class ExAgent implements Runnable{
 		}
 		
 		if(!Environnement.agent.getMouvementChemin().isEmpty()){
-			Environnement.agent.setDebutCycle(false);
 			switch(Environnement.agent.getMouvementChemin().get(0)){
 			case Agent.HAUT:
 				Environnement.agent.goUp();
