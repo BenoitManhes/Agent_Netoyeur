@@ -14,7 +14,7 @@ public class exAgent implements Runnable{
 		/**Initialisation de l affichage de l agent*/
 		Draw drawing = new Draw(Parametre.TITRE_AGENT, Environement.agent.getListElementObs());
 		
-		//testAInformee();
+	   //testAInformee();
 	   //testArbre();
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
@@ -48,6 +48,13 @@ public class exAgent implements Runnable{
 		}
 		// Observation si un cycle est finie ou liste d element observe vide
 		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) { 
+			Environement.agent.setDebutCycle(true);
+			
+			if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle())
+			{
+				System.out.println("--Démarage d'un nouveau cycle--");
+			}
+			System.out.println("Agent : J'observe l'environnement à l'aide de mes capteurs");
 			Environement.agent.observerEnvironnement();
 		}
 	}
@@ -56,12 +63,13 @@ public class exAgent implements Runnable{
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
 		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) {	// si le robot a terminer son cycle
+			System.out.println("Agent : Je met à jour mon état interne");
 			Environement.agent.ajoutPerformance();
 			Environement.agent.resetNbElementCycle(); 	// Nouveau cycle
 			Environement.agent.getObjectifs().clear();
 			Environement.agent.getMouvementChemin().clear();
-			System.out.println("Performance enregistrï¿½");
-			affichageFrequence();
+			/*System.out.println("Performance enregistrï¿½");
+			affichageFrequence();*/
 		}
 
 	}
@@ -71,7 +79,9 @@ public class exAgent implements Runnable{
 		// Choix de la frequence d observation
 		if(Environement.agent.getNbElementCycle() == 0 && Environement.agent.getObjectifs().isEmpty()) { // cycle termine
 			Environement.agent.choixFrequence();
-			System.out.println("Frequence choisi : "+Environement.agent.getFrequenceObs());
+			System.out.println("Agent : Je planifie mes prochaines actions");
+			//System.out.println("Frequence choisi : "+Environement.agent.getFrequenceObs());
+			
 		}
 		// Choix du chemin a parcourir
 		if(!Environement.agent.getListElementObs().isEmpty() && (Environement.agent.getNbElementCycle() == 0 || Environement.agent.getObjectifs().isEmpty())) {	
@@ -79,11 +89,13 @@ public class exAgent implements Runnable{
 			if(nbElementObs>0) {
 				planificationItineraire();
 			}
+
 		}
 		// Planification des actions a faire 
 		if( !Environement.agent.getObjectifs().isEmpty() && Environement.agent.getMouvementChemin().isEmpty()) { // objectif existant et aucune action en attente
 			planificationAction();
 		}
+		
 	}
 
 	public void planificationItineraire() {
@@ -107,7 +119,12 @@ public class exAgent implements Runnable{
 
 	// ---------------------------------------------------Action----------------------------------------------------------------------------------
 	public void actionAgent(){
+		if(Environement.agent.isDebutCycle()){
+			System.out.println("Agent : J'effectue la séquence d'actions planifiées");
+		}
+		
 		if(!Environement.agent.getMouvementChemin().isEmpty()){
+			Environement.agent.setDebutCycle(false);
 			switch(Environement.agent.getMouvementChemin().get(0)){
 			case Agent.HAUT:
 				Environement.agent.goUp();
