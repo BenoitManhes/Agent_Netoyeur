@@ -19,17 +19,19 @@ public class exAgent implements Runnable{
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 
-			// Observer environement
-			observation();
 
-			// Mise a jour Etat
-			miseAJourEtat();
+				// Observer environement
+				observation();
 
-			// Decision Action 
-			decision();
+				// Mise a jour Etat
+				miseAJourEtat();
 
-			// Action
-			actionAgent();
+				// Decision Action 
+				decision();
+
+				// Action
+				actionAgent();
+			
 
 			//mis a jour affichage et delai
 			drawing.render();
@@ -77,7 +79,13 @@ public class exAgent implements Runnable{
 		if(!Environement.agent.getListElementObs().isEmpty() && (Environement.agent.getNbElementCycle() == 0 || Environement.agent.getObjectifs().isEmpty())) {	
 			int nbElementObs = Environement.agent.getListElementObs().size();
 			if(nbElementObs>0) {
-				planificationItineraire();
+				if(!Draw.isChoixInformee()) {
+					planificationItineraire();
+				}
+				else if(Draw.isChoixInformee()) {
+					planificationInformee();
+				}
+				
 			}
 		}
 		// Planification des actions a faire 
@@ -176,6 +184,8 @@ public class exAgent implements Runnable{
 		Glouton arbreinf = new Glouton(Environement.agent.getX(), Environement.agent.getY(), Environement.agent.getListElementObs(), Environement.agent.getListElementObs().get(0));
 		arbreinf.greedySearch();
 		Environement.agent.setObjectifs(arbreinf.getItineraireOptimal());
+		Environement.enregistrerPerf();
+		Environement.reinitialiserPerf();
 	}
 
 

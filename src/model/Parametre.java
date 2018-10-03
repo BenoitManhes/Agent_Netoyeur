@@ -11,7 +11,7 @@ public class Parametre {
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba
-	public static double PROBA_POUSSIERE = 0.01;
+	public static double PROBA_POUSSIERE = 0.02;
 	public static double PROBA_BIJOU = 0.002;
 	
 	//Frequence d observation

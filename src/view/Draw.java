@@ -13,12 +13,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 
 import model.Agent;
 import model.Element;
@@ -29,9 +31,9 @@ import model.Parametre;
 
 
 public class Draw{
-	
+
 	// -------------------------------------------------Attributs-------------------------------------------------------------------------------
-	
+
 	JFrame frame;
 	Canvas canvas;
 
@@ -42,8 +44,8 @@ public class Draw{
 	int width  = (int)dimension.getWidth();
 
 
-	private int WIDTH = (int)(width/3);
-	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
+	private int WIDTH = (int)(width/2);
+	private int HEIGHT = (int)(width/2)+20;  //20 = height of menu
 
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
@@ -62,12 +64,15 @@ public class Draw{
 	/**commodite d'affichage*/
 	private static boolean informationsVisibles;
 
+	/**Choix de l'exploration*/
+	private static boolean choixInformee;
+
 	private ArrayList<Element> List;
 
 	// -------------------------------------------------Constructeur-------------------------------------------------------------------------------
-	
+
 	public Draw(String titre, ArrayList<Element> list){
-		
+
 		//Chargement des ressources utiles
 		typeAffichage=titre;
 		List = list;
@@ -98,7 +103,7 @@ public class Draw{
 		try {
 			this.bijou = ImageIO.read(new File("diamond-ring.png"));
 		} catch (IOException e) {e.printStackTrace();}
-		
+
 		//Makes a new window
 		frame = new JFrame(titre);
 		JPanel panel = (JPanel) frame.getContentPane();
@@ -109,10 +114,10 @@ public class Draw{
 		canvas.setIgnoreRepaint(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
-		
+
 		//this will make the frame not re-sizable
 		frame.setResizable(false);
-		
+
 		//this will place the frames on different positions
 		switch(titre) {
 		case "Environement" : frame.setLocation(0, 0);
@@ -121,7 +126,7 @@ public class Draw{
 		break;
 		default : break;
 		}
-		
+
 		//this will add a menu on the frame Environnement
 		int tailleMenu = 0;
 		switch(titre) {
@@ -138,23 +143,23 @@ public class Draw{
 		default : break;
 		}					
 		frame.setVisible(true);
-		
+
 		//this will add the canvas to our frame
 		panel.add(canvas);
 		canvas.createBufferStrategy(2);
 		bufferStrategy = canvas.getBufferStrategy();
-		
+
 		//this will make sure the canvas has focus, so that it can take input from mouse/keyboard
 		canvas.requestFocus();
-		
+
 		//this will set the background to black
 		canvas.setBackground(Color.black);
 		// This will add our buttonhandler to our program
 		//canvas.addKeyListener(new ButtonHandler());
 	}
-	
+
 	// -------------------------------------------------Mise a jour avec le thread de l environnement-------------------------------------------------------------------------------
-	
+
 	public void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
@@ -162,10 +167,10 @@ public class Draw{
 		g.dispose();
 		bufferStrategy.show();
 	}
-	
-	
+
+
 	protected void render(Graphics2D g){
-		
+
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.black);
 		// drawing de la grille
@@ -178,7 +183,7 @@ public class Draw{
 				g.drawRect(CO(i), CO(j),T,T );
 			}
 		}
-		
+
 		/* Drawing des elements d abord poussier puis ensuite bijou 
 		 * 2 boucle for afin de permettre aux images des bijoux de paraitre dessus la poussiere
 		 */
@@ -194,7 +199,7 @@ public class Draw{
 				g.drawImage(bijou,CO(e.getX()),CO(e.getY()),T,T,null);
 			}
 		}
-		
+
 		// drawing du robot
 
 		if(Environement.agent.getLastAction()==Agent.DROITE) {
@@ -222,7 +227,7 @@ public class Draw{
 			g.drawImage(robotBas, CO(Environement.agent.getX()), CO(Environement.agent.getY()), T, T, null);
 		}
 
-		
+
 
 		//maj score
 		if(informationsVisibles==true) {
@@ -230,7 +235,7 @@ public class Draw{
 			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, HEIGHT-150);
 			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, HEIGHT-130);
 			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, HEIGHT-110);
-			
+
 			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, HEIGHT-170);
 			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200, HEIGHT-150);
 			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, HEIGHT-130);
@@ -242,7 +247,7 @@ public class Draw{
 			BigDecimal bdb = new BigDecimal(Parametre.PROBA_BIJOU);
 			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
 			double valeurProbaBijou = bdb.doubleValue();
-			
+
 			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 420, HEIGHT-170);
 			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 420, HEIGHT-150);
 			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 420, HEIGHT-130);
@@ -261,16 +266,16 @@ public class Draw{
 	}
 
 	// -------------------------------------------------Generer les cases-------------------------------------------------------------------------------
-	
+
 	private int CO(int x) {	// coordonne en fonction de la taille de grille
 		return (int) (x*intervalle+intervalle/10);
 	}
 
-	
+
 	/** ================================================== Creer les menus ===========================================================*/
-	
+
 	// -------------------------------------------------Menu de l environnement-------------------------------------------------------------------------------
-	
+
 	public static JMenuBar createMenuBarEnvironnement() {
 
 		JMenuBar menuBar;
@@ -359,7 +364,7 @@ public class Draw{
 	}
 
 	// -------------------------------------------------Menu de l agent-------------------------------------------------------------------------------
-	
+
 	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
@@ -368,6 +373,9 @@ public class Draw{
 		JMenuItem menuItemVitessePlus;
 		JMenuItem menuItemVitesseMoins;
 		JMenuItem menuItemInformations2;
+		JMenu menuInforme;
+		JRadioButtonMenuItem menuInformeOui;
+		JRadioButtonMenuItem menuInformeNon;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -411,22 +419,45 @@ public class Draw{
 		});
 		menu.add(menuItemVitesseMoins);
 
-		menuItemInformations2 = new JMenuItem("Informations");
-		menuItemInformations2.addActionListener(new ActionListener() {
+		
+		//Build the explorationMenu
+		menuInforme = new JMenu("Type d'exploration");
+		menuBar.add(menuInforme);
+		menuInforme.getAccessibleContext().setAccessibleDescription("Set event 2");
+		ButtonGroup bg = new ButtonGroup();
+		
+		menuInforme.addSeparator();
+		menuInformeOui = new JRadioButtonMenuItem("Exploration informee");
+		menuInformeOui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(informationsVisibles) {
-					informationsVisibles=false;
-				}
-				else {
-					informationsVisibles=true;
-				}
+				choixInformee = true;
 			}
 		});
-		menuBar.add(menuItemInformations2);
+		bg.add(menuInformeOui);
+		menuInforme.add(menuInformeOui);
+		
+		menuInforme.addSeparator();
+		menuInformeNon = new JRadioButtonMenuItem("Exploration non-informee");
+		menuInformeNon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choixInformee = false;
+			}
+		});
+		menuInformeNon.setSelected(true);
+		bg.add(menuInformeNon);
+		menuInforme.add(menuInformeNon);
+		
+		
+		
 
 		return menuBar;
 
 	}
+
+	public static boolean isChoixInformee() {
+		return choixInformee;
+	}
+
 
 
 
