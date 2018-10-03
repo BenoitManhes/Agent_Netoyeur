@@ -30,11 +30,7 @@ public class exAgent implements Runnable{
 				decision();
 
 				// Action
-				actionAgent();
-				
-				Environement.enregistrerPerf();
-				Environement.reinitialiserPerf();
-			
+				actionAgent();			
 
 			//mis a jour affichage et delai
 			drawing.render();
@@ -57,24 +53,25 @@ public class exAgent implements Runnable{
 			
 			if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle())
 			{
-				System.out.println("--D�marage d'un nouveau cycle--");
+				System.out.println("--Demarage d'un nouveau cycle--");
 			}
-			System.out.println("Agent : J'observe l'environnement � l'aide de mes capteurs");
+			System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
 			Environement.agent.observerEnvironnement();
+		}else {
+			Environement.agent.setDebutCycle(false);
 		}
 	}
 
 	// -----------------------------------------------Mise a jour Etat----------------------------------------------------------------------------
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
-		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) {	// si le robot a terminer son cycle
-			System.out.println("Agent : Je met � jour mon �tat interne");
+		if(Environement.agent.isDebutCycle()) {	// si le robot a terminer son cycle
+			System.out.println("Agent : Je met a jour mon etat interne");
 			Environement.agent.ajoutPerformance();
 			Environement.agent.resetNbElementCycle(); 	// Nouveau cycle
 			Environement.agent.getObjectifs().clear();
 			Environement.agent.getMouvementChemin().clear();
-			/*System.out.println("Performance enregistr�");
-			affichageFrequence();*/
+			affichageFrequence();
 		}
 
 	}
@@ -98,7 +95,7 @@ public class exAgent implements Runnable{
 
 			if(nbElementObs>0) {
 				if(!Draw.isChoixInformee()) {
-					planificationItineraire();
+					planificationNonInforme();
 				}
 				else if(Draw.isChoixInformee()) {
 					planificationInformee();
@@ -114,12 +111,19 @@ public class exAgent implements Runnable{
 		
 	}
 
-	public void planificationItineraire() {
+	public void planificationNonInforme() {
 		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
 		
 		if(!A.getItineraireOptimal().isEmpty()) {
 			Environement.agent.setObjectifs(A.getItineraireOptimal());
 		}
+	}
+	
+	
+	public void planificationInformee() {
+		Glouton arbreinf = new Glouton(Environement.agent.getX(), Environement.agent.getY(), Environement.agent.getListElementObs(), Environement.agent.getListElementObs().get(0));
+		arbreinf.greedySearch();
+		Environement.agent.setObjectifs(arbreinf.getItineraireOptimal());
 	}
 
 	public void planificationAction() {
@@ -136,7 +140,7 @@ public class exAgent implements Runnable{
 	// ---------------------------------------------------Action----------------------------------------------------------------------------------
 	public void actionAgent(){
 		if(Environement.agent.isDebutCycle()){
-			System.out.println("Agent : J'effectue la s�quence d'actions planifi�es");
+			System.out.println("Agent : J'effectue la sequence d'actions planifiees");
 		}
 		
 		if(!Environement.agent.getMouvementChemin().isEmpty()){
@@ -196,23 +200,6 @@ public class exAgent implements Runnable{
 		arbreinf.greedySearch();
 		Environement.agent.setObjectifs(arbreinf.getItineraireOptimal());
 	}
-	
-
-	public void planificationItineraire(int X) {
-		ArbreNonInforme A = new ArbreNonInforme(Environement.agent.getListElementObs(), Environement.agent.getX(), Environement.agent.getY());
-		Environement.agent.setObjectifs(A.getItineraireOptimal());
-		Environement.enregistrerPerf();
-		Environement.reinitialiserPerf();
-	}
-	
-	public void planificationInformee() {
-		Glouton arbreinf = new Glouton(Environement.agent.getX(), Environement.agent.getY(), Environement.agent.getListElementObs(), Environement.agent.getListElementObs().get(0));
-		arbreinf.greedySearch();
-		Environement.agent.setObjectifs(arbreinf.getItineraireOptimal());
-		Environement.enregistrerPerf();
-		Environement.reinitialiserPerf();
-	}
-
 
 	public void afficherAction() {
 		String s = "action : [ ";

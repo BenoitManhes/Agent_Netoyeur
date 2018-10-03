@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import org.omg.CORBA.Environment;
+
 public class Agent {
 
 	//Mouvement de l'agent
@@ -23,10 +25,11 @@ public class Agent {
 	private int frequenceObs = Parametre.FREQUENCE_MAX;
 	private int nbElementCycle = 0;	// nb element atteint sans avoir effectuer d observation
 	private boolean debutCycle = true;
-	private int energieDepense;
-	private int nbrCasesParcourues;
-	private int nbrObjetsAspires;
-	private int nbrBijouxRamasses;
+	private int energieDepense = 0;
+	private int energieDepenseTotal = 0;
+	private int nbrCasesParcourues = 0;
+	private int nbrObjetsAspires = 0;
+	private int nbrBijouxRamasses = 0;
 
 	
 	public Agent() {
@@ -54,9 +57,12 @@ public class Agent {
 
 	/** ============================================ Mise ajour Etat ===========================================================================*/
 	public void ajoutPerformance() {
-		tabFrequence[frequenceObs-1][0] += Environement.getScoreEnvironnement() - energieDepense; // calcul des points
+		int score = Environement.getScoreEnvironnement() - energieDepense;	// calcul des points
+		tabFrequence[frequenceObs-1][0] += score; 
 		tabFrequence[frequenceObs-1][1] += nbElementCycle;
+		Environement.scoresObtenus.add(score);
 		//remise de spoints a zero
+		System.out.println("Score environement: "+Environement.getScoreEnvironnement()+"  - energie: "+energieDepense);
 		energieDepense=0;
 		Environement.setScoreEnvironnement(0);
 	}
@@ -94,7 +100,7 @@ public class Agent {
 		if(this.Y>0){
 			this.Y--;
 			this.lastAction = HAUT;
-			this.energieDepense++;
+			this.incrementeEnergieDepense();
 			//System.out.println("Agent : Je me suis deplace vers le haut");
 		}
 	}
@@ -103,7 +109,7 @@ public class Agent {
 		if(this.Y<Parametre.TAILLE_GRILLE-1){
 			this.Y++;
 			this.lastAction = BAS;
-			this.energieDepense++;
+			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
 			//System.out.println("Agent : Je me suis deplace vers le bas");
 		}
@@ -113,7 +119,7 @@ public class Agent {
 		if(this.X<Parametre.TAILLE_GRILLE-1){
 			this.X++;
 			this.lastAction = DROITE;
-			this.energieDepense++;
+			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
 			//System.out.println("Agent : Je me suis deplace vers la droite");
 		}
@@ -123,7 +129,7 @@ public class Agent {
 		if(this.X>0){
 			this.X--;
 			this.lastAction = GAUCHE;
-			this.energieDepense++;
+			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
 			//System.out.println("Agent : Je me suis deplace vers la gauche");
 		}
@@ -131,7 +137,7 @@ public class Agent {
 
 	public void ramasser(){ 
 		this.lastAction = RAMASSER;
-		this.energieDepense++;
+		this.incrementeEnergieDepense();
 		this.nbrBijouxRamasses++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
 	//	System.out.println("Agent : J'ai ramasse le contenu de la case");
@@ -139,13 +145,16 @@ public class Agent {
 
 	public void aspirer(){
 		this.lastAction = ASPIRER;
-		this.energieDepense++;
+		this.incrementeEnergieDepense();
 		this.nbrObjetsAspires++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
 	//	System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
-	
+	public void incrementeEnergieDepense() {
+		this.energieDepense += Parametre.COUT_ENERGIE;
+		this.energieDepenseTotal += Parametre.COUT_ENERGIE;
+	}
 
 	/** ============================================= methode de calcul ========================================================================*/
 
@@ -224,16 +233,16 @@ public class Agent {
 		return lastAction;
 	}
 
-	public void setLastAction(int lastAction) {
-		this.lastAction = lastAction;
+	public void setLastAction(int l) {
+		this.lastAction = l;
 	}
 
 	public int getEnergieDepense() {
 		return energieDepense;
 	}
 
-	public void setEnergieDepense(int energieDepense) {
-		this.energieDepense = energieDepense;
+	public void setEnergieDepense(int e) {
+		this.energieDepense = e;
 	}
 
 	public ArrayList<Integer> getMouvementChemin() {
@@ -294,6 +303,16 @@ public class Agent {
 
 	public void setDebutCycle(boolean debutCycle) {
 		this.debutCycle = debutCycle;
+	}
+
+
+	public int getEnergieDepenseTotal() {
+		return energieDepenseTotal;
+	}
+
+
+	public void setEnergieDepenseTotal(int energieDepenseTotal) {
+		this.energieDepenseTotal = energieDepenseTotal;
 	}
 
 

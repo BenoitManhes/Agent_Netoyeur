@@ -3,6 +3,7 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -45,7 +46,7 @@ public class Draw{
 
 
 	private int WIDTH = (int)(width/3);
-	private int HEIGHT = (int)(width/3)+20;  //20 = height of menu
+	private int HEIGHT = (int)(width*4/9);  
 
 	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
 
@@ -231,6 +232,7 @@ public class Draw{
 
 		//maj score
 		if(informationsVisibles==true) {
+/*<<<<<<< Updated upstream
 			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,HEIGHT-170);
 			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, HEIGHT-150);
 			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, HEIGHT-130);
@@ -239,6 +241,19 @@ public class Draw{
 			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, HEIGHT-170);
 			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200, HEIGHT-150);
 			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, HEIGHT-130);
+=======*/
+			//Affichage stat
+			g.setColor(Color.white);
+			
+			g.drawString("Score environnement : "+Environement.getScoreEnvironnement(), 20,CO(10)+20);
+			g.drawString("Cout energie : "+Environement.agent.getEnergieDepense(), 20, CO(10)+40);
+			g.drawString("Score : "+(Environement.getScoreEnvironnement()-Environement.agent.getEnergieDepense()), 20, CO(10)+60);
+			
+			
+			g.drawString("Nombre de cases parcourues : "+Environement.agent.getNbrCasesParcourues(), 200, CO(10)+20);
+			g.drawString("Nombre d'objets aspires : "+Environement.agent.getNbrObjetsAspirees(), 200,CO(10)+40);
+			g.drawString("Nombre de bijoux ramasses : "+Environement.agent.getNbrBijouxRamasses(), 200, CO(10)+60);
+
 
 			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
 			bd= bd.setScale(4,BigDecimal.ROUND_DOWN);
@@ -247,10 +262,19 @@ public class Draw{
 			BigDecimal bdb = new BigDecimal(Parametre.PROBA_BIJOU);
 			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
 			double valeurProbaBijou = bdb.doubleValue();
-
-			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 420, HEIGHT-170);
-			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 420, HEIGHT-150);
-			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 420, HEIGHT-130);
+			
+			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 420, CO(10)+20);
+			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 420,CO(10)+40);
+			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 420, CO(10)+60);
+			
+			//Affichage informations essentielles
+			g.drawString("Score Moyen : "+Environement.getMoyenneScore(), 20, CO(12));
+			g.drawString("Energie total : "+Environement.agent.getEnergieDepenseTotal(), 20, CO(12)+20);
+			g.drawString("Frequence d'observation : "+Environement.agent.getFrequenceObs(), 20, CO(12)+40);
+			
+			if(Environement.agent.isDebutCycle()) {
+				g.drawString("OBSERVATION",200, CO(12)+20);
+			}
 
 		}
 

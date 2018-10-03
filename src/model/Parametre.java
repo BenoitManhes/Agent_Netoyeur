@@ -6,12 +6,12 @@ public class Parametre {
 	
 	//Gestion des points
 	public static final int POINT_POUSSIERE = 8;
-	public static final int POINT_BIJOU = 10;
+	public static final int POINT_BIJOU = 5;
 	public static final int MALUS_BIJOU = -20;
 	public static final int COUT_ENERGIE = 1;
 	
 	//Proba
-	public static double PROBA_POUSSIERE = 0.03;
+	public static double PROBA_POUSSIERE = 0.02;
 	public static double PROBA_BIJOU = 0.002;
 	
 	//Frequence d observation

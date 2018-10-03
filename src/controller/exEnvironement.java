@@ -21,9 +21,11 @@ public class exEnvironement implements Runnable{
 			genererBijou(probaBijou);
 
 			//Regarder le robot et compter les points
-
 			calculateScoreEnvironnement();
-			majAffichage();
+			majEnvironement();
+
+			// Calcul des statistiques
+			updateScoreMoyen();
 
 			//mis a jour affichage avec drawing
 			drawing.render();	
@@ -58,10 +60,10 @@ public class exEnvironement implements Runnable{
 			}
 		}
 	}
-	
+
 
 	// -------------------------------------------------Obtenir les positions de l agent-------------------------------------------------------------------------------
-	
+
 	public int getXPositionAgent() {
 		return Environement.agent.getX();
 	}
@@ -71,15 +73,15 @@ public class exEnvironement implements Runnable{
 	}
 
 	// -------------------------------------------------Obtenir la derniere action de l agent-------------------------------------------------------------------------------
-	
+
 	public int getLastActionAgent() {
 		return Environement.agent.getLastAction();
 	}
-	
+
 
 	// -------------------------------------------------Calculer le score-------------------------------------------------------------------------------
-	
-	private int calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
+
+	private void calculateScoreEnvironnement() {	//Prend en parametres les coordonnees de l'agent et sa derniere action
 
 		int score = 0;
 		int PositionX = getXPositionAgent();
@@ -95,7 +97,7 @@ public class exEnvironement implements Runnable{
 		//Test si il y a un bijou
 		if (isTherePoussiere(PositionX, PositionY, false)) {
 			if(lastAction == Agent.ASPIRER) {
-				
+
 				score+=Parametre.MALUS_BIJOU;
 				System.out.println("Environnement : L'agent a aspire un bijou");
 				System.out.println("Environnement : l'agent perd "+score+" points.");
@@ -107,15 +109,24 @@ public class exEnvironement implements Runnable{
 			}
 		}
 		ajouterScore(score);
-		return score;
 	}
-	
+
 	private void ajouterScore(int score) {
 		Environement.setScoreEnvironnement(Environement.getScoreEnvironnement() + score);
 	}
 
-// -------------------------------------------------Voir la presence d element-------------------------------------------------------------------------------
-	
+	private void updateScoreMoyen() {
+		if(!Environement.scoresObtenus.isEmpty()) {
+			double somme = 0;
+			for (int i = 0; i < Environement.scoresObtenus.size(); i++) {
+				somme += Environement.scoresObtenus.get(i);
+			}
+			Environement.setMoyenneScore(somme/Environement.scoresObtenus.size());
+		}
+	}
+
+	// -------------------------------------------------Voir la presence d element-------------------------------------------------------------------------------
+
 	public boolean isTherePoussiere(int x, int y, boolean testPoussiere) {
 		boolean presence = false;
 		for (int i = 0; i < Environement.ListEnvironement.size(); i++) {
@@ -127,10 +138,10 @@ public class exEnvironement implements Runnable{
 		}
 		return presence;
 	}
-	
-	// -------------------------------------------------Mettre a jour l affichage-------------------------------------------------------------------------------
 
-	private void majAffichage() {
+	// -------------------------------------------------Mettre a jour l'environement-------------------------------------------------------------------------------
+
+	private void majEnvironement() {
 
 		int PositionX = getXPositionAgent();
 		int PositionY = getYPositionAgent();
@@ -158,9 +169,9 @@ public class exEnvironement implements Runnable{
 			}
 		}
 	}
-	
+
 	// -------------------------------------------------Methode pour initialiser l'environnement-------------------------------------------------------------------------------
-	
+
 	private void initialisationEnvironnement() {
 		genererBijou(Parametre.PROBA_BIJOU*1000);
 		genererPoussiere(Parametre.PROBA_POUSSIERE*1000);
