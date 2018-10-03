@@ -6,7 +6,7 @@ public class Parametre {
 	
 	//Gestion des points
 	public static final int POINT_POUSSIERE = 8;
-	public static final int POINT_BIJOU = 4;
+	public static final int POINT_BIJOU = 10;
 	public static final int MALUS_BIJOU = -20;
 	public static final int COUT_ENERGIE = 1;
 	
@@ -25,6 +25,7 @@ public class Parametre {
 	public static final int DELAI_ENV = 10;		// idem environnement
 	public static final String TITRE_AGENT = "Agent";
 	public static final String TITRE_ENVIRONNEMENT = "Environnement";
+	public static final int LIMITE_NON_INFORME = 10;
 	
 	
 }

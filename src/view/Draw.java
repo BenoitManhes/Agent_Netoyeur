@@ -302,7 +302,7 @@ public class Draw{
 		//	menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItemRaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Systeme : réinitialisation de l'environnement");
+				System.out.println("Systeme : rï¿½initialisation de l'environnement");
 				Environement.ListEnvironement.clear();
 				
 			}
@@ -453,18 +453,26 @@ public class Draw{
 				System.out.println("Systeme : mode exploration non-informee");
 			}
 		});
-		menuInformeNon.setSelected(true);
+		
+		if(choixInformee == false) {
+			menuInformeOui.setSelected(false);
+			menuInformeNon.setSelected(true);
+		}
+		else menuInformeNon.setSelected(false);
+		
 		bg.add(menuInformeNon);
 		menuInforme.add(menuInformeNon);
-		
-		
-		
 
 		return menuBar;
 
 	}
 
 	public static boolean isChoixInformee() {
+		return choixInformee;
+	}
+	
+	public static boolean setChoixInformee(boolean choix) {
+		choixInformee = choix;
 		return choixInformee;
 	}
 

@@ -7,7 +7,6 @@ public class Environement {
 	
 	public static ArrayList<Element> ListEnvironement = new ArrayList<Element>();
 	public static Agent agent = new Agent();
-	private static int performance;
 	private static int scoreEnvironnement;
 	private static Vector<Integer> scoresObtenus = new Vector<>();
 	private static double moyenneScore;

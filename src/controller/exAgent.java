@@ -31,6 +31,9 @@ public class exAgent implements Runnable{
 
 				// Action
 				actionAgent();
+				
+				Environement.enregistrerPerf();
+				Environement.reinitialiserPerf();
 			
 
 			//mis a jour affichage et delai
@@ -54,9 +57,9 @@ public class exAgent implements Runnable{
 			
 			if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle())
 			{
-				System.out.println("--Démarage d'un nouveau cycle--");
+				System.out.println("--Dï¿½marage d'un nouveau cycle--");
 			}
-			System.out.println("Agent : J'observe l'environnement à l'aide de mes capteurs");
+			System.out.println("Agent : J'observe l'environnement ï¿½ l'aide de mes capteurs");
 			Environement.agent.observerEnvironnement();
 		}
 	}
@@ -65,7 +68,7 @@ public class exAgent implements Runnable{
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
 		if(Environement.agent.getFrequenceObs() == Environement.agent.getNbElementCycle() || Environement.agent.getObjectifs().isEmpty()) {	// si le robot a terminer son cycle
-			System.out.println("Agent : Je met à jour mon état interne");
+			System.out.println("Agent : Je met ï¿½ jour mon ï¿½tat interne");
 			Environement.agent.ajoutPerformance();
 			Environement.agent.resetNbElementCycle(); 	// Nouveau cycle
 			Environement.agent.getObjectifs().clear();
@@ -88,6 +91,11 @@ public class exAgent implements Runnable{
 		// Choix du chemin a parcourir
 		if(!Environement.agent.getListElementObs().isEmpty() && (Environement.agent.getNbElementCycle() == 0 || Environement.agent.getObjectifs().isEmpty())) {	
 			int nbElementObs = Environement.agent.getListElementObs().size();
+			if(nbElementObs>Parametre.LIMITE_NON_INFORME) {
+				Draw.setChoixInformee(true);
+				System.out.println("Agent : Je me suis mis en mode safe");
+			}
+
 			if(nbElementObs>0) {
 				if(!Draw.isChoixInformee()) {
 					planificationItineraire();
@@ -128,7 +136,7 @@ public class exAgent implements Runnable{
 	// ---------------------------------------------------Action----------------------------------------------------------------------------------
 	public void actionAgent(){
 		if(Environement.agent.isDebutCycle()){
-			System.out.println("Agent : J'effectue la séquence d'actions planifiées");
+			System.out.println("Agent : J'effectue la sï¿½quence d'actions planifiï¿½es");
 		}
 		
 		if(!Environement.agent.getMouvementChemin().isEmpty()){
