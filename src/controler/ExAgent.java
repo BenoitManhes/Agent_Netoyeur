@@ -15,6 +15,11 @@ public class ExAgent implements Runnable{
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 
+			if(Agent.razAffichage==true) {
+				drawing = new Draw(Parametres.TITRE_AGENT, Environnement.agent.getListElementObs());
+				Agent.razAffichage=false;
+			}
+			
 			// Observer environement
 				observation();
 

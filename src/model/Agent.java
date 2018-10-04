@@ -28,11 +28,18 @@ public class Agent {
 	private int nbrCasesParcourues = 0;
 	private int nbrObjetsAspires = 0;
 	private int nbrBijouxRamasses = 0;
+	public static boolean razAffichage;
 
 	
 	public Agent() {
 		X = (int) (Math.random()*Parametres.TAILLE_GRILLE);
 		Y = (int) (Math.random()*Parametres.TAILLE_GRILLE);
+	}
+	
+	public Agent(int x, int y) {
+		X=x;
+		Y=y;
+		razAffichage=true;
 	}
 
 	

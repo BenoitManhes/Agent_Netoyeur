@@ -120,16 +120,13 @@ public class Draw{
 		}
 
 		//this will add a menu on the frame Environnement
-		int tailleMenu = 0;
 		switch(titre) {
 		case "Environnement" :
 			JMenuBar menuEnvironnement = createMenuBarEnvironnement();
-			tailleMenu = menuEnvironnement.getHeight();
 			frame.setJMenuBar(menuEnvironnement);
 			break;
 		case "Agent" :
-			JMenuBar menuAgent = createMenuBarAgent();
-			tailleMenu = menuAgent.getHeight();
+			JMenuBar menuAgent = createMenuBarAgent(frame);
 			frame.setJMenuBar(menuAgent);
 			break;
 		default : break;
@@ -221,7 +218,7 @@ public class Draw{
 
 
 		//Affichage type exploration :
-		
+
 		if(choixInformee){
 			g.setColor(new Color(52, 201, 36));
 			g.drawString("Mode : Exploration informee", 20, WIDTH + 15);
@@ -230,46 +227,46 @@ public class Draw{
 			g.setColor(new Color(0, 127, 255));
 			g.drawString("Mode : Exploration non-informee", 20, WIDTH + 15);
 		}
-		
-			//Affichage stat
-			g.setColor(Color.gray);
-			
-			g.drawString("Score environnement : "+Environnement.getScoreEnvironnement(), 20,WIDTH+40);
-			g.drawString("Cout energie : "+Environnement.agent.getEnergieDepense(), 20, WIDTH+60);
-			g.drawString("Score : "+(Environnement.getScoreEnvironnement()-Environnement.agent.getEnergieDepense()), 20, WIDTH+80);
-			
-			
-			g.drawString("Nombre de cases parcourues : "+Environnement.agent.getNbrCasesParcourues(), 220, WIDTH+40);
-			g.drawString("Nombre d'objets aspires : "+Environnement.agent.getNbrObjetsAspirees(), 220,WIDTH+60);
-			g.drawString("Nombre de bijoux ramasses : "+Environnement.agent.getNbrBijouxRamasses(), 220, WIDTH+80);
 
-			
-			NumberFormat nfProba = NumberFormat.getInstance();
-			nfProba.setMaximumFractionDigits(5);
-			
-			String valeurProbaPoussiere = nfProba.format(Parametres.PROBA_POUSSIERE);
-			String valeurProbaBijou = nfProba.format(Parametres.PROBA_BIJOU);
-			
-			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 220, WIDTH + 105);
-			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 220, WIDTH +125);
-			g.drawString("Delai de l'agent : "+Parametres.DELAI_AGENT, 220, WIDTH + 145);
-			
-			//Affichage informations essentielles
-			
-			 
-			NumberFormat nf = NumberFormat.getInstance();
-			nf.setMaximumFractionDigits(2);
-			String scoreMoyenFormate = nf.format(Environnement.getMoyenneScore());
-			
-			g.drawString("Score Moyen : "+scoreMoyenFormate, 20, WIDTH + 105);
-			g.drawString("Energie total : "+Environnement.agent.getEnergieDepenseTotal(), 20, WIDTH +125);
-			g.drawString("Frequence d'observation : "+Environnement.agent.getFrequenceObs(), 20, WIDTH + 145);
-			
-			if(Environnement.agent.isDebutCycle()) {
-				g.setColor(Color.orange);
-				g.drawString("Observation",220, WIDTH + 15);
-			}
-			
+		//Affichage stat
+		g.setColor(Color.gray);
+
+		g.drawString("Score environnement : "+Environnement.getScoreEnvironnement(), 20,WIDTH+40);
+		g.drawString("Cout energie : "+Environnement.agent.getEnergieDepense(), 20, WIDTH+60);
+		g.drawString("Score : "+(Environnement.getScoreEnvironnement()-Environnement.agent.getEnergieDepense()), 20, WIDTH+80);
+
+
+		g.drawString("Nombre de cases parcourues : "+Environnement.agent.getNbrCasesParcourues(), 220, WIDTH+40);
+		g.drawString("Nombre d'objets aspires : "+Environnement.agent.getNbrObjetsAspirees(), 220,WIDTH+60);
+		g.drawString("Nombre de bijoux ramasses : "+Environnement.agent.getNbrBijouxRamasses(), 220, WIDTH+80);
+
+
+		NumberFormat nfProba = NumberFormat.getInstance();
+		nfProba.setMaximumFractionDigits(5);
+
+		String valeurProbaPoussiere = nfProba.format(Parametres.PROBA_POUSSIERE);
+		String valeurProbaBijou = nfProba.format(Parametres.PROBA_BIJOU);
+
+		g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 220, WIDTH + 105);
+		g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 220, WIDTH +125);
+		g.drawString("Delai de l'agent : "+Parametres.DELAI_AGENT, 220, WIDTH + 145);
+
+		//Affichage informations essentielles
+
+
+		NumberFormat nf = NumberFormat.getInstance();
+		nf.setMaximumFractionDigits(2);
+		String scoreMoyenFormate = nf.format(Environnement.getMoyenneScore());
+
+		g.drawString("Score Moyen : "+scoreMoyenFormate, 20, WIDTH + 105);
+		g.drawString("Energie total : "+Environnement.agent.getEnergieDepenseTotal(), 20, WIDTH +125);
+		g.drawString("Frequence d'observation : "+Environnement.agent.getFrequenceObs(), 20, WIDTH + 145);
+
+		if(Environnement.agent.isDebutCycle()) {
+			g.setColor(Color.orange);
+			g.drawString("Observation",220, WIDTH + 15);
+		}
+
 		//affichage parcour planifie
 		if(typeAffichage.equals(Parametres.TITRE_AGENT) && !Environnement.agent.getObjectifs().isEmpty()) {
 			g.setColor(Color.RED);
@@ -301,7 +298,6 @@ public class Draw{
 		JMenuItem menuItemPoussiereMoins;
 		JMenuItem menuItemBijouPlus;
 		JMenuItem menuItemBijouMoins;
-		JMenuItem menuItemInformations;
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -320,7 +316,7 @@ public class Draw{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Systeme : reinitialisation de l'environnement");
 				Environnement.ListEnvironement.clear();
-				
+
 			}
 		});
 		menuBar.add(menuItemRaz);
@@ -341,7 +337,7 @@ public class Draw{
 				if(Parametres.PROBA_POUSSIERE>=0.05) Parametres.PROBA_POUSSIERE -= 0.05;
 				else Parametres.PROBA_POUSSIERE = 0;
 				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametres.PROBA_POUSSIERE);
-				
+
 			}
 		});
 		menu.add(menuItemPoussiereMoins);
@@ -371,7 +367,7 @@ public class Draw{
 
 	// -------------------------------------------------Menu de l agent-------------------------------------------------------------------------------
 
-	public static JMenuBar createMenuBarAgent() {
+	public static JMenuBar createMenuBarAgent(JFrame frame) {
 
 		JMenuBar menuBar;
 		JMenu menu;
@@ -395,14 +391,12 @@ public class Draw{
 		menuItemRazPerf = new JMenuItem("Reinitialiser performances agent");
 		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Systeme : performances de l'agent reinitialisee");
-				Environnement.setScoreEnvironnement(0);
-				Environnement.agent.setEnergieDepense(0);
-				Environnement.agent.setLastAction(0);
-				Environnement.agent.setNbrBijouxRamasses(0);
-				Environnement.agent.setNbrCasesParcourues(0);
-				Environnement.agent.setNbrObjetsAspirees(0);
+				System.out.println("Systeme : performances de l'agent reinitialisees");
+				frame.dispose();
+				Environnement.agent = new Agent(Environnement.agent.getX(),Environnement.agent.getY());
 				Environnement.setMoyenneScore(0);
+				Environnement.setScoreEnvironnement(0);
+				Environnement.scoresObtenus.removeAllElements();
 			}});
 		menuBar.add(menuItemRazPerf);
 
@@ -414,7 +408,7 @@ public class Draw{
 			public void actionPerformed(ActionEvent e) {
 				if(Parametres.DELAI_AGENT>100) Parametres.DELAI_AGENT -= 50;
 				System.out.println("Systeme : modification delai agent : "+Parametres.DELAI_AGENT);
-				
+
 			}
 		});
 		menu.add(menuItemVitessePlus);
@@ -427,7 +421,7 @@ public class Draw{
 		});
 		menu.add(menuItemVitesseMoins);
 
-		
+
 		//Build the explorationMenu
 		menuInforme = new JMenuItem("Type d'exploration");
 		menuBar.add(menuInforme);
@@ -437,7 +431,7 @@ public class Draw{
 				choixInformee = !choixInformee;
 			}
 		});
-		
+
 		menuBar.add(menuInforme);
 
 		return menuBar;
@@ -447,7 +441,7 @@ public class Draw{
 	public static boolean isChoixInformee() {
 		return choixInformee;
 	}
-	
+
 	public static void setChoixInformee(boolean choix) {
 		choixInformee = choix;
 	}
