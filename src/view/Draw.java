@@ -26,7 +26,6 @@ import model.Parametres;
 
 /** ======================================= Dessiner les fenetres et tous les elements a mettre a jour ===========================================================*/
 
-
 public class Draw{
 
 	// -------------------------------------------------Attributs-------------------------------------------------------------------------------
@@ -38,8 +37,6 @@ public class Draw{
 
 	private int WIDTH = 460;
 	private int HEIGHT = 650;  
-
-
 
 	private int intervalle = (int)(WIDTH/Parametres.TAILLE_GRILLE*0.99);
 
@@ -158,8 +155,6 @@ public class Draw{
 		bufferStrategy.show();
 	}
 
-
-	
 	protected void render(Graphics2D g){
 		if(remiseAzero && typeAffichage.equals(Parametres.TITRE_AGENT)){
 			this.reinitialiser();
@@ -221,7 +216,6 @@ public class Draw{
 			g.drawImage(robotBas, CO(Environnement.agent.getX()), CO(Environnement.agent.getY()), T, T, null);
 		}
 
-
 		//Affichage type exploration :
 
 		if(choixInformee){
@@ -258,7 +252,6 @@ public class Draw{
 
 		//Affichage informations essentielles
 
-
 		NumberFormat nf = NumberFormat.getInstance();
 		nf.setMaximumFractionDigits(2);
 		String scoreMoyenFormate = nf.format(Environnement.getMoyenneScore());
@@ -282,7 +275,7 @@ public class Draw{
 		}
 
 	}
-	
+
 	//possibilite pour l'utilisateur de reintialiser les performances de l'agent :
 	public void reinitialiser(){
 		int x = Environnement.agent.getX();
@@ -292,7 +285,7 @@ public class Draw{
 		Environnement.setScoreEnvironnement(0);
 		Environnement.scoresObtenus.removeAllElements();
 		this.List = Environnement.agent.getListElementObs();
-		
+
 		remiseAzero = false;
 	}
 
@@ -384,8 +377,8 @@ public class Draw{
 	}
 
 	// -------------------------------------------------Menu de l agent-------------------------------------------------------------------------------
-	
-	
+
+
 	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
@@ -460,8 +453,5 @@ public class Draw{
 	public static void setChoixInformee(boolean choix) {
 		choixInformee = choix;
 	}
-
-
-
 
 }

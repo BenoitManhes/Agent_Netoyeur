@@ -91,7 +91,6 @@ public class ExAgent implements Runnable{
 				else{
 					planificationInformee();
 				}
-
 			}
 
 		}
@@ -124,7 +123,6 @@ public class ExAgent implements Runnable{
 		}else {
 			Environnement.agent.getMouvementChemin().add(Agent.RAMASSER);
 		}
-
 	}
 
 	// ---------------------------------------------------Action----------------------------------------------------------------------------------

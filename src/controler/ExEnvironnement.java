@@ -4,13 +4,11 @@ import view.*;
 
 public class ExEnvironnement implements Runnable{
 
-	@Override
 	public void run() {
 
 		/**Initialisation de l environement*/
 		initialisationEnvironnement();
 		Draw drawing = new Draw(Parametres.TITRE_ENVIRONNEMENT,Environnement.ListEnvironement);
-
 
 		/**Gestion environement*/
 		while(true) {	// gestion de l'environement en boucle infini

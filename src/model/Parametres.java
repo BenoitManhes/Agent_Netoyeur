@@ -1,7 +1,5 @@
 package model;
 
-import org.omg.Messaging.SyncScopeHelper;
-
 /*Ici sont stocke tout les differents parametre
  * -> gestion au meme endroit, plus facilement gerable*/
 public class Parametres {
@@ -17,7 +15,7 @@ public class Parametres {
 	public static double PROBA_BIJOU = 0.002;
 	
 	//Frequence d observation
-	public static final int FREQUENCE_MAX = 5;	// nb d objectif atteind avant une nouvelle observation
+	public static final int FREQUENCE_MAX = 5;	// nb d objectifs atteints avant une nouvelle observation
 	public static final int ECHANTILLON_MIN = 10; // echantillon min d element recuperer pour etablir le tableau des frequences
 	
 	//autre...
@@ -28,6 +26,5 @@ public class Parametres {
 	public static final String TITRE_AGENT = "Agent";
 	public static final String TITRE_ENVIRONNEMENT = "Environnement";
 	public static final int LIMITE_NON_INFORME = 10;
-	
 	
 }

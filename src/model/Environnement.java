@@ -25,6 +25,7 @@ public class Environnement {
 		return dispo;
 	}
 	
+	//retourne la position dans la liste d'un element souhaite en fonction de son type et de ses coordonnees
 	public static int indiceElement(int x, int y, boolean poussiere) {
 		int id = -1;
 		for (int i = 0; i < ListEnvironement.size(); i++) {
