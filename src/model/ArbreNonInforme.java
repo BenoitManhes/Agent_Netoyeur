@@ -16,30 +16,30 @@ public class ArbreNonInforme {
 		topScore = 0;
 		groupElement = new ArrayList<Element>();
 		cloneList(groupElement, groupE);
-		profondeur = Math.min(Parametre.PROFONDEUR_ARBRE_MAX,Environnement.agent.getListElementObs().size());
+		profondeur = Math.min(Parametres.PROFONDEUR_ARBRE_MAX,Environnement.agent.getListElementObs().size());
 		X = x;
 		Y = y;
-		this.cheminNonInforme();
+		this.depthLimitedSearch();
 	}
 	
-	public void cheminNonInforme(){
+	public void depthLimitedSearch(){
 		
 		ArrayList<Element> itineraire = new ArrayList<Element>();
 		itineraire.add(new Poussiere(X, Y)); 	// ajout de la positoin initiale
 		int score = 0;
 		int deep = 0;	
-		parcourChemin(itineraire, score, deep, groupElement);
+		recursiveDLS(itineraire, score, deep, groupElement);
 		if(!itineraireOptimale.isEmpty())
 			itineraireOptimale.remove(0); 		 // suppression position initiale -> on obtient une liste d objectif
 	}
 	
-	public void parcourChemin(ArrayList<Element> itineraire, int score, int deep, ArrayList<Element> EDispo) {
-		if(deep < profondeur && !EDispo.isEmpty()) {
-			for (int i = 0; i < EDispo.size(); i++) {
-				Element e = EDispo.get(i);
+	public void recursiveDLS(ArrayList<Element> itineraire, int score, int deep, ArrayList<Element> eDispo) {
+		if(deep < profondeur && !eDispo.isEmpty()) {
+			for (int i = 0; i < eDispo.size(); i++) {
+				Element e = eDispo.get(i);
 				
 				ArrayList<Element> newEDispo = new ArrayList<Element>();
-				cloneList(newEDispo, EDispo);
+				cloneList(newEDispo, eDispo);
 				newEDispo.remove(i);
 				
 				ArrayList<Element> newIteneraire = new ArrayList<Element>();
@@ -48,7 +48,7 @@ public class ArbreNonInforme {
 												
 				int s = calculerScore(e, newEDispo, score, itineraire);
 								
-				parcourChemin(newIteneraire, s, deep+1, newEDispo);
+				recursiveDLS(newIteneraire, s, deep+1, newEDispo);
 			}
 			testCombinaison(itineraire, score); 	// Test agent choisie de rien faire		
 		}
@@ -58,9 +58,9 @@ public class ArbreNonInforme {
 	}
 	
 	private int calculerScore(Element e, ArrayList<Element> newEDispo, int score, ArrayList<Element> itineraire) {
-		int s = score - distanceManhattan(e, itineraire.get(itineraire.size()-1)) + e.getPts() + Parametre.COUT_ENERGIE;
+		int s = score - distanceManhattan(e, itineraire.get(itineraire.size()-1)) + e.getPts() + Parametres.COUT_ENERGIE;
 		if(e.isPoussiere() && verifierPresenceBijou(e, newEDispo)) {
-			s += Parametre.MALUS_BIJOU;
+			s += Parametres.MALUS_BIJOU;
 		}
 		return s;
 		

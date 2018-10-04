@@ -1,4 +1,4 @@
-package controller;
+package controler;
 
 public class Main {
 

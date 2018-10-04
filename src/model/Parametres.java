@@ -1,8 +1,10 @@
 package model;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 /*Ici sont stocke tout les differents parametre
  * -> gestion au meme endroit, plus facilement gerable*/
-public class Parametre {
+public class Parametres {
 	
 	//Gestion des points
 	public static final int POINT_POUSSIERE = 8;

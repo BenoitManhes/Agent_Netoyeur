@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Glouton {
+public class ArbreInforme {
 	private ArrayList<Element> listeElemObs;
 	private ArrayList<Element> itineraireOptimal;
 	private int xDepart;
@@ -10,7 +10,7 @@ public class Glouton {
 	private Element elemDestination;
 
 
-public Glouton(int xDepart, int yDepart, ArrayList<Element> listeElemObs, Element elemDestination){
+public ArbreInforme(int xDepart, int yDepart, ArrayList<Element> listeElemObs, Element elemDestination){
 	this.xDepart = xDepart;
 	this.yDepart = yDepart;
 	this.listeElemObs = listeElemObs;
@@ -46,7 +46,7 @@ public void greedySearch(){
 
 public int elementScore(Element a, Element b){
 	//Points raportés par le traitement de l'element - cout de déplacement - cout de traitement de la poussiere
-	int score = b.getPts() - distanceManhattan(a,b)*Parametre.COUT_ENERGIE - Parametre.COUT_ENERGIE;
+	int score = b.getPts() - distanceManhattan(a,b)*Parametres.COUT_ENERGIE - Parametres.COUT_ENERGIE;
 	return score;
 }
 

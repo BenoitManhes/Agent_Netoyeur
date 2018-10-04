@@ -1,4 +1,4 @@
-package controller;
+package controler;
 import model.*;
 import view.*;
 
@@ -7,16 +7,15 @@ public class ExAgent implements Runnable{
 	public void run() {
 
 		/**Initialisation de l affichage de l agent*/
-		Draw drawing = new Draw(Parametre.TITRE_AGENT, Environnement.agent.getListElementObs());
+		Draw drawing = new Draw(Parametres.TITRE_AGENT, Environnement.agent.getListElementObs());
 		
-	    //testAInformee();
-	    //testArbre();
+	    //testArbreNonInforme();
+	    //testArbreInforme();
 		
 		/**Gestion de l agent*/
 		while(true) {	// gestion de l agent en boucle infini
 
-
-				// Observer environement
+			// Observer environement
 				observation();
 
 				// Mise a jour Etat
@@ -30,7 +29,7 @@ public class ExAgent implements Runnable{
 
 			//mis a jour affichage et delai
 			drawing.render();
-			try {Thread.sleep(Parametre.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(Parametres.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
 
 		}
 	}
@@ -43,19 +42,17 @@ public class ExAgent implements Runnable{
 		if(!Environnement.agent.getObjectifs().isEmpty()) {	
 			Environnement.agent.actualiserObjectif();
 		}
-		// Observation si un cycle est finie ou liste d element observe vide
+		// Observation si un cycle est fini ou liste d element observe vide
 		if(Environnement.agent.getFrequenceObs() == Environnement.agent.getNbElementCycle() || Environnement.agent.getObjectifs().isEmpty()) { 
 			Environnement.agent.setDebutCycle(true);
 			
-			if(Environnement.agent.getFrequenceObs() == Environnement.agent.getNbElementCycle())
-			{
-				System.out.println("--Demarage d'un nouveau cycle--");
-			}
+			System.out.println("--Demarage d'un nouveau cycle--");
 			System.out.println("Agent : J'observe l'environnement a l'aide de mes capteurs");
+			
 			Environnement.agent.observerEnvironnement();
 			
 			//mode safe : espace d'etat trop grand pour le non informe -> passage en informee
-			if(Environnement.agent.getListElementObs().size()>Parametre.LIMITE_NON_INFORME && !Draw.isChoixInformee()) {
+			if(Environnement.agent.getListElementObs().size()>Parametres.LIMITE_NON_INFORME && !Draw.isChoixInformee()) {
 				Draw.setChoixInformee(true);
 				System.out.println("Systeme : Safe Mode Activated : mode informe");
 			}
@@ -67,7 +64,7 @@ public class ExAgent implements Runnable{
 	// -----------------------------------------------Mise a jour Etat----------------------------------------------------------------------------
 	public void miseAJourEtat() {
 		//Mise a jour des donnes sur la frequence
-		if(Environnement.agent.isDebutCycle()) {	// si le robot a terminer son cycle
+		if(Environnement.agent.isDebutCycle() && !Environnement.ListEnvironement.isEmpty()) {	// si le robot a terminer son cycle
 			System.out.println("Agent : Je met a jour mon etat interne");
 			Environnement.agent.ajoutPerformance();
 			Environnement.agent.resetNbElementCycle(); 	// Nouveau cycle
@@ -80,21 +77,19 @@ public class ExAgent implements Runnable{
 	// --------------------------------------------------Decision---------------------------------------------------------------------------------
 	public void decision() {
 		// Choix de la frequence d observation
-		if(Environnement.agent.getNbElementCycle() == 0 && Environnement.agent.getObjectifs().isEmpty()) { // cycle termine
+		if(Environnement.agent.isDebutCycle()) { // cycle termine
 			Environnement.agent.choixFrequence();
 			System.out.println("Agent : Je planifie mes prochaines actions");
-			//System.out.println("Frequence choisi : "+Environement.agent.getFrequenceObs());
-			
 		}
 		// Choix du chemin a parcourir
-		if(!Environnement.agent.getListElementObs().isEmpty() && (Environnement.agent.getNbElementCycle() == 0 || Environnement.agent.getObjectifs().isEmpty())) {	
+		if(!Environnement.agent.getListElementObs().isEmpty() && Environnement.agent.isDebutCycle()) {	
 			int nbElementObs = Environnement.agent.getListElementObs().size();
 
 			if(nbElementObs>0) {
 				if(!Draw.isChoixInformee()) {
 					planificationNonInforme();
 				}
-				else if(Draw.isChoixInformee()) {
+				else{
 					planificationInformee();
 				}
 				
@@ -110,7 +105,6 @@ public class ExAgent implements Runnable{
 
 	public void planificationNonInforme() {
 		ArbreNonInforme A = new ArbreNonInforme(Environnement.agent.getListElementObs(), Environnement.agent.getX(), Environnement.agent.getY());
-		
 		if(!A.getItineraireOptimal().isEmpty()) {
 			Environnement.agent.setObjectifs(A.getItineraireOptimal());
 		}
@@ -118,7 +112,7 @@ public class ExAgent implements Runnable{
 	
 	
 	public void planificationInformee() {
-		Glouton arbreinf = new Glouton(Environnement.agent.getX(), Environnement.agent.getY(), Environnement.agent.getListElementObs(), Environnement.agent.getListElementObs().get(0));
+		ArbreInforme arbreinf = new ArbreInforme(Environnement.agent.getX(), Environnement.agent.getY(), Environnement.agent.getListElementObs(), Environnement.agent.getListElementObs().get(0));
 		arbreinf.greedySearch();
 		Environnement.agent.setObjectifs(arbreinf.getItineraireOptimal());
 	}
@@ -168,14 +162,9 @@ public class ExAgent implements Runnable{
 	}
 
 
-
-
-
-
-
 	/** =============================================== Methode Test ===========================================================================*/
-	public void testArbre() {
-		for (int i = 0; i < 3; i++) {
+	public void testArbreNonInforme() {
+		for (int i = 0; i < 5; i++) {
 			int x = (int)(Math.random()*10);
 			int y = (int)(Math.random()*10);
 			Environnement.agent.getListElementObs().add(new Poussiere(x, y));
@@ -184,16 +173,16 @@ public class ExAgent implements Runnable{
 		Environnement.agent.setObjectifs(A.getItineraireOptimal());
 	}
 	
-	public void testAInformee() {
-		for (int i = 0; i < 8; i++) {
+	public void testArbreInforme() {
+		for (int i = 0; i < 5; i++) {
 			int x = (int)(Math.random()*10);
 			int y = (int)(Math.random()*10);
 			Environnement.agent.getListElementObs().add(new Poussiere(x, y));
 		}
 		
-		Glouton arbreinf = new Glouton(Environnement.agent.getX(), Environnement.agent.getY(), Environnement.agent.getListElementObs(), Environnement.agent.getListElementObs().get(0));
-		arbreinf.greedySearch();
-		Environnement.agent.setObjectifs(arbreinf.getItineraireOptimal());
+		ArbreInforme B = new ArbreInforme(Environnement.agent.getX(), Environnement.agent.getY(), Environnement.agent.getListElementObs(), Environnement.agent.getListElementObs().get(0));
+		B.greedySearch();
+		Environnement.agent.setObjectifs(B.getItineraireOptimal());
 	}
 
 	public void afficherAction() {

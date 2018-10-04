@@ -2,8 +2,8 @@ package model;
 
 public class Bijou extends model.Element{
 	
-	private final int POINT = Parametre.POINT_BIJOU;	// constante plus court et visible dans la classe
-
+	private final int POINT = Parametres.POINT_BIJOU;	
+	
 	public Bijou(int x, int y) {
 		X = x;
 		Y = y;

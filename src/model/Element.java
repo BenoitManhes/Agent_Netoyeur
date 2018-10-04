@@ -21,23 +21,16 @@ public abstract class Element {
  	public int getX() {
 		return X;
 	}
-
-	public void setX(int x) {
-		this.X = x;
-	}
 	
 	public int getY() {
 		return Y;
-	}
-
-	public void setY(int y) {
-		this.Y = y;
 	}
 
 	public int getPts() {
 		return Pts;
 	}
 	
+	//debuggage 
 	public String toString(){
 		return "("+this.X+","+this.Y+")";
 	}

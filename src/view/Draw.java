@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import model.Agent;
 import model.Element;
 import model.Environnement;
-import model.Parametre;
+import model.Parametres;
 
 /** ======================================= Dessiner les fenetres et tous les elements a mettre a jour ===========================================================*/
 
@@ -41,7 +41,7 @@ public class Draw{
 
 
 
-	private int intervalle = (int)(WIDTH/Parametre.TAILLE_GRILLE*0.99);
+	private int intervalle = (int)(WIDTH/Parametres.TAILLE_GRILLE*0.99);
 
 	/**image*/
 	private Image poussiere;
@@ -166,8 +166,8 @@ public class Draw{
 		g.setColor(Color.black);
 		g.setBackground(Color.black);
 		// drawing de la grille
-		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
-			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
+		for (int i = 0; i < Parametres.TAILLE_GRILLE; i++) {
+			for (int j = 0; j < Parametres.TAILLE_GRILLE; j++) {
 				g.drawRect(CO(i), CO(j),T,T );
 				g.setColor(Color.white);
 				g.fillRect(CO(i), CO(j),T,T );
@@ -247,12 +247,12 @@ public class Draw{
 			NumberFormat nfProba = NumberFormat.getInstance();
 			nfProba.setMaximumFractionDigits(5);
 			
-			String valeurProbaPoussiere = nfProba.format(Parametre.PROBA_POUSSIERE);
-			String valeurProbaBijou = nfProba.format(Parametre.PROBA_BIJOU);
+			String valeurProbaPoussiere = nfProba.format(Parametres.PROBA_POUSSIERE);
+			String valeurProbaBijou = nfProba.format(Parametres.PROBA_BIJOU);
 			
 			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 220, WIDTH + 105);
 			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 220, WIDTH +125);
-			g.drawString("Delai de l'agent : "+Parametre.DELAI_AGENT, 220, WIDTH + 145);
+			g.drawString("Delai de l'agent : "+Parametres.DELAI_AGENT, 220, WIDTH + 145);
 			
 			//Affichage informations essentielles
 			
@@ -271,7 +271,7 @@ public class Draw{
 			}
 			
 		//affichage parcour planifie
-		if(typeAffichage.equals(Parametre.TITRE_AGENT) && !Environnement.agent.getObjectifs().isEmpty()) {
+		if(typeAffichage.equals(Parametres.TITRE_AGENT) && !Environnement.agent.getObjectifs().isEmpty()) {
 			g.setColor(Color.RED);
 			g.drawLine(CO(Environnement.agent.getX())+intervalle/2, CO(Environnement.agent.getY())+intervalle/2,CO( Environnement.agent.getObjectifs().get(0).getX())+intervalle/2, CO(Environnement.agent.getObjectifs().get(0).getY())+intervalle/2);
 			for (int i = 0; i < Environnement.agent.getObjectifs().size()-1; i++) {
@@ -330,17 +330,17 @@ public class Draw{
 		menuItemPoussierePlus = new JMenuItem("Probabilite apparition poussiere +");
 		menuItemPoussierePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.05;
-				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
+				if(Parametres.PROBA_POUSSIERE<0.8) Parametres.PROBA_POUSSIERE += 0.05;
+				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametres.PROBA_POUSSIERE);
 			}
 		});
 		menu.add(menuItemPoussierePlus);
 		menuItemPoussiereMoins = new JMenuItem("Probabilite apparition poussiere -");
 		menuItemPoussiereMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_POUSSIERE>=0.05) Parametre.PROBA_POUSSIERE -= 0.05;
-				else Parametre.PROBA_POUSSIERE = 0;
-				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
+				if(Parametres.PROBA_POUSSIERE>=0.05) Parametres.PROBA_POUSSIERE -= 0.05;
+				else Parametres.PROBA_POUSSIERE = 0;
+				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametres.PROBA_POUSSIERE);
 				
 			}
 		});
@@ -351,17 +351,17 @@ public class Draw{
 		menuItemBijouPlus = new JMenuItem("Probabilite apparition bijou +");
 		menuItemBijouPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.005;
-				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
+				if(Parametres.PROBA_BIJOU<0.8) Parametres.PROBA_BIJOU += 0.005;
+				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametres.PROBA_BIJOU);
 			}
 		});
 		menu.add(menuItemBijouPlus);
 		menuItemBijouMoins = new JMenuItem("Probabilite apparition bijou -");
 		menuItemBijouMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU>=0.002) Parametre.PROBA_BIJOU -= 0.002;
-				else Parametre.PROBA_BIJOU = 0;
-				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
+				if(Parametres.PROBA_BIJOU>=0.002) Parametres.PROBA_BIJOU -= 0.002;
+				else Parametres.PROBA_BIJOU = 0;
+				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametres.PROBA_BIJOU);
 			}
 		});
 		menu.add(menuItemBijouMoins);
@@ -412,8 +412,8 @@ public class Draw{
 		menuItemVitessePlus = new JMenuItem("Vitesse de l'agent +");
 		menuItemVitessePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.DELAI_AGENT>100) Parametre.DELAI_AGENT -= 50;
-				System.out.println("Systeme : modification delai agent : "+Parametre.DELAI_AGENT);
+				if(Parametres.DELAI_AGENT>100) Parametres.DELAI_AGENT -= 50;
+				System.out.println("Systeme : modification delai agent : "+Parametres.DELAI_AGENT);
 				
 			}
 		});
@@ -421,8 +421,8 @@ public class Draw{
 		menuItemVitesseMoins = new JMenuItem("Vitesse de l'agent -");
 		menuItemVitesseMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Parametre.DELAI_AGENT += 50;
-				System.out.println("Systeme : modification delai agent : "+Parametre.DELAI_AGENT);
+				Parametres.DELAI_AGENT += 50;
+				System.out.println("Systeme : modification delai agent : "+Parametres.DELAI_AGENT);
 			}
 		});
 		menu.add(menuItemVitesseMoins);

@@ -16,11 +16,11 @@ public class Agent {
 	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
 	private ArrayList<Element> Objectifs = new ArrayList<Element>();
 	private ArrayList<Integer> mouvementChemin = new ArrayList<Integer>();
-	private double[][] tabFrequence = new double[Parametre.FREQUENCE_MAX][2];		// tab[i][j] : i= les differentes frequences X=i+1, j=1 : score total pour X, j=2 : nb total de parcour effectuer avec X
+	private double[][] tabFrequence = new double[Parametres.FREQUENCE_MAX][2];		// tab[i][j] : i= les differentes frequences X=i+1, j=1 : score total pour X, j=2 : nb total de parcour effectuer avec X
 	private int lastAction;
 	private int X;
 	private int Y;
-	private int frequenceObs = Parametre.FREQUENCE_MAX;
+	private int frequenceObs = Parametres.FREQUENCE_MAX;
 	private int nbElementCycle = 0;	// nb element atteint sans avoir effectuer d observation
 	private boolean debutCycle = true;
 	private int energieDepense = 0;
@@ -31,8 +31,8 @@ public class Agent {
 
 	
 	public Agent() {
-		X = (int) (Math.random()*Parametre.TAILLE_GRILLE);
-		Y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
+		X = (int) (Math.random()*Parametres.TAILLE_GRILLE);
+		Y = (int) (Math.random()*Parametres.TAILLE_GRILLE);
 	}
 
 	
@@ -59,7 +59,6 @@ public class Agent {
 		tabFrequence[frequenceObs-1][1] += nbElementCycle;
 		Environnement.scoresObtenus.add(score);
 		//remise de spoints a zero
-		System.out.println("Environnement: Score : "+Environnement.getScoreEnvironnement()+" / energie: "+energieDepense);
 		energieDepense=0;
 		Environnement.setScoreEnvironnement(0);
 	}
@@ -86,7 +85,7 @@ public class Agent {
 		}
 		//si un X n est pas assez echantillone , on le choisit
 		for (int i = 0; i < tabFrequence.length; i++) {
-			if(tabFrequence[i][1] < Parametre.ECHANTILLON_MIN) {
+			if(tabFrequence[i][1] < Parametres.ECHANTILLON_MIN) {
 				frequenceObs = i+1;
 			}
 		}
@@ -98,27 +97,25 @@ public class Agent {
 			this.Y--;
 			this.lastAction = HAUT;
 			this.incrementeEnergieDepense();
-			//System.out.println("Agent : Je me suis deplace vers le haut");
+			this.nbrCasesParcourues++;
 		}
 	}
 
 	public void goDown(){
-		if(this.Y<Parametre.TAILLE_GRILLE-1){
+		if(this.Y<Parametres.TAILLE_GRILLE-1){
 			this.Y++;
 			this.lastAction = BAS;
 			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
-			//System.out.println("Agent : Je me suis deplace vers le bas");
 		}
 	}
 
 	public void goRight(){
-		if(this.X<Parametre.TAILLE_GRILLE-1){
+		if(this.X<Parametres.TAILLE_GRILLE-1){
 			this.X++;
 			this.lastAction = DROITE;
 			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
-			//System.out.println("Agent : Je me suis deplace vers la droite");
 		}
 	}
 
@@ -128,7 +125,6 @@ public class Agent {
 			this.lastAction = GAUCHE;
 			this.incrementeEnergieDepense();
 			this.nbrCasesParcourues++;
-			//System.out.println("Agent : Je me suis deplace vers la gauche");
 		}
 	}
 
@@ -137,7 +133,6 @@ public class Agent {
 		this.incrementeEnergieDepense();
 		this.nbrBijouxRamasses++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
-	//	System.out.println("Agent : J'ai ramasse le contenu de la case");
 	}
 
 	public void aspirer(){
@@ -145,12 +140,11 @@ public class Agent {
 		this.incrementeEnergieDepense();
 		this.nbrObjetsAspires++;
 		this.nbElementCycle++;			//objectif atteint : on incremente le nb d objectif atteint du cycle
-	//	System.out.println("Agent : J'ai aspire le contenu de la case");
 	}
 
 	public void incrementeEnergieDepense() {
-		this.energieDepense += Parametre.COUT_ENERGIE;
-		this.energieDepenseTotal += Parametre.COUT_ENERGIE;
+		this.energieDepense += Parametres.COUT_ENERGIE;
+		this.energieDepenseTotal += Parametres.COUT_ENERGIE;
 	}
 
 	/** ============================================= methode de calcul ========================================================================*/
@@ -193,13 +187,9 @@ public class Agent {
 		}
 	}
 
-	/**============================================= Getter et Setter ===========================================================================*/
+	/**============================================= Accesseurs et mutateurs ===========================================================================*/
 	public ArrayList<Element> getListElementObs() {
 		return ListElementObs;
-	}
-
-	public void setListElementObs(ArrayList<Element> listElementObs) {
-		ListElementObs = listElementObs;
 	}
 	
 	public int getX() {
@@ -246,10 +236,6 @@ public class Agent {
 		return mouvementChemin;
 	}
 
-	public void setMouvementChemin(ArrayList<Integer> mouvementChemin) {
-		this.mouvementChemin = mouvementChemin;
-	}
-
 	public int getNbrCasesParcourues() {
 		return nbrCasesParcourues;
 	}
@@ -282,35 +268,20 @@ public class Agent {
 		return tabFrequence;
 	}
 
-
 	public int getNbElementCycle() {
 		return nbElementCycle;
 	}
-
-
-	public void setNbElementCycle(int nbElementCycle) {
-		this.nbElementCycle = nbElementCycle;
-	}
-
 
 	public boolean isDebutCycle() {
 		return debutCycle;
 	}
 
-
 	public void setDebutCycle(boolean debutCycle) {
 		this.debutCycle = debutCycle;
 	}
 
-
 	public int getEnergieDepenseTotal() {
 		return energieDepenseTotal;
 	}
-
-
-	public void setEnergieDepenseTotal(int energieDepenseTotal) {
-		this.energieDepenseTotal = energieDepenseTotal;
-	}
-
 
 }

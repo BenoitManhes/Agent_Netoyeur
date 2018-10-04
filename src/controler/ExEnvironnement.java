@@ -1,4 +1,4 @@
-package controller;
+package controler;
 import model.*;
 import view.*;
 
@@ -9,16 +9,14 @@ public class ExEnvironnement implements Runnable{
 
 		/**Initialisation de l environement*/
 		initialisationEnvironnement();
-		Draw drawing = new Draw(Parametre.TITRE_ENVIRONNEMENT,Environnement.ListEnvironement);
-		double probaPoussiere = Parametre.PROBA_POUSSIERE;
-		double probaBijou = Parametre.PROBA_BIJOU;
+		Draw drawing = new Draw(Parametres.TITRE_ENVIRONNEMENT,Environnement.ListEnvironement);
 
 		/**Gestion environement*/
 		while(true) {	// gestion de l'environement en boucle infini
 
 			//apparition ou non d elements
-			genererPoussiere(probaPoussiere);
-			genererBijou(probaBijou);
+			genererPoussiere(Parametres.PROBA_POUSSIERE);
+			genererBijou(Parametres.PROBA_BIJOU);
 
 			//Regarder le robot et compter les points
 			calculateScoreEnvironnement();
@@ -29,7 +27,7 @@ public class ExEnvironnement implements Runnable{
 
 			//mis a jour affichage avec drawing
 			drawing.render();	
-			try {Thread.sleep(Parametre.DELAI_ENV);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(Parametres.DELAI_ENV);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 
 	}
@@ -41,8 +39,8 @@ public class ExEnvironnement implements Runnable{
 	public void genererPoussiere(double p) {
 		double i = Math.random();
 		if(i<=p) {
-			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
-			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
+			int x = (int) (Math.random()*Parametres.TAILLE_GRILLE);
+			int y = (int) (Math.random()*Parametres.TAILLE_GRILLE);
 			if(Environnement.caseDisponible(x, y, true)) {
 				Environnement.ListEnvironement.add(new Poussiere(x, y));
 				System.out.println("Environnement : Poussiere apparue en "+x+","+y);
@@ -52,8 +50,8 @@ public class ExEnvironnement implements Runnable{
 	public void genererBijou(double p) {
 		double i = Math.random();
 		if(i<=p) {
-			int x = (int) (Math.random()*Parametre.TAILLE_GRILLE);
-			int y = (int) (Math.random()*Parametre.TAILLE_GRILLE);
+			int x = (int) (Math.random()*Parametres.TAILLE_GRILLE);
+			int y = (int) (Math.random()*Parametres.TAILLE_GRILLE);
 			if(Environnement.caseDisponible(x, y, false)) {
 				Environnement.ListEnvironement.add(new Bijou(x, y));
 				System.out.println("Environnement : Bijou apparue en "+x+","+y);
@@ -90,7 +88,7 @@ public class ExEnvironnement implements Runnable{
 
 		//Test si il y a de la poussiere
 		if(isTherePoussiere(PositionX, PositionY, true) && lastAction == Agent.ASPIRER) { 
-			score+=Parametre.POINT_POUSSIERE;
+			score+=Parametres.POINT_POUSSIERE;
 			System.out.println("Environnement : L'agent a aspire de la poussiere");
 			System.out.println("Environnement : L'agent gagne "+score+" points.");
 		}
@@ -98,12 +96,12 @@ public class ExEnvironnement implements Runnable{
 		if (isTherePoussiere(PositionX, PositionY, false)) {
 			if(lastAction == Agent.ASPIRER) {
 
-				score+=Parametre.MALUS_BIJOU;
+				score+=Parametres.MALUS_BIJOU;
 				System.out.println("Environnement : L'agent a aspire un bijou");
 				System.out.println("Environnement : l'agent perd "+score+" points.");
 			}
 			else if(lastAction == Agent.RAMASSER) {
-				score+=Parametre.POINT_BIJOU;
+				score+=Parametres.POINT_BIJOU;
 				System.out.println("Environnement : L'agent a ramasse un bijou");
 				System.out.println("Environnement : L'agent gagne "+score+" points.");
 			}
@@ -173,8 +171,8 @@ public class ExEnvironnement implements Runnable{
 	// -------------------------------------------------Methode pour initialiser l'environnement-------------------------------------------------------------------------------
 
 	private void initialisationEnvironnement() {
-		genererBijou(Parametre.PROBA_BIJOU*1000);
-		genererPoussiere(Parametre.PROBA_POUSSIERE*1000);
+		genererBijou(Parametres.PROBA_BIJOU*1000);
+		genererPoussiere(Parametres.PROBA_POUSSIERE*1000);
 	}
 
 }
