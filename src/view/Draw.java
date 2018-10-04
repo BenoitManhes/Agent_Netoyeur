@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
-import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -66,31 +65,31 @@ public class Draw{
 		typeAffichage=titre;
 		List = list;
 		try {
-			this.robotDroite = ImageIO.read(new File("robotDroite.png"));
+			this.robotDroite = ImageIO.read(getClass().getResource("/resources/robotDroite.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotGauche = ImageIO.read(new File("robotGauche.png"));
+			this.robotGauche = ImageIO.read(getClass().getResource("/resources/robotGauche.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotBas = ImageIO.read(new File("robotBas.png"));
+			this.robotBas = ImageIO.read(getClass().getResource("/resources/robotBas.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotHaut = ImageIO.read(new File("robotHaut.png"));
+			this.robotHaut = ImageIO.read(getClass().getResource("/resources/robotHaut.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotRamasse = ImageIO.read(new File("robotRamasse.png"));
+			this.robotRamasse = ImageIO.read(getClass().getResource("/resources/robotRamasse.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotAspire = ImageIO.read(new File("robotAspire.png"));
+			this.robotAspire = ImageIO.read(getClass().getResource("/resources/robotAspire.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.robotNeRienFaire = ImageIO.read(new File("robotNeRienFaire.png"));
+			this.robotNeRienFaire = ImageIO.read(getClass().getResource("/resources/robotNeRienFaire.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.poussiere = ImageIO.read(new File("poussiere.png"));
+			this.poussiere = ImageIO.read(getClass().getResource("/resources/poussiere.png"));
 		} catch (IOException e) {e.printStackTrace();}
 		try {
-			this.bijou = ImageIO.read(new File("diamond-ring.png"));
+			this.bijou = ImageIO.read(getClass().getResource("/resources/diamond-ring.png"));
 		} catch (IOException e) {e.printStackTrace();}
 
 		//Makes a new window
