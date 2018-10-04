@@ -57,6 +57,7 @@ public class Draw{
 
 	/**Choix de l'exploration*/
 	private static boolean choixInformee;
+	private static boolean remiseAzero = false;
 
 	private ArrayList<Element> List;
 
@@ -126,7 +127,7 @@ public class Draw{
 			frame.setJMenuBar(menuEnvironnement);
 			break;
 		case "Agent" :
-			JMenuBar menuAgent = createMenuBarAgent(frame);
+			JMenuBar menuAgent = createMenuBarAgent();
 			frame.setJMenuBar(menuAgent);
 			break;
 		default : break;
@@ -158,7 +159,11 @@ public class Draw{
 	}
 
 
+	
 	protected void render(Graphics2D g){
+		if(remiseAzero && typeAffichage.equals(Parametres.TITRE_AGENT)){
+			this.reinitialiser();
+		}
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.black);
 		g.setBackground(Color.black);
@@ -277,6 +282,19 @@ public class Draw{
 		}
 
 	}
+	
+	//possibilite pour l'utilisateur de reintialiser les performances de l'agent :
+	public void reinitialiser(){
+		int x = Environnement.agent.getX();
+		int y = Environnement.agent.getY();
+		Environnement.agent = new Agent(x, y);
+		Environnement.setMoyenneScore(0);
+		Environnement.setScoreEnvironnement(0);
+		Environnement.scoresObtenus.removeAllElements();
+		this.List = Environnement.agent.getListElementObs();
+		
+		remiseAzero = false;
+	}
 
 	// -------------------------------------------------Generer les cases-------------------------------------------------------------------------------
 
@@ -366,8 +384,9 @@ public class Draw{
 	}
 
 	// -------------------------------------------------Menu de l agent-------------------------------------------------------------------------------
-
-	public static JMenuBar createMenuBarAgent(JFrame frame) {
+	
+	
+	public static JMenuBar createMenuBarAgent() {
 
 		JMenuBar menuBar;
 		JMenu menu;
@@ -392,11 +411,7 @@ public class Draw{
 		menuItemRazPerf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Systeme : performances de l'agent reinitialisees");
-				frame.dispose();
-				Environnement.agent = new Agent(Environnement.agent.getX(),Environnement.agent.getY());
-				Environnement.setMoyenneScore(0);
-				Environnement.setScoreEnvironnement(0);
-				Environnement.scoresObtenus.removeAllElements();
+				remiseAzero = true;
 			}});
 		menuBar.add(menuItemRazPerf);
 

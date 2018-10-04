@@ -28,11 +28,6 @@ public class ExAgent implements Runnable{
 			actionAgent();			
 
 			drawing.render();
-			//Possibilite pour l'utilisateur de reinitialiser les performances de l'agent
-			if(Agent.razAgent){
-				drawing = new Draw(Parametres.TITRE_AGENT, Environnement.agent.getListElementObs());
-				Agent.razAgent=false;
-			}
 			try {Thread.sleep(Parametres.DELAI_AGENT);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 
