@@ -68,7 +68,7 @@ public class ExAgent implements Runnable{
 			Environnement.agent.ajoutPerformance();
 			Environnement.agent.resetNbElementCycle(); 	// Nouveau cycle
 			Environnement.agent.getObjectifs().clear();
-			Environnement.agent.getMouvementChemin().clear();
+			Environnement.agent.getListeActions().clear();
 		}
 
 	}
@@ -95,7 +95,7 @@ public class ExAgent implements Runnable{
 
 		}
 		// Planification des actions a faire 
-		if( !Environnement.agent.getObjectifs().isEmpty() && Environnement.agent.getMouvementChemin().isEmpty()) { // objectif existant et aucune action en attente
+		if( !Environnement.agent.getObjectifs().isEmpty() && Environnement.agent.getListeActions().isEmpty()) { // objectif existant et aucune action en attente
 			planificationAction();
 		}
 
@@ -119,9 +119,9 @@ public class ExAgent implements Runnable{
 		Element e = Environnement.agent.getObjectifs().get(0);
 		Environnement.agent.cheminVers(e.getX(), e.getY());
 		if(e.isPoussiere()) {
-			Environnement.agent.getMouvementChemin().add(Agent.ASPIRER);
+			Environnement.agent.getListeActions().add(Agent.ASPIRER);
 		}else {
-			Environnement.agent.getMouvementChemin().add(Agent.RAMASSER);
+			Environnement.agent.getListeActions().add(Agent.RAMASSER);
 		}
 	}
 
@@ -131,8 +131,8 @@ public class ExAgent implements Runnable{
 			System.out.println("Agent : J'effectue la sequence d'actions planifiees");
 		}
 
-		if(!Environnement.agent.getMouvementChemin().isEmpty()){
-			switch(Environnement.agent.getMouvementChemin().get(0)){
+		if(!Environnement.agent.getListeActions().isEmpty()){
+			switch(Environnement.agent.getListeActions().get(0)){
 			case Agent.HAUT:
 				Environnement.agent.goUp();
 				break;
@@ -154,7 +154,7 @@ public class ExAgent implements Runnable{
 			default:
 				break;
 			}
-			Environnement.agent.getMouvementChemin().remove(0);
+			Environnement.agent.getListeActions().remove(0);
 		}
 	}
 
@@ -183,8 +183,8 @@ public class ExAgent implements Runnable{
 
 	public void afficherAction() {
 		String s = "action : [ ";
-		for (int i = 0; i < Environnement.agent.getMouvementChemin().size(); i++) {
-			s += Environnement.agent.getMouvementChemin().get(i)+", ";
+		for (int i = 0; i < Environnement.agent.getListeActions().size(); i++) {
+			s += Environnement.agent.getListeActions().get(i)+", ";
 		}
 		s += "]";
 		System.out.println(s);

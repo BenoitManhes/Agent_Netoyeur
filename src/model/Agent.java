@@ -13,9 +13,9 @@ public class Agent {
 	public static final int ASPIRER = 5;
 	public static final int RAMASSER = 6;
 
-	private ArrayList<Element> ListElementObs = new ArrayList<Element>();
+	private ArrayList<Element> listElementObs = new ArrayList<Element>();
 	private ArrayList<Element> Objectifs = new ArrayList<Element>();
-	private ArrayList<Integer> mouvementChemin = new ArrayList<Integer>();
+	private ArrayList<Integer> listeActions = new ArrayList<Integer>();
 	private double[][] tabFrequence = new double[Parametres.FREQUENCE_MAX][2];		// tab[i][j] : i= les differentes frequences X=i+1, j=1 : score total pour X, j=2 : nb total de parcour effectuer avec X
 	private int lastAction;
 	private int X;
@@ -46,17 +46,17 @@ public class Agent {
 	/** ============================================== Observation =============================================================================*/
 	public void actualiserObjectif() {
 		Element e = this.Objectifs.get(0);
-		if( this.X==e.getX() && this.Y==e.getY() && mouvementChemin.isEmpty()) {
+		if( this.X==e.getX() && this.Y==e.getY() && listeActions.isEmpty()) {
 			this.Objectifs.remove(0);	//objectif atteint, il est supprime des objectif
 			int i = indiceElement(this.X, this.Y, e.isPoussiere());
-			this.ListElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
+			this.listElementObs.remove(i);	//objectif atteint, il est supprime des element observe 
 		}
 	}
 
 	
 	public void observerEnvironnement(){
-		this.ListElementObs.clear();
-		this.ListElementObs.addAll(Environnement.ListEnvironement);
+		this.listElementObs.clear();
+		this.listElementObs.addAll(Environnement.ListEnvironement);
 	}
 
 	/** ============================================ Mise ajour Etat ===========================================================================*/
@@ -158,10 +158,10 @@ public class Agent {
 
 	public int indiceElement(int x, int y, boolean poussiere) {
 		int id = -1;
-		for (int i = 0; i < ListElementObs.size(); i++) {
-			int a = ListElementObs.get(i).getX();
-			int b = ListElementObs.get(i).getY();
-			if(x==a && y==b && ListElementObs.get(i).isPoussiere()==poussiere) {
+		for (int i = 0; i < listElementObs.size(); i++) {
+			int a = listElementObs.get(i).getX();
+			int b = listElementObs.get(i).getY();
+			if(x==a && y==b && listElementObs.get(i).isPoussiere()==poussiere) {
 				id = i;
 			}
 		}
@@ -174,21 +174,21 @@ public class Agent {
 		while(diffX != 0){
 			if(diffX < 0)
 			{
-				this.mouvementChemin.add(DROITE);
+				this.listeActions.add(DROITE);
 				diffX++;
 			}
 			else{
-				this.mouvementChemin.add(GAUCHE);
+				this.listeActions.add(GAUCHE);
 				diffX--;
 			}
 		}
 		while(diffY != 0){
 			if(diffY < 0){
-				this.mouvementChemin.add(BAS);
+				this.listeActions.add(BAS);
 				diffY++;
 			}
 			else{
-				this.mouvementChemin.add(HAUT);
+				this.listeActions.add(HAUT);
 				diffY--;
 			}
 		}
@@ -196,7 +196,7 @@ public class Agent {
 
 	/**============================================= Accesseurs et mutateurs ===========================================================================*/
 	public ArrayList<Element> getListElementObs() {
-		return ListElementObs;
+		return listElementObs;
 	}
 	
 	public int getX() {
@@ -239,8 +239,8 @@ public class Agent {
 		this.energieDepense = e;
 	}
 
-	public ArrayList<Integer> getMouvementChemin() {
-		return mouvementChemin;
+	public ArrayList<Integer> getListeActions() {
+		return listeActions;
 	}
 
 	public int getNbrCasesParcourues() {
