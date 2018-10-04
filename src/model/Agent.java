@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import org.omg.CORBA.Environment;
-
 public class Agent {
 
 	//Mouvement de l'agent

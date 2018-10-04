@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -105,6 +104,7 @@ public class Draw{
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel.setBackground(Color.black);
 		frame.pack();
 
 		//this will make the frame not re-sizable
@@ -164,6 +164,7 @@ public class Draw{
 	protected void render(Graphics2D g){
 		int T =(int) (intervalle*0.9); // Taille d un element 
 		g.setColor(Color.black);
+		g.setBackground(Color.black);
 		// drawing de la grille
 		for (int i = 0; i < Parametre.TAILLE_GRILLE; i++) {
 			for (int j = 0; j < Parametre.TAILLE_GRILLE; j++) {
@@ -377,7 +378,6 @@ public class Draw{
 		JMenuItem menuItemRazPerf;
 		JMenuItem menuItemVitessePlus;
 		JMenuItem menuItemVitesseMoins;
-		JMenuItem menuItemInformations2;
 		JMenuItem menuInforme;
 
 
