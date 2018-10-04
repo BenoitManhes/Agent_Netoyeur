@@ -28,7 +28,7 @@ public class Agent {
 	private int nbrCasesParcourues = 0;
 	private int nbrObjetsAspires = 0;
 	private int nbrBijouxRamasses = 0;
-	public static boolean razAffichage;
+	public static boolean razAgent;
 
 	
 	public Agent() {
@@ -39,7 +39,7 @@ public class Agent {
 	public Agent(int x, int y) {
 		X=x;
 		Y=y;
-		razAffichage=true;
+		razAgent=true;
 	}
 
 	
