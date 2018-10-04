@@ -3,7 +3,6 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -15,16 +14,11 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-
-import org.omg.Messaging.SyncScopeHelper;
 
 import model.Agent;
 import model.Element;
@@ -237,7 +231,7 @@ public class Draw{
 		}
 		
 			//Affichage stat
-			g.setColor(Color.white);
+			g.setColor(Color.gray);
 			
 			g.drawString("Score environnement : "+Environnement.getScoreEnvironnement(), 20,WIDTH+40);
 			g.drawString("Cout energie : "+Environnement.agent.getEnergieDepense(), 20, WIDTH+60);
@@ -248,14 +242,12 @@ public class Draw{
 			g.drawString("Nombre d'objets aspires : "+Environnement.agent.getNbrObjetsAspirees(), 220,WIDTH+60);
 			g.drawString("Nombre de bijoux ramasses : "+Environnement.agent.getNbrBijouxRamasses(), 220, WIDTH+80);
 
-
-			BigDecimal bd = new BigDecimal(Parametre.PROBA_POUSSIERE);
-			bd= bd.setScale(4,BigDecimal.ROUND_DOWN);
-			double valeurProbaPoussiere = bd.doubleValue();
-
-			BigDecimal bdb = new BigDecimal(Parametre.PROBA_BIJOU);
-			bdb= bdb.setScale(4,BigDecimal.ROUND_DOWN);
-			double valeurProbaBijou = bdb.doubleValue();
+			
+			NumberFormat nfProba = NumberFormat.getInstance();
+			nfProba.setMaximumFractionDigits(5);
+			
+			String valeurProbaPoussiere = nfProba.format(Parametre.PROBA_POUSSIERE);
+			String valeurProbaBijou = nfProba.format(Parametre.PROBA_BIJOU);
 			
 			g.drawString("Probabilite apparition poussiere : "+valeurProbaPoussiere, 220, WIDTH + 105);
 			g.drawString("Probabilite apparition bijoux : "+valeurProbaBijou, 220, WIDTH +125);
@@ -337,7 +329,7 @@ public class Draw{
 		menuItemPoussierePlus = new JMenuItem("Probabilite apparition poussiere +");
 		menuItemPoussierePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.1;
+				if(Parametre.PROBA_POUSSIERE<0.8) Parametre.PROBA_POUSSIERE += 0.05;
 				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
 			}
 		});
@@ -345,7 +337,7 @@ public class Draw{
 		menuItemPoussiereMoins = new JMenuItem("Probabilite apparition poussiere -");
 		menuItemPoussiereMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_POUSSIERE>=0.1) Parametre.PROBA_POUSSIERE -= 0.1;
+				if(Parametre.PROBA_POUSSIERE>=0.05) Parametre.PROBA_POUSSIERE -= 0.05;
 				else Parametre.PROBA_POUSSIERE = 0;
 				System.out.println("Systeme : modification proba. apparition poussiere : "+Parametre.PROBA_POUSSIERE);
 				
@@ -358,7 +350,7 @@ public class Draw{
 		menuItemBijouPlus = new JMenuItem("Probabilite apparition bijou +");
 		menuItemBijouPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.01;
+				if(Parametre.PROBA_BIJOU<0.8) Parametre.PROBA_BIJOU += 0.005;
 				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
 			}
 		});
@@ -366,7 +358,7 @@ public class Draw{
 		menuItemBijouMoins = new JMenuItem("Probabilite apparition bijou -");
 		menuItemBijouMoins.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Parametre.PROBA_BIJOU>=0.1) Parametre.PROBA_BIJOU -= 0.01;
+				if(Parametre.PROBA_BIJOU>=0.002) Parametre.PROBA_BIJOU -= 0.002;
 				else Parametre.PROBA_BIJOU = 0;
 				System.out.println("Systeme : modification proba. apparition bijoux : "+Parametre.PROBA_BIJOU);
 			}
@@ -386,9 +378,8 @@ public class Draw{
 		JMenuItem menuItemVitessePlus;
 		JMenuItem menuItemVitesseMoins;
 		JMenuItem menuItemInformations2;
-		JMenu menuInforme;
-		JMenuItem menuInformeOui;
-		JMenuItem menuInformeNon;
+		JMenuItem menuInforme;
+
 
 		//Create the menu bar.
 		menuBar = new JMenuBar();
@@ -438,34 +429,16 @@ public class Draw{
 
 		
 		//Build the explorationMenu
-		menuInforme = new JMenu("Type d'exploration");
+		menuInforme = new JMenuItem("Type d'exploration");
 		menuBar.add(menuInforme);
 		menuInforme.getAccessibleContext().setAccessibleDescription("Set event 2");
-		ButtonGroup bg = new ButtonGroup();
-		
-		menuInforme.addSeparator();
-		menuInformeOui = new JMenuItem("Exploration informee");
-		
-		menuInformeOui.addActionListener(new ActionListener() {
+		menuInforme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choixInformee = true;
-				System.out.println("Systeme : mode exploration informee");
+				choixInformee = !choixInformee;
 			}
 		});
 		
-		bg.add(menuInformeOui);
-		menuInforme.add(menuInformeOui);
-		
-		menuInforme.addSeparator();
-		menuInformeNon = new JMenuItem("Exploration non-informee");
-		menuInformeNon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				choixInformee = false;
-				System.out.println("Systeme : mode exploration non-informee");
-			}
-		});
-		bg.add(menuInformeNon);
-		menuInforme.add(menuInformeNon);
+		menuBar.add(menuInforme);
 
 		return menuBar;
 
